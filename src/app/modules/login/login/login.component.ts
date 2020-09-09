@@ -35,47 +35,53 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', Validators.required)
     });
   }
-
-  processLoginForm() {
-    console.log("Process Login Form started");
-    //console.log(this.user.value);
-    this.logging = true;
-    //console.log('Authentication started for user ');
-    let user = new User(this.user.value);
-    //console.log("Authenticated user made from form control as: ");
-    // console.log(user);
-    // console.log(user.getUsername()+" "+user.getPassword());
-
-    this.authorizationService.authenticate(user).subscribe(data => {
-      // console.log("Data in processLoginForm");
-      // console.log(data);
-      let status = (<any>data).status;
-      if (status === 200) {
-        console.log("Login Successfull. Logged in User is: " + this.authorizationService.getLoggedInUserRole());
-        if (this.authorizationService.isLogedIn()) {
-          if (this.authorizationService.getLoggedInUserRole() === GlobalConfiguration.ROLE_OIC) {
-            console.log("Authenticated user is oag. Navigating to oag homepage");
-            this.router.navigate(['/oag']);
-          }
-        } else {
-          console.log("Unable to login user");
-          this.loginError = true;
-          this.loginErrorText = this.UNABLE_LOGIN_MESSAGE;
-        }
-      }
-      this.logging = false;
-    }, error => {
-
-      this.logging = false;
-      this.loginError = true;
-      console.log("Error While login");
-      console.log(error);
-      let status = error.status;
-      if (status == 403 || status == 401) {
-        this.loginErrorText = this.INVALID_LOGIN_MESSAGE;
-      } else {
-        this.loginErrorText = this.UNABLE_LOGIN_MESSAGE;
-      }
-    });
+ 
+  processLoginForm(){
+    console.log("processing");
+    console.log(this.user);
   }
+  
+
+  // processLoginForm() {
+  //   console.log("Process Login Form started");
+  //   //console.log(this.user.value);
+  //   this.logging = true;
+  //   //console.log('Authentication started for user ');
+  //   let user = new User(this.user.value);
+  //   //console.log("Authenticated user made from form control as: ");
+  //   // console.log(user);
+  //   // console.log(user.getUsername()+" "+user.getPassword());
+
+  //   this.authorizationService.authenticate(user).subscribe(data => {
+  //     // console.log("Data in processLoginForm");
+  //     // console.log(data);
+  //     let status = (<any>data).status;
+  //     if (status === 200) {
+  //       console.log("Login Successfull. Logged in User is: " + this.authorizationService.getLoggedInUserRole());
+  //       if (this.authorizationService.isLogedIn()) {
+  //         if (this.authorizationService.getLoggedInUserRole() === GlobalConfiguration.ROLE_OIC) {
+  //           console.log("Authenticated user is oag. Navigating to oag homepage");
+  //           this.router.navigate(['/oag']);
+  //         }
+  //       } else {
+  //         console.log("Unable to login user");
+  //         this.loginError = true;
+  //         this.loginErrorText = this.UNABLE_LOGIN_MESSAGE;
+  //       }
+  //     }
+  //     this.logging = false;
+  //   }, error => {
+
+  //     this.logging = false;
+  //     this.loginError = true;
+  //     console.log("Error While login");
+  //     console.log(error);
+  //     let status = error.status;
+  //     if (status == 403 || status == 401) {
+  //       this.loginErrorText = this.INVALID_LOGIN_MESSAGE;
+  //     } else {
+  //       this.loginErrorText = this.UNABLE_LOGIN_MESSAGE;
+  //     }
+  //   });
+  // }
 }
