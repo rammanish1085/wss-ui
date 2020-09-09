@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
   processLoginForm(){
     console.log("processing");
     console.log(this.user);
+    this.router.navigate(['oic']);
   }
   
 
