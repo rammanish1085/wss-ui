@@ -1,26 +1,42 @@
-<div class="container">
-
-    <div class="card">
-          <div class="card-body">
-              <div>
-                  <label for="username">username</label>
+<header id="showcase">
+  <div class="card text-center bg-dark text-white mb-3">
+      <div class="card-header">Welcome to CIT - Login</div>
+      <div class="card-body">
+          <div *ngIf="logging">
+                            <div class="form-group">
+                  <label class="font-weight-bold">Logging In..</label>
+                  <div class="spinner-border"></div>
               </div>
-              <div>
-                <input type="text" class="form-control" placeholder="Username" aria-label="Username" >
+          </div>
+          <div *ngIf="loginError">
+              <div class="form-group">
+                  <label class="font-weight-bold">{{loginErrorText}}</label>
               </div>
-              <div>
-                <label for="password">pasword</label>
+          </div>
+          <div>
+              <div> 
+                  <form  [formGroup]="user" (ngSubmit)="processLoginForm()">
+                      <div class="form-group">
+                          <label class="sr-only">Username</label><i class="fas fa-user">
+                          <input type="text" class="form-control form-control-lg" placeholder="Enter Your Username" formControlName="username" required></i>
+                          <label class="error" *ngIf="user.get('username').hasError('required') && user.get('username').touched">Username is required</label>
+                      </div>
+                      <div class="form-group">
+                          <label class="sr-only">Password</label>
+                          <input type="password" class="form-control form-control-lg" placeholder="Enter Your Password" formControlName="password" required>
+                          <label class="error" *ngIf="user.get('password').hasError('required') && user.get('password').touched">Password is required</label>
+                      </div>
+                      <div class="form-group">
+                          <button type="submit" class="btn btn-success btn-lg" [disabled]="logging || user.invalid">login</button>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <button type="reset" class="btn btn-danger btn-lg" (click)="loginErrorText=null">clear</button>
+                      </div>
+                  </form>
               </div>
-             <div>
-                <input type="password" class="form-control" placeholder="password" aria-label="Username" >
-             </div>
-             <div>
-                 <button type="button form-control" class="btn btn-primary"(click)="buttonClicked()">login</button>
-             </div>
-        </div>
+          </div>
       </div>
-	
-</div>
-
-
-
+      <div class="card-footer text-muted">
+          <strong>&copy; MPPKVCL-2020</strong>
+      </div>
+  </div>
+</header>
