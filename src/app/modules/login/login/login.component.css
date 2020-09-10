@@ -1,10 +1,13 @@
 
 #showcase{
-    background-image: url('src/assets/login.jpg');
+    background-image: url('src/assets/login2.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.img-fluid{
+    width: 60px;
 }

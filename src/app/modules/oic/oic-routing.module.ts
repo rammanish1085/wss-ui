@@ -4,6 +4,7 @@ import { OicComponent } from './oic.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AddIssueComponent } from './add-issue/add-issue.component';
 import { HomeComponent } from './home/home.component';
+import { DashboardComponent } from 'src/app/components/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,12 @@ const routes: Routes = [
         path: '',
         children: [
           {path:'add-issue',component:AddIssueComponent}
+        ]
+      },
+      {
+        path: '',
+        children: [
+          {path:'dashboard',component:DashboardComponent}
         ]
       }
     ]
