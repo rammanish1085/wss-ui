@@ -13,4 +13,9 @@
 }
 .card-footer{
  background-color:yellow;
+}.card{
+   background-color: #f3aa4e;
+}
+.input-group-text {
+    color: #a85b0c;
 }
