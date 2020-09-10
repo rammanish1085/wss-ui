@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 /* The side navigation menu */
 .sidebar {
-  margin: 0;
+  margin-top: 0px;
   padding: 0;
-  width: 200px;
+  width: 250px;
   background-color: #f1f1f1;
   position: fixed;
   height: 100%;

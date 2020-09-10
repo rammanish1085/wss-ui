@@ -1,5 +1,58 @@
-<div class="sidebar">
+<!-- <div class="sidebar">
     <a [routerLink]="['./']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">Home</a>
     <a [routerLink]="['add-user']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">Add User</a>
     <a [routerLink]="['add-issue']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">Add Issue</a>
-</div>
+</div> -->
+
+<aside class="sidebar shadow-sm">
+
+    <div class="sidebar-profile d-flex flex-column justify-content-center ">
+      <!-- <div class="picture-wrapper">
+        <div class="user-picture m-auto">
+          i class="fa fa-user"></i> 
+        </div>
+      </div> -->
+      <div class="profile-details text-center pb-4">    
+        <p class="mb-0 text-uppercase name">Girjesh Kumar</p>
+        <small class="text-uppercase role">OIC</small>
+      </div>
+    </div>
+    
+      <hr>
+    
+    <nav class="sidebar-menu">
+      <div class="menu-header text-center text-dark">
+       SIDE MENU
+      </div>
+      <hr>
+      <ul class="menu-items">
+        <li >
+             <a href="#" routerLink="/dashboard" routerLinkActive="active">
+            <!-- <i class="fa fa-tv"></i> -->
+            <span>Home</span>
+            </a>
+        </li>
+        <li>
+          <a href="#" routerLink="/forms" routerLinkActive="active">
+            <!-- <i class="fas fa-gem"></i> -->
+            <span>Deshboard</span>
+          </a>
+        </li>
+        <li>
+            <a [routerLink]="['add-user']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
+              <!-- <i class="fas fa-gem"></i> -->
+              <span>Add User</span>
+            </a>
+          </li>
+
+        <li>
+          <a [routerLink]="['add-issue']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
+            <!-- <i class="fa fa-table"></i> -->
+            <span>Add Issue</span>
+          </a>
+        </li>
+  
+      </ul>
+        
+    </nav>
+  </aside>
