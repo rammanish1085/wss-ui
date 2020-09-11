@@ -39,7 +39,7 @@ export class GlobalConfiguration {
   constructor () {}
 
   getAuthenticationURL() : string {
-      let url = this.BACKEND_PREFIX + this.AUTHENTICATION_URL;
+      let url = this.AUTHENTICATION_URL;
       return url;
   }
 

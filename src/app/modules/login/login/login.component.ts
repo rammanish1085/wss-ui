@@ -52,10 +52,12 @@ export class LoginComponent implements OnInit {
       // console.log(data);
       let status = (<any>data).status;
       if (status === 200) {
+        console.log(data);
         console.log("Login Successfull. Logged in User is: " + this.authorizationService.getLoggedInUserRole());
         if (this.authorizationService.isLogedIn()) {
+          console.log("Inside isLogged");
           if (this.authorizationService.getLoggedInUserRole() === GlobalConfiguration.ROLE_OIC) {
-            console.log("Authenticated user is oag. Navigating to oag homepage");
+            console.log("Authenticated user is OIC. Navigating to OIC homepage");
             this.router.navigate(['oic']);
           }
         } else {
