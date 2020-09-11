@@ -36,6 +36,9 @@ export class LoginComponent implements OnInit {
     });
   }
  
+  // processLoginForm() {
+  //   this.router.navigate(['oic']);
+  // }
   
   processLoginForm() {
     console.log("Process Login Form started");

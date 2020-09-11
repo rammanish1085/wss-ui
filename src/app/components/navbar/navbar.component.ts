@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/user.model';
+import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  public loggedInUser: User;
+  
+  constructor(private authorizationService: AuthorizationService,private router: Router) {
+  }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    console.log("Initialising Navbar");
+    this.loggedInUser = this.authorizationService.getLoggedInUser();
+  }
+
+  logoutClicked() {
+    console.log("logout clicked from ngb-navbar");
+    this.authorizationService.logout();
+  }
+
+  settingClicked() {
+    console.log("setting clicked from ngb-navbar");
+    this.router.navigate(['setting'],{ queryParams: { source: this.router.url }, queryParamsHandling: "merge" });
   }
 
 }
