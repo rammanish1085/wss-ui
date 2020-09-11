@@ -1,0 +1,14 @@
+/*THIS IS THE MAIN .SCSS FILE. WHICH OVERRIDES DEFAULT .SCSS VARIABLES OF BOOTSTRAP AND THEN IMPORT BOOTSTRAP .SCSS FOR USE IN PROJECT*/
+
+/*
+ * Overiding default value for below variable in Bootstrap version 4.2.1. Since
+ * Since from version 4.2.1 bootstrap has started showing icons for is-valid css class
+ * To hide that behaviour and to obtain pre v4.2.1 styles and layout we are overiding this variable.
+ * Refer following links for changes and solution https://github.com/twbs/bootstrap/releases/tag/v4.2.0
+*/
+$enable-validation-icons: false;
+
+/* 
+ * Importing complete Bootstrap for whole project
+*/
+@import "../node_modules/bootstrap/scss/bootstrap";
