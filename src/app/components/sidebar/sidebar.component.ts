@@ -12,10 +12,10 @@ export class SidebarComponent implements OnInit {
   constructor(private authorizationService: AuthorizationService) { }
 
   loggedInUser: User;
-
   ngOnInit() {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     console.log(this.loggedInUser);
+    
   }
   
 

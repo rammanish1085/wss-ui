@@ -14,11 +14,10 @@ export class UserService {
    }
 
 
-
-  getProject():any{
-    console.log("inside getProject Service")
-     return this.http.get(this.contextPath+'/hello',{observe:'response'});
-  }
-
-  
+  getAllProject(){
+    console.log("Inside Location Code and Name Service");
+    return this.http.get(this.contextPath+'/users',{observe: 'response'}).pipe(map(
+       (response : HttpResponse<any>)=>{
+        return response;}));  
+    }
 }

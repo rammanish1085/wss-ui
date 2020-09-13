@@ -15,7 +15,7 @@ export class AddUserComponent implements OnInit {
 
   public getData() {
     console.log('Getting Data Called');
-    this.userService.getProject().subscribe(succes=>{
+    this.userService.getAllProject().subscribe(succes=>{
       console.log("succes");
       console.log(succes.body);
 
