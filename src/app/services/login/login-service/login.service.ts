@@ -75,7 +75,7 @@ export class LoginService {
       //console.log("Token after split");
       //console.log(token);
       sessionStorage.setItem(this.TOKEN_KEY, token);
-      let sessionEndTimestamp = new Date(new Date().getTime() + this.SESSION_DURATION_MINUTES * 60 * 1000).getTime();
+      let sessionEndTimestamp = new Date(new Date().getTime() + this.SESSION_DURATION_MINUTES * 60 * 10000).getTime();
       sessionStorage.setItem(this.SESSION_END_TIME_KEY, sessionEndTimestamp.toString());
     }
   }

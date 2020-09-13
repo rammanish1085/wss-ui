@@ -19,7 +19,6 @@ export class LogoutService{
     public logoutSession(sessionId : number,token : string){
         console.log("logoutSession called for sessionId " + sessionId);
         let headers = new HttpHeaders();
-        this.createAuthorizationTokenHeader(headers,token);
         return this.http.put(this.contextPath + this.logoutControllerUrl + '/' + 'session/id/' + sessionId,{},{
           headers: headers
         }).pipe(map((response : HttpResponse<any>) => {
