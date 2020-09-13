@@ -8,6 +8,8 @@ import { LoginService } from './services/login/login-service/login.service';
 import { LogoutService } from './services/logout/logout-service/logout.service';
 import { GlobalConfiguration } from './config/global.config';
 import { HttpClient, HttpClientModule} from '@angular/common/http';
+import { AuthorizationInterceptor } from '../app/interceptor/authorization.interceptor';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 
 
@@ -18,9 +20,16 @@ import { HttpClient, HttpClientModule} from '@angular/common/http';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+     ],
+  providers: [AuthorizationService,LoginService,LogoutService,GlobalConfiguration,HttpClient,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationInterceptor,
+      multi: true
+    }
+   
   ],
-  providers: [AuthorizationService,LoginService,LogoutService,GlobalConfiguration,HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
