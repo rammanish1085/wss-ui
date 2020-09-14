@@ -10,6 +10,7 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { AddIssueComponent } from './add-issue/add-issue.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from '../../components/dashboard/dashboard.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -18,7 +19,8 @@ import { DashboardComponent } from '../../components/dashboard/dashboard.compone
   declarations: [OicComponent,NavbarComponent,SidebarComponent, AddUserComponent,FooterComponent, AddIssueComponent, HomeComponent,DashboardComponent],
   imports: [
     CommonModule,
-    OicRoutingModule
+    OicRoutingModule,
+    FormsModule
   ]
 })
 export class OicModule { }

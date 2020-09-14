@@ -8,9 +8,13 @@ import {UserService} from 'src/app/services/users/user.service';
 })
 export class AddUserComponent implements OnInit {
 
+  project:any;
+  selectedProject:any;
+
   constructor(private userService:UserService) { }
 
   ngOnInit() {
+    this.getData();
   }
 
   public getData() {
@@ -18,6 +22,7 @@ export class AddUserComponent implements OnInit {
     this.userService.getAllProject().subscribe(succes=>{
       console.log("succes");
       console.log(succes.body);
+      this.project=succes.body;
 
     },error=>{
       console.log("error");
