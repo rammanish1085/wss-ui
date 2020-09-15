@@ -20,4 +20,13 @@ export class UserService {
        (response : HttpResponse<any>)=>{
         return response;}));  
     }
+
+
+
+    getAllUsers(locationCode:string,role:any){
+      console.log("Inside getting users");
+      return this.http.get(this.contextPath+'/users-detail/location-code/'+locationCode +'/role/'+role,{observe: 'response'}).pipe(map(
+         (response : HttpResponse<any>)=>{
+          return response;}));  
+      }
 }

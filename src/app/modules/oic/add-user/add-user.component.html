@@ -1,7 +1,3 @@
-<!-- <div class="container">
-  <button type="button" class="btn btn-success" (click)="getData()">GET DATA</button>
-</div> -->
-
 <div class="container">
   <div>
     <div>
@@ -25,9 +21,9 @@
     <div>
       <select
       [ngClass]="{'is-valid': !user.errors && (user.dirty || user.touched),'is-invalid': user.errors && (user.dirty || user.touched)}"
-      class="form-control" name="user" [(ngModel)]="selectedProject"   #user="ngModel" required>
+      class="form-control" name="user" [(ngModel)]="selectedUser"   #user="ngModel" required>
       <option [value]="undefined" selected disabled>Select User</option>
-      <option  class="form-control form-control-sm">
+      <option *ngFor="let user of users" [ngValue]="user" class="form-control form-control-sm">{{user.username}}&nbsp;({{user.name}})
         </option>
     </select>
     <div class="invalid-feedback" *ngIf="user.errors && (projectName.dirty || user.touched)"
@@ -37,7 +33,7 @@
  </div>
 
  <div class="button">
-  <button class="btn btn-success">Add</button>
+  <button class="btn btn-success" (click)="onclickAddUserProject()">Add</button>
 </div>
 
 

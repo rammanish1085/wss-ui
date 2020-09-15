@@ -8,6 +8,9 @@ export class User{
     public mobileNo : string;
     public status : string;
     public locationCode : string;
+    public locationName : string;
+    public locationShortName: string;
+    public officeType : string;
     public generator : string;
     private sessionId : number;
     public zone : any;
@@ -66,6 +69,30 @@ export class User{
 
     getLocationCode() : string{
       return this.locationCode;
+    }
+
+    setLocationName(locationName:string){
+      this.locationName = locationName;
+    }
+
+    getLocationName():string{
+      return this.locationName;
+    }
+
+    setLocationShortName(locationShortName: string){
+      this.locationShortName =locationShortName;
+    }
+
+    getLocationShortName():string{
+      return this.locationShortName;
+    }
+
+    setOfficeType(officeType :string){
+      this.officeType = officeType;
+    }
+
+    getOfficeType():string{
+      return this.officeType;
     }
 
     setMobileNo(mobileNo : string){

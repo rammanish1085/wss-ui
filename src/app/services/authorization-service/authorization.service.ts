@@ -73,7 +73,10 @@ export class AuthorizationService {
     user.setName(decodedToken.user.name);
     user.setDesignation(decodedToken.user.designation);
     user.setLocationCode(decodedToken.user.locationCode);
-    user.setMobileNo(decodedToken.user.mobileNo);
+    user.setLocationName(decodedToken.user.locationName);
+    user.setLocationShortName(decodedToken.user.locationShortName);
+    user.setOfficeType(decodedToken.user.officeType);
+    user.setMobileNo(decodedToken.user.mobileNumber);
     user.setStatus(decodedToken.user.status);
     user.setSessionId(decodedToken.sessionId);
     user.setZone(decodedToken.user.zone);
