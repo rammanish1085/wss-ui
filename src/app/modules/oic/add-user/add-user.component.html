@@ -5,8 +5,7 @@
     </div>
     <select
       [ngClass]="{'is-valid': !projectName.errors && (projectName.dirty || projectName.touched),'is-invalid': projectName.errors && (projectName.dirty || projectName.touched)}"
-      class="form-control" name="projectName" [(ngModel)]="selectedProject"
-      #projectName="ngModel" required>
+      class="form-control" name="projectName" [(ngModel)]="selectedProject" #projectName="ngModel" required>
       <option [value]="undefined" selected disabled>Select Project</option>
       <option *ngFor="let pro of project" [ngValue]="pro" class="form-control form-control-sm text-center">
         {{pro.name}}</option>
@@ -20,20 +19,66 @@
     </div>
     <div>
       <select
-      [ngClass]="{'is-valid': !user.errors && (user.dirty || user.touched),'is-invalid': user.errors && (user.dirty || user.touched)}"
-      class="form-control" name="user" [(ngModel)]="selectedUser"   #user="ngModel" required>
-      <option [value]="undefined" selected disabled>Select User</option>
-      <option *ngFor="let user of users" [ngValue]="user" class="form-control form-control-sm">{{user.username}}&nbsp;({{user.name}})
+        [ngClass]="{'is-valid': !user.errors && (user.dirty || user.touched),'is-invalid': user.errors && (user.dirty || user.touched)}"
+        class="form-control" name="user" [(ngModel)]="selectedUser" #user="ngModel" required>
+        <option [value]="undefined" selected disabled>Select User</option>
+        <option *ngFor="let user of users" [ngValue]="user" class="form-control form-control-sm">
+          {{user.username}}&nbsp;({{user.name}})
         </option>
-    </select>
-    <div class="invalid-feedback" *ngIf="user.errors && (projectName.dirty || user.touched)"
-      [hidden]="!user.errors.required">User is require</div>
+      </select>
+      <div class="invalid-feedback" *ngIf="user.errors && (projectName.dirty || user.touched)"
+        [hidden]="!user.errors.required">User is require</div>
     </div>
   </div>
- </div>
-
- <div class="button">
-  <button class="btn btn-success" (click)="onclickAddUserProject()">Add</button>
+  <div class="button">
+    <button class="btn btn-success" (click)="onclickAddUserProject()">Add</button>
+  </div>
 </div>
 
+<div class="containe-fluid">
+
+  <div class="row mb-4">
+
+    <div class="col-md-12">
+      <div class="card border-0 rounded-0">
+        <div class="card-title mb-1 p-3 mt-5 text-center">
+          <!-- <h5>Project User Mapping</h5> -->
+        </div>
+        <div class="card-body">
+          <div class="table-responsive-md">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Location Code</th>
+                  <th scope="col">Location name</th>
+                  <th scope="col">Project name</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                 <tr *ngFor="let project of projectUserMapping index i">
+                  <td align="center">{{i+1}}</td>
+                  <td align="center">{{project.username}}</td>
+                  <td align="center">{{project.name}}</td>
+                  <td align="center">{{project.locationCode}}</td>
+                  <td align="center">{{project.locationName}}</td>
+                  <td align="center">{{project.projectName}}</td>
+                   <td align="center"></td>
+                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
 

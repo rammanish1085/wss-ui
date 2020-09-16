@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 import {UserService} from 'src/app/services/users/user.service';
+import {ProjectUserMappingService} from 'src/app/services/project/project-user-mapping.service';
+import { getLocaleDateTimeFormat } from '@angular/common';
 
 @Component({
   selector: 'app-add-user',
@@ -13,15 +15,17 @@ export class AddUserComponent implements OnInit {
   users : any;
   selectedProject:any;
   selectedUser : any;
-  saveUserProject :any ={};
+  projectUserMappingObject :any ={};
   loggedInUser : any;
-  constructor(private userService:UserService,private authorizationService: AuthorizationService) { }
+  projectUserMapping:any;
+  constructor(private userService:UserService,private authorizationService: AuthorizationService,private projectUserMappingService:ProjectUserMappingService) { }
 
   ngOnInit() {
+    this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.getProject();
     this.getUsers();
-    this.loggedInUser = this.authorizationService.getLoggedInUser();
-  }
+    this.getAssignProject();
+    }
 
   public getProject() {
     console.log('Getting Data Called');
@@ -51,15 +55,33 @@ export class AddUserComponent implements OnInit {
   }
 
   onclickAddUserProject(){
-    console.log(this.selectedProject.name);
-    console.log(this.selectedUser.username);
-    this.saveUserProject.username=this.selectedUser.username;
-    this.saveUserProject.name=this.selectedUser.name;
-    this.saveUserProject.projectName=this.selectedProject.name;
-    this.saveUserProject.locationCode= this.loggedInUser.getLocationCode();
-    this.saveUserProject.locationName= this.loggedInUser.getLocationShortName();
-   console.log(this.saveUserProject);
+   this.prepareProjectUserMapping();
+     this.projectUserMappingService.insertProjectUserMapping(this.projectUserMappingObject).subscribe(success=>{
+       console.log(success.body);
+       console.log("Data inserted successfully");
+     },error=>{})
 
-  }
-    
+     }
+
+  prepareProjectUserMapping(){
+    this.projectUserMappingObject.username=this.selectedUser.username;
+    this.projectUserMappingObject.name =this.selectedUser.name;
+    this.projectUserMappingObject.locationCode=this.loggedInUser.getLocationCode();
+    this.projectUserMappingObject.locationName=this.loggedInUser.getLocationShortName();
+    this.projectUserMappingObject.projectName=this.selectedProject.name;
+    this.projectUserMappingObject.deleted=false;
+    this.projectUserMappingObject.createdBy=this.loggedInUser.getUsername() +" "+ this.loggedInUser.getName();
+  }   
+
+getAssignProject(){
+
+  this.projectUserMappingService.getAssignedProjectList(this.loggedInUser.getLocationCode()).subscribe(success=>{
+    this.projectUserMapping =success.body;
+    console.log("Inside ger Assigned Project");
+    console.log(this.projectUserMapping);
+  },error=>{
+  })
+
+}
+
 }
