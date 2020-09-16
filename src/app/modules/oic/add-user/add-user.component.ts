@@ -59,6 +59,7 @@ export class AddUserComponent implements OnInit {
      this.projectUserMappingService.insertProjectUserMapping(this.projectUserMappingObject).subscribe(success=>{
        console.log(success.body);
        console.log("Data inserted successfully");
+       this.getAssignProject();
      },error=>{})
 
      }

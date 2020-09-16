@@ -37,4 +37,12 @@ export class ProjectUserMappingService {
         return response;
       }));
   }
+
+  getAssignedProjectByUsernameAndLocationCode(username: any, locationCode: any) {
+    console.log("getAssignedProjectByUsernameAndLocationCode");
+    return this.http.get(this.contextPath + '/project-user-mapping/username/'+ username + '/location-code/' + locationCode, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
 }

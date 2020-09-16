@@ -1,76 +1,28 @@
 <div class="row">
-    <div class="col-md-12 col-lg-6 mb-4 align-items-stretch">
-      <div class="card border-0 rounded-0 h-100">
-        <div class="card-title mb-1 p-3">
-          <h5>Basic Form</h5>
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control rounded-0" id="exampleInputEmail1" aria-describedby="emailHelp"
-                placeholder="Enter email">
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control rounded-0" id="exampleInputPassword1" placeholder="Password">
-            </div>
-            <div class="custom-control custom-checkbox my-1 mr-sm-2 mb-3">
-              <input type="checkbox" class="custom-control-input" id="customControlInline">
-              <label class="custom-control-label" for="customControlInline">Remember me</label>
-            </div>
-            <button type="button" class="btn btn-lightning rounded-0 mb-2 mr-2">Submit</button>
-            <button type="button " class="btn btn-outline-lightning rounded-0 mb-2">Cancel</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-12 col-lg-6 mb-4 align-items-stretch">
-      <div class="card border-0 rounded-0 h-100">
-        <div class="card-title mb-1 p-3">
-          <h5>Horizontal Form</h5>
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="form-group row">
-              <label for="husername" class="col-sm-2 col-form-label text-nowrap">Username</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control rounded-0" id="husername" aria-describedby="emailHelp"
-                  placeholder="Username">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="staticEmail" class="col-sm-2 col-form-label text-nowrap">Email</label>
-              <div class="col-sm-10">
-                <input type="email" class="form-control rounded-0" id="staticEmail" aria-describedby="emailHelp"
-                  placeholder="Enter email">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputPassword" class="col-sm-2 col-form-label text-nowrap">Password</label>
-              <div class="col-sm-10">
-                <input type="password" class="form-control rounded-0" id="inputPassword" placeholder="Password">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="" class="col-sm-2 col-form-label "></label>
-              <div class="col-sm-10">
-                <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                  <input type="checkbox" class="custom-control-input" id="hcustomControlInline" checked>
-                  <label class="custom-control-label" for="hcustomControlInline">Remember me</label>
-                </div>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="" class="col-sm-2 col-form-label"></label>
-              <div class="col-sm-10 mb-3">
-                <button type="button" class="btn btn-lightning rounded-0 mb-2 mr-2">Submit</button>
-                <button type="button " class="btn btn-outline-lightning rounded-0 mb-2">Cancel</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+  <div class="col-md-12 col-lg-4 mb-4 mt-4 align-items-stretch" *ngIf="role ==='oic'" >
+     <div>
+      <select class="form-control" name="user" [(ngModel)]="selectedProjectOic" required>
+        <option [value]="undefined" selected disabled>Select Project</option>
+        <option  *ngFor="let project of projectsOic" class="form-control form-control-sm">{{project.name}}</option>
+      </select>
     </div>
   </div>
+
+  <div class="col-md-12 col-lg-4 mb-4 mt-4 align-items-stretch" *ngIf="role !=='oic'">
+    <div>
+     <select class="form-control" name="user" [(ngModel)]="selectedProjectOther" required>
+       <option [value]="undefined"  selected disabled>Select Project</option>
+       <option *ngFor="let project of projectsOther" class="form-control form-control-sm">{{project.projectName}}</option>
+     </select>
+   </div>
+ </div>
+
+ <div class="col-md-12 col-lg-4 mb-4 mt-4 align-items-stretch">
+  <div>
+   <select class="form-control" name="user" [(ngModel)]="selectedModule" required>
+     <option [value]="undefined" selected disabled>Select Module</option>
+     <option  class="form-control form-control-sm"></option>
+   </select>
+ </div>
+</div>
+</div>

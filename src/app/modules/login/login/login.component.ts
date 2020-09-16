@@ -58,11 +58,12 @@ export class LoginComponent implements OnInit {
         console.log(data);
         console.log("Login Successfull. Logged in User is: " + this.authorizationService.getLoggedInUserRole());
         if (this.authorizationService.isLogedIn()) {
+          this.router.navigate(['oic']);
           console.log("Inside isLogged");
-          if (this.authorizationService.getLoggedInUserRole() === GlobalConfiguration.ROLE_OIC) {
-            console.log("Authenticated user is OIC. Navigating to OIC homepage");
-            this.router.navigate(['oic']);
-          }
+          // if (this.authorizationService.getLoggedInUserRole() === GlobalConfiguration.ROLE_OIC || this.authorizationService.getLoggedInUserRole() === 'AE') {
+          //   console.log("Authenticated user is OIC. Navigating to OIC homepage");
+          //   this.router.navigate(['oic']);
+          // }
         } else {
           console.log("Unable to login user");
           this.loginError = true;

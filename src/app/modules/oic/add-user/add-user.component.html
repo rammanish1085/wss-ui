@@ -59,15 +59,15 @@
                 </tr>
               </thead>
               <tbody>
-                 <tr *ngFor="let project of projectUserMapping index i">
-                  <td align="center">{{i+1}}</td>
-                  <td align="center">{{project.username}}</td>
-                  <td align="center">{{project.name}}</td>
-                  <td align="center">{{project.locationCode}}</td>
-                  <td align="center">{{project.locationName}}</td>
-                  <td align="center">{{project.projectName}}</td>
-                   <td align="center"></td>
-                  
+                <tr *ngFor="let project of projectUserMapping let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{project.username}}</td>
+                  <td>{{project.name}}</td>
+                  <td>{{project.locationCode}}</td>
+                  <td>{{project.locationName}}</td>
+                  <td>{{project.projectName}}</td>
+                  <td><button class="btn btn-danger btn-sm">Delete</button></td>
+
                 </tr>
               </tbody>
             </table>
@@ -81,4 +81,3 @@
 
 
 </div>
-
