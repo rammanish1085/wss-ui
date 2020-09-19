@@ -34,8 +34,8 @@ export class AddIssueComponent implements OnInit {
 
   locationCode:any;
 
-  private fieldArray: Array<any> = [];
-  private newAttribute: any = {};
+  public fieldArray: Array<any> = [];
+  public newAttribute: any = {};
 
   ngOnInit() {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
