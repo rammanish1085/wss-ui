@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 import { ProjectUserMappingService } from 'src/app/services/project/project-user-mapping.service';
@@ -12,6 +13,7 @@ import { UserService } from 'src/app/services/users/user.service';
 })
 export class AddIssueComponent implements OnInit {
 
+  
   constructor(private authorizationService: AuthorizationService,private userService:UserService,private projectUserMappingService :ProjectUserMappingService) { }
 
   selectedProjectOic :any;
@@ -31,6 +33,9 @@ export class AddIssueComponent implements OnInit {
   loggedInUser: User;
 
   locationCode:any;
+
+  private fieldArray: Array<any> = [];
+  private newAttribute: any = {};
 
   ngOnInit() {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
@@ -65,5 +70,15 @@ export class AddIssueComponent implements OnInit {
     })
 
   }
+
+  addFieldValue() {
+    this.fieldArray.push(this.newAttribute)
+    this.newAttribute = {};
+}
+
+deleteFieldValue(index) {
+    this.fieldArray.splice(index, 1);
+}
+  
  
 }

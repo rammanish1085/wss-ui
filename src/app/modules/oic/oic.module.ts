@@ -11,6 +11,9 @@ import { AddIssueComponent } from './add-issue/add-issue.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from '../../components/dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -20,7 +23,10 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     OicRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class OicModule { }

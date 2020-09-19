@@ -64,7 +64,7 @@ export class AddUserComponent implements OnInit {
        this.reset();
        this.getAssignProject();
      },()=>{
-       window.alert("Project Already Exist");
+      this.globalUtilityService.alertWithSuccess("Project Already Exist for user");
        this.reset();
      });
 

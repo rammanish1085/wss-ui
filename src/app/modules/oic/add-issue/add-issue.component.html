@@ -1,28 +1,74 @@
 <div class="row">
-  <div class="col-md-12 col-lg-4 mb-4 mt-4 align-items-stretch" *ngIf="role ==='oic'" >
-     <div>
+  <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch" *ngIf="role ==='oic'">
+    <div>
       <select class="form-control" name="user" [(ngModel)]="selectedProjectOic" required>
         <option [value]="undefined" selected disabled>Select Project</option>
-        <option  *ngFor="let project of projectsOic" class="form-control form-control-sm">{{project.name}}</option>
+        <option *ngFor="let project of projectsOic" class="form-control form-control-sm">{{project.name}}</option>
       </select>
     </div>
   </div>
 
-  <div class="col-md-12 col-lg-4 mb-4 mt-4 align-items-stretch" *ngIf="role !=='oic'">
+  <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch" *ngIf="role !=='oic'">
     <div>
-     <select class="form-control" name="user" [(ngModel)]="selectedProjectOther" required>
-       <option [value]="undefined"  selected disabled>Select Project</option>
-       <option *ngFor="let project of projectsOther" class="form-control form-control-sm">{{project.projectName}}</option>
-     </select>
-   </div>
- </div>
+      <select class="form-control" name="user" [(ngModel)]="selectedProjectOther" required>
+        <option [value]="undefined" selected disabled>Select Project</option>
+        <option *ngFor="let project of projectsOther" class="form-control form-control-sm">{{project.projectName}}
+        </option>
+      </select>
+    </div>
+  </div>
 
- <div class="col-md-12 col-lg-4 mb-4 mt-4 align-items-stretch">
-  <div>
-   <select class="form-control" name="user" [(ngModel)]="selectedModule" required>
-     <option [value]="undefined" selected disabled>Select Module</option>
-     <option  class="form-control form-control-sm"></option>
-   </select>
- </div>
+  <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch">
+    <div>
+      <select class="form-control" name="user" [(ngModel)]="selectedModule" required>
+        <option [value]="undefined" selected disabled>Select Module</option>
+        <option class="form-control form-control-sm"></option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch">
+    <div>
+      <select class="form-control" name="user" [(ngModel)]="selectedModule" required>
+        <option [value]="undefined" selected disabled>Select Problem statement</option>
+        <option class="form-control form-control-sm"></option>
+      </select>
+    </div>
+  </div>
 </div>
+
+<!--File upload Code Start From Here  -->
+<div>
+  <table class="table">
+    <tbody>
+      <tr *ngFor="let field of fieldArray; let i = index">
+        <td>
+          <label for="exampleFormControlFile1">Attatch File</label>
+        </td>
+        <td>
+          <input type="file" class="form-control-file" id="exampleFormControlFile1">
+        </td>
+
+        <td>
+          <button class="btn btn-danger btn-sm" type="button" (click)="deleteFieldValue(i)"><i
+              class="fa fa-minus-square fa-lg" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="exampleFormControlFile1">Attatch File </label>
+        </td>
+        <td>
+          <input type="file" class="form-control-file" id="exampleFormControlFile1">
+        </td>
+
+        <td>
+          <button class="btn btn-primary btn-sm" type="button" (click)="addFieldValue()"><i
+              class="fa fa-plus-square fa-lg" aria-hidden="true"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+<!--File upload Code End Here  -->

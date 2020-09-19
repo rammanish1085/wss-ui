@@ -3,3 +3,11 @@
     justify-content: center;
 
 }
+
+.table{
+   display: flex;
+   justify-content: center;
+}
+.table td {
+    border-top: 0px;
+}
