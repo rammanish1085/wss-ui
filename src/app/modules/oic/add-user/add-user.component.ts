@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 import {UserService} from 'src/app/services/users/user.service';
 import {ProjectUserMappingService} from 'src/app/services/project/project-user-mapping.service';
-import { getLocaleDateTimeFormat } from '@angular/common';
+import {GobalutilityService} from 'src/app/utility/gobalutility.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-add-user',
@@ -18,7 +19,7 @@ export class AddUserComponent implements OnInit {
   projectUserMappingObject :any ={};
   loggedInUser : any;
   projectUserMapping:any;
-  constructor(private userService:UserService,private authorizationService: AuthorizationService,private projectUserMappingService:ProjectUserMappingService) { }
+  constructor(private userService:UserService,private authorizationService: AuthorizationService,private projectUserMappingService:ProjectUserMappingService,private globalUtilityService:GobalutilityService) { }
 
   ngOnInit() {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
@@ -46,11 +47,11 @@ export class AddUserComponent implements OnInit {
     this.userService.getAllUsers('34420124','oic').subscribe(success=>{
       console.log(success.body);
       this.users = success.body;
-    },error=>{
+    },()=>{
      
       // this.project=succes.body;
 
-    })
+    });
 
   }
 
@@ -59,13 +60,13 @@ export class AddUserComponent implements OnInit {
      this.projectUserMappingService.insertProjectUserMapping(this.projectUserMappingObject).subscribe(success=>{
        console.log(success.body);
        console.log("Data inserted successfully");
-       window.alert("Project Inserted Successfully");
+       this.globalUtilityService.alertWithSuccess("Data Inserted Successfully");
        this.reset();
        this.getAssignProject();
-     },error=>{
+     },()=>{
        window.alert("Project Already Exist");
        this.reset();
-     })
+     });
 
      }
 
@@ -85,8 +86,8 @@ getAssignProject(){
     this.projectUserMapping =success.body;
     console.log("Inside ger Assigned Project");
     console.log(this.projectUserMapping);
-  },error=>{
-  })
+  },()=>{
+  });
 
 }
 reset(){
