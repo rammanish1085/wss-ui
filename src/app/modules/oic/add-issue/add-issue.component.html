@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch" *ngIf="role ==='oic'">
     <div>
-      <select class="form-control" name="user" [(ngModel)]="selectedProjectOic" required>
+      <select class="form-control" name="projectOic" [(ngModel)]="issueMaster.projectName" (change)="onChangeProjectOic()"  required>
         <option [value]="undefined" selected disabled>Select Project</option>
         <option *ngFor="let project of projectsOic" class="form-control form-control-sm">{{project.name}}</option>
       </select>
@@ -10,7 +10,7 @@
 
   <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch" *ngIf="role !=='oic'">
     <div>
-      <select class="form-control" name="user" [(ngModel)]="selectedProjectOther" required>
+      <select class="form-control" name="projectOthers" [(ngModel)]="issueMaster.projectName" (change)="onChangeProjectOther()"required>
         <option [value]="undefined" selected disabled>Select Project</option>
         <option *ngFor="let project of projectsOther" class="form-control form-control-sm">{{project.projectName}}
         </option>
@@ -20,18 +20,19 @@
 
   <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch">
     <div>
-      <select class="form-control" name="user" [(ngModel)]="selectedModule" required>
+      <select class="form-control" name="projectModule" [(ngModel)]="issueMaster.projectModule" (change)="onChangeProjectModule()" required>
         <option [value]="undefined" selected disabled>Select Module</option>
-        <option class="form-control form-control-sm"></option>
+        <option *ngFor="let module of moduleList" [ngValue]="module" class="form-control form-control-sm">{{module.projectModule}}</option>
       </select>
     </div>
-  </div>
+  </div> 
 
   <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch">
     <div>
-      <select class="form-control" name="user" [(ngModel)]="selectedModule" required>
+      <select class="form-control" name="problemStatement" [(ngModel)]="issueMaster.problemStatement" required>
         <option [value]="undefined" selected disabled>Select Problem statement</option>
-        <option class="form-control form-control-sm"></option>
+        <option *ngFor="let projectProblemStatment of projectProblemStatmentList" class="form-control form-control-sm">{{projectProblemStatment.problemStatement}}</option>
+        <option [value]="others" *ngIf="isOther">Others</option>
       </select>
     </div>
   </div>
