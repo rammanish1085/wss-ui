@@ -5,6 +5,10 @@ import { ProjectUserMappingService } from 'src/app/services/project/project-user
 import { UserService } from 'src/app/services/users/user.service';
 import { ProjectDescriptionService } from 'src/app/services/project/project-description.service';
 import { ProjectProblemStatementService } from 'src/app/services/project/project-problem-statement.service';
+import {IssueMasterService} from 'src/app/services/project/issue-master.service'
+import {GobalutilityService} from 'src/app/utility/gobalutility.service'
+import { map } from 'rxjs/operators';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 
 @Component({
@@ -15,28 +19,38 @@ import { ProjectProblemStatementService } from 'src/app/services/project/project
 export class AddIssueComponent implements OnInit {
 
 
-  constructor(private authorizationService: AuthorizationService, private projectDescriptionService: ProjectDescriptionService,
-    private userService: UserService, private projectUserMappingService: ProjectUserMappingService, private projectProblemStatmentService: ProjectProblemStatementService) { }
+  constructor(private authorizationService: AuthorizationService, private projectDescriptionService: ProjectDescriptionService, private issueMasterService:IssueMasterService,
+    private userService: UserService,private globalutilityService:GobalutilityService, private projectUserMappingService: ProjectUserMappingService, private projectProblemStatmentService: ProjectProblemStatementService) { }
 
   projectsOic: any;
 
   projectsOther: any;
 
-  role: any;
+  role: string;
 
-  username: any;
+  username: string;
 
   loggedInUser: User;
 
   locationCode: any;
 
+  locationName:string;
+
+  name: string;
+
   moduleList: any;
 
   isOther: boolean;
 
+  isAttachment :boolean;
+
   projectProblemStatmentList: any;
 
   issueMaster: any = {};
+
+  insertIssueMaster:any={};
+
+  tokenId:any;
 
   public fieldArray: Array<any> = [];
   public newAttribute: any = {};
@@ -45,7 +59,11 @@ export class AddIssueComponent implements OnInit {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.role = this.loggedInUser.getRole();
     this.username = this.loggedInUser.getUsername();
+    this.name = this.loggedInUser.getName();
     this.locationCode = this.loggedInUser.getLocationCode();
+    this.locationName = this.loggedInUser.getLocationShortName();
+
+
     console.log(this.loggedInUser);
     this.getOicProject();
     this.getOtherProject();
@@ -109,11 +127,11 @@ export class AddIssueComponent implements OnInit {
   onChangeProjectModule() {
     console.log("onChangeProjectModule() called");
     this.isOther = true;
-    console.log(this.issueMaster.projectModule.id);
+    console.log(this.issueMaster.projectModule.projectModule);
     this.projectProblemStatmentService.getProjectProblemStatementByModule(this.issueMaster.projectModule.id).subscribe(success => {
       if (success.status === 200) {
         this.projectProblemStatmentList = success.body;
-        this.reset();
+        // this.reset();
       }
       else if (success.status === 204) {
         this.isOther = false;
@@ -125,6 +143,32 @@ export class AddIssueComponent implements OnInit {
       this.reset();
     })
   }
+  onClickSubmit(){
+     
+   this.preparedIssueMasterObject();
+   this.issueMasterService.insertIssueMaster(this.insertIssueMaster).subscribe(success=>{
+
+    if(success.status === 201){
+      this.tokenId = success.body;
+      this.globalutilityService.alertWithSuccess2("Issue Created Successfully With Id:",this.tokenId.tokenNumber);
+      this.resetForm();
+    }
+},error=>{})
+}
+
+  private preparedIssueMasterObject(){
+    this.insertIssueMaster.username=this.username;
+    this.insertIssueMaster.name=this.name;
+    this.insertIssueMaster.locationCode = this.locationCode;
+    this.insertIssueMaster.locationName =this.locationName;
+    this.insertIssueMaster.projectName = this.issueMaster.projectName;
+    this.insertIssueMaster.projectModule = this.issueMaster.projectModule.projectModule;
+    this.insertIssueMaster.problemStatement = this.issueMaster.problemStatement;
+    this.insertIssueMaster.subject=this.issueMaster.subject;
+    this.insertIssueMaster.description= this.issueMaster.description;
+   }
+
+
 
   addFieldValue() {
     this.fieldArray.push(this.newAttribute)
@@ -139,5 +183,13 @@ export class AddIssueComponent implements OnInit {
     this.issueMaster.projectModule = undefined;
     this.issueMaster.problemStatement = undefined;
   }
+  resetForm(){
+    this.issueMaster.projectModule = undefined;
+    this.issueMaster.projectName = undefined;
+    this.issueMaster.problemStatement = undefined;
+    this.issueMaster.subject=undefined;
+    this.issueMaster.description= undefined;
+  }
+   
 
 }

@@ -11,3 +11,9 @@
 .table td {
     border-top: 0px;
 }
+
+.button{
+    display: flex;
+    justify-content: center;
+  
+}

@@ -34,5 +34,9 @@ export class GobalutilityService {
     })
   }
 
+  public alertWithSuccess2(message:any,tokenId:any){
+    Swal.fire(message +"    " + tokenId)
+  }
+
 
 }
