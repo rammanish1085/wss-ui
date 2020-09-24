@@ -1,32 +1,30 @@
 <div class="card border-dark">
-  <div class="card-header text-center main-header text-white">ADD USER</div>
+  <div class="card-header text-center main-header text-white">Add Issue</div>
   <div class="card-body">
     <div class="container">
       <div>
         <div>
           <label for="project">Select Project</label>
         </div>
-        <select
-           class="form-control" name="projectName" [(ngModel)]="selectedProject" required>
+        <select class="form-control" name="projectName" [(ngModel)]="selectedProject" required>
           <option [value]="undefined" selected disabled>Select Project</option>
           <option *ngFor="let pro of project" [ngValue]="pro" class="form-control form-control-sm text-center">
             {{pro.name}}</option>
         </select>
-      
+
       </div>
       <div>
         <div>
           <label for="user" class="text-center">Select User</label>
         </div>
         <div>
-          <select
-             class="form-control" name="user" [(ngModel)]="selectedUser" required>
+          <select class="form-control" name="user" [(ngModel)]="selectedUser" required>
             <option [value]="undefined" selected disabled>Select User</option>
             <option *ngFor="let user of users" [ngValue]="user" class="form-control form-control-sm">
               {{user.username}}&nbsp;({{user.name}})
             </option>
           </select>
-         
+
         </div>
       </div>
       <div class="button">
@@ -78,6 +76,5 @@
         </div>
       </div>
     </div>
-    </div>
-    </div>
-    
+  </div>
+</div>
