@@ -1,109 +1,122 @@
-<div class="row">
-  <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch" *ngIf="role ==='oic'">
-    <div>
-      <select class="form-control" name="projectOic" [(ngModel)]="issueMaster.projectName"
-        (change)="onChangeProjectOic()" required>
-        <option [value]="undefined" selected disabled>Select Project</option>
-        <option *ngFor="let project of projectsOic" class="form-control form-control-sm">{{project.name}}</option>
-      </select>
-    </div>
-  </div>
 
-  <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch" *ngIf="role !=='oic'">
-    <div>
-      <select class="form-control" name="projectOthers" [(ngModel)]="issueMaster.projectName"
-        (change)="onChangeProjectOther()" required>
-        <option [value]="undefined" selected disabled>Select Project</option>
-        <option *ngFor="let project of projectsOther" class="form-control form-control-sm">{{project.projectName}}
-        </option>
-      </select>
-    </div>
-  </div>
-
-  <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch">
-    <div>
-      <select class="form-control" name="projectModule" [(ngModel)]="issueMaster.projectModule"
-        (change)="onChangeProjectModule()" required>
-        <option [value]="undefined" selected disabled>Select Module</option>
-        <option *ngFor="let module of moduleList" [ngValue]="module" class="form-control form-control-sm">
-          {{module.projectModule}}</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch">
-    <div>
-      <select class="form-control" name="problemStatement" [(ngModel)]="issueMaster.problemStatement" required>
-        <option [value]="undefined" selected disabled>Select Problem statement</option>
-        <option *ngFor="let projectProblemStatment of projectProblemStatmentList" class="form-control form-control-sm">
-          {{projectProblemStatment.problemStatement}}</option>
-        <option [value]="others" *ngIf="isOther">Others</option>
-      </select>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-lg-8 mb-4 mt-2 align-items-stretch">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-default">Subject</span>
+<div class="card border-dark">
+  <div class="card-header text-center main-header text-white">ADD ISSUE</div>
+  <div class="card-body">
+   
+    <div class="row">
+      <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch" *ngIf="role ==='oic'">
+        <div>
+          <select class="form-control" name="projectOic" [(ngModel)]="issueMaster.projectName"
+            (change)="onChangeProjectOic()" required>
+            <option [value]="undefined" selected disabled>Select Project</option>
+            <option *ngFor="let project of projectsOic" class="form-control form-control-sm">{{project.name}}</option>
+          </select>
+        </div>
       </div>
-      <input type="text" class="form-control"  [(ngModel)]="issueMaster.subject" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+    
+      <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch" *ngIf="role !=='oic'">
+        <div>
+          <select class="form-control" name="projectOthers" [(ngModel)]="issueMaster.projectName"
+            (change)="onChangeProjectOther()" required>
+            <option [value]="undefined" selected disabled>Select Project</option>
+            <option *ngFor="let project of projectsOther" class="form-control form-control-sm">{{project.projectName}}
+            </option>
+          </select>
+        </div>
+      </div>
+    
+      <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch">
+        <div>
+          <select class="form-control" name="projectModule" [(ngModel)]="issueMaster.projectModule"
+            (change)="onChangeProjectModule()" required>
+            <option [value]="undefined" selected disabled>Select Module</option>
+            <option *ngFor="let module of moduleList" [ngValue]="module" class="form-control form-control-sm">
+              {{module.projectModule}}</option>
+          </select>
+        </div>
+      </div>
+    
+      <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch">
+        <div>
+          <select class="form-control" name="problemStatement" [(ngModel)]="issueMaster.problemStatement" required>
+            <option [value]="undefined" selected disabled>Select Problem statement</option>
+            <option *ngFor="let projectProblemStatment of projectProblemStatmentList" class="form-control form-control-sm">
+              {{projectProblemStatment.problemStatement}}</option>
+            <option [value]="others" *ngIf="isOther">Others</option>
+          </select>
+        </div>
+      </div>
     </div>
+    <div class="row">
+      <div class="col-lg-8 mb-4 mt-2 align-items-stretch">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Subject</span>
+          </div>
+          <input type="text" class="form-control"  [(ngModel)]="issueMaster.subject" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-8 mb-2 mt-2 align-items-stretch">
+       <div class="form-group">
+      <label for="comment">Problem Description:</label>
+      <textarea class="form-control" rows="3" id="comment" [(ngModel)]="issueMaster.description" required></textarea>
+    </div>
+    </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-8 mb-2 mt-2 align-items-stretch">
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input"[(ngModel)]="isAttachment" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Attachment</label>
+    </div>
+    </div>
+    </div>
+    
+    <!--File upload Code Start From Here  -->
+    <div>
+      <table class="table" *ngIf="isAttachment">
+        <tbody>
+          <tr *ngFor="let field of fieldArray; let i = index">
+            <td>
+              <label for="exampleFormControlFile1">Attatch File</label>
+            </td>
+            <td>
+              <input type="file" class="form-control-file" id="exampleFormControlFile1">
+            </td>
+    
+            <td>
+              <button class="btn btn-danger btn-sm" type="button" (click)="deleteFieldValue(i)"><i
+                  class="fa fa-minus-square fa-lg" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="exampleFormControlFile1">Attatch File </label>
+            </td>
+            <td>
+              <input type="file" class="form-control-file" id="exampleFormControlFile1">
+            </td>
+    
+            <td>
+              <button class="btn btn-primary btn-sm" type="button" (click)="addFieldValue()"><i
+                  class="fa fa-plus-square fa-lg" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--File upload Code End Here  -->
+    
+    <div class="button mt-4"><button class="btn btn-primary" (click)="onClickSubmit()">Submit</button></div>
+
+
+
+    
   </div>
 </div>
 
-<div class="row">
-  <div class="col-lg-8 mb-2 mt-2 align-items-stretch">
-   <div class="form-group">
-  <label for="comment">Problem Description:</label>
-  <textarea class="form-control" rows="3" id="comment" [(ngModel)]="issueMaster.description" required></textarea>
-</div>
-</div>
-</div>
 
-<div class="row">
-  <div class="col-lg-8 mb-2 mt-2 align-items-stretch">
-<div class="form-check">
-  <input type="checkbox" class="form-check-input"[(ngModel)]="isAttachment" id="exampleCheck1">
-  <label class="form-check-label" for="exampleCheck1">Attachment</label>
-</div>
-</div>
-</div>
-
-<!--File upload Code Start From Here  -->
-<div>
-  <table class="table" *ngIf="isAttachment">
-    <tbody>
-      <tr *ngFor="let field of fieldArray; let i = index">
-        <td>
-          <label for="exampleFormControlFile1">Attatch File</label>
-        </td>
-        <td>
-          <input type="file" class="form-control-file" id="exampleFormControlFile1">
-        </td>
-
-        <td>
-          <button class="btn btn-danger btn-sm" type="button" (click)="deleteFieldValue(i)"><i
-              class="fa fa-minus-square fa-lg" aria-hidden="true"></i></button>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <label for="exampleFormControlFile1">Attatch File </label>
-        </td>
-        <td>
-          <input type="file" class="form-control-file" id="exampleFormControlFile1">
-        </td>
-
-        <td>
-          <button class="btn btn-primary btn-sm" type="button" (click)="addFieldValue()"><i
-              class="fa fa-plus-square fa-lg" aria-hidden="true"></i></button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<!--File upload Code End Here  -->
-
-<div class="button mt-4"><button class="btn btn-primary" (click)="onClickSubmit()">Submit</button></div>

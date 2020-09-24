@@ -2,3 +2,14 @@
     display: flex;
     justify-content: flex-start;
 }
+.bg-dark {
+    background-color: #117a8b!important;
+}
+
+.small, small {
+    font-size: 100%;
+    font-weight: 600;
+}
+.dropdown-menu {
+border: 1px solid rgb(17 122 139);
+}
