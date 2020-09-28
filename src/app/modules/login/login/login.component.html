@@ -4,7 +4,7 @@
             <img src="./assets/img/mppkvvcl.png" class="img-fluid" alt="">
         </div>
         <div class="header">Welcome to CIT - Login</div>
-        <div class="card-body">
+        <div class="card-body" *ngIf="isLogIn">
             <div *ngIf="logging">
                 <div class="form-group">
                     <label class="font-weight-bold">Logging In..</label>
@@ -45,6 +45,34 @@
                     </form>
                 </div>
             </div>
+        </div>
+        <div class="card-body" *ngIf="!isLogIn">
+                       
+            <div>
+                <div>
+                    <form [formGroup]="form" (ngSubmit)="processOtpForm()">
+
+                        <div>
+                            <Label><h5>{{loggedUser.getName()}}</h5></Label>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="number">Enter OTP </label>
+                             <input formControlName="number" id="number"  type="text" class="form-control">
+                                <div *ngIf="f.number.touched && f.number.invalid" class="alert alert-danger">
+                                <div *ngIf="f.number.errors.required">Number is required.</div>
+                                <div *ngIf="f.number.errors.pattern">Enter only number.</div>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                        <button class="btn btn-primary mr-3" type="submit" [disabled]="!form.valid">Submit</button>
+                       
+                        <button type="reset" class="btn btn-warning" (click)="loginErrorText=null">Clear</button>
+                    </div>
+                    </form>
+                </div>
+            </div> 
+            
         </div>
         <div class="card-footer text-muted">
             <strong>&copy; MPPKVCL Indore</strong>

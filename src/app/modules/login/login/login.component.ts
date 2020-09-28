@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
-import { GlobalConfiguration } from 'src/app/config/global.config';
+import { FormBuilder } from '@angular/forms';
+import {OtpService} from 'src/app/services/OTP/otp.service';
+import { GobalutilityService } from 'src/app/utility/gobalutility.service';
 
 
 @Component({
@@ -21,10 +23,18 @@ export class LoginComponent implements OnInit {
   loginError = false;
   loginErrorText;
   loggedUser: User;
+  isLogIn : boolean = true;
 
   user: FormGroup;
 
-  constructor(private authorizationService: AuthorizationService, private router: Router) {
+
+  form: FormGroup = new FormGroup({});
+
+  constructor(private authorizationService: AuthorizationService, private router: Router,
+    private fb: FormBuilder,private otpService:OtpService,private globalutilityService:GobalutilityService) {
+    this.form = fb.group({
+      number: ['', [Validators.required, Validators.pattern("^[0-9]*$")]]
+    })
     console.log("Running LoginComponent Constructor ");
     //this.user = new User(null);
   }
@@ -33,37 +43,24 @@ export class LoginComponent implements OnInit {
     this.user = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
-    });
+    });    
   }
- 
-  // processLoginForm() {
-  //   this.router.navigate(['oic']);
-  // }
+   
   
   processLoginForm() {
     console.log("Process Login Form started");
     console.log(this.user.value);
     this.logging = true;
-    //console.log('Authentication started for user ');
     let user = new User(this.user.value);
-    //console.log("Authenticated user made from form control as: ");
-    // console.log(user);
-    // console.log(user.getUsername()+" "+user.getPassword());
-
     this.authorizationService.authenticate(user).subscribe(data => {
-      // console.log("Data in processLoginForm");
-      // console.log(data);
       let status = (<any>data).status;
       if (status === 200) {
         console.log(data);
         console.log("Login Successfull. Logged in User is: " + this.authorizationService.getLoggedInUserRole());
         if (this.authorizationService.isLogedIn()) {
-          this.router.navigate(['oic']);
-          console.log("Inside isLogged");
-          // if (this.authorizationService.getLoggedInUserRole() === GlobalConfiguration.ROLE_OIC || this.authorizationService.getLoggedInUserRole() === 'AE') {
-          //   console.log("Authenticated user is OIC. Navigating to OIC homepage");
-          //   this.router.navigate(['oic']);
-          // }
+          this.isLogIn = false;
+          this.loggedUser = this.authorizationService.getLoggedInUser();
+          this.generateOTP();
         } else {
           console.log("Unable to login user");
           this.loginError = true;
@@ -85,4 +82,42 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+
+  generateOTP() {
+    this.otpService.generateOTP().subscribe(success => {
+      console.log("Inside success generating otp");
+      // console.log(success.body);
+      if (success.status === 200) {
+        console.log("OTP Generated Successfully");
+
+      }
+    }, error => {
+      console.log("Error while generating OTP");
+
+    })
+  }
+
+
+  processOtpForm() {
+    this.otpService.validateOTP(this.form.value.number).subscribe(success => {
+      if (success.status === 200) {
+        this.router.navigate(['oic']);
+      }
+
+    }, error => {
+      if (error.status === 400) {
+        this.globalutilityService.alertWithSuccess("Enter OTP is not valid !!")
+      } else if (error.status === 401) {
+        this.globalutilityService.alertWithSuccess("OTP has been expired !!");
+      } else if (error.status === 417) {
+        this.globalutilityService.alertWithSuccess("Enter OTP is not matched !!");
+      }
+    })
+  }
+
+  get f(){
+    return this.form.controls;
+  }
+      
+
 }

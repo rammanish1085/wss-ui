@@ -4,6 +4,7 @@ import {UserService} from 'src/app/services/users/user.service';
 import {ProjectUserMappingService} from 'src/app/services/project/project-user-mapping.service';
 import {GobalutilityService} from 'src/app/utility/gobalutility.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-add-user',
@@ -17,12 +18,18 @@ export class AddUserComponent implements OnInit {
   selectedProject:any;
   selectedUser : any;
   projectUserMappingObject :any ={};
-  loggedInUser : any;
+  loggedInUser: User;
   projectUserMapping:any;
+  locationCode :string;
+  
+
+
   constructor(private userService:UserService,private authorizationService: AuthorizationService,private projectUserMappingService:ProjectUserMappingService,private globalUtilityService:GobalutilityService) { }
 
   ngOnInit() {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
+    this.locationCode = this.loggedInUser.getLocationCode();
+
     this.getProject();
     this.getUsers();
     this.getAssignProject();
@@ -44,7 +51,7 @@ export class AddUserComponent implements OnInit {
 
   private getUsers(){
     console.log('Getting USers');
-    this.userService.getAllUsers('34420124','oic').subscribe(success=>{
+    this.userService.getAllUsers(this.locationCode,'oic').subscribe(success=>{
       console.log(success.body);
       this.users = success.body;
     },()=>{
