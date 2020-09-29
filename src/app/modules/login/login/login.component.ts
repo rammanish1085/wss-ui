@@ -24,6 +24,9 @@ export class LoginComponent implements OnInit {
   loginErrorText;
   loggedUser: User;
   isLogIn : boolean = true;
+  timeLeft: number = 60;
+  interval;
+  isResend :boolean;
 
   user: FormGroup;
 
@@ -89,6 +92,8 @@ export class LoginComponent implements OnInit {
       // console.log(success.body);
       if (success.status === 200) {
         console.log("OTP Generated Successfully");
+        // this.isResend = true;
+        this.startTimer();
 
       }
     }, error => {
@@ -115,8 +120,37 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  onClickResendOTP() {
+    this.otpService.generateOTP().subscribe(success => {
+      console.log("Inside success generating otp");
+      // console.log(success.body);
+      if (success.status === 200) {
+        console.log("OTP Generated Successfully");
+      //  this.isResend = false;
+       // this.startTimer();
+
+      }
+    }, error => {
+      console.log("Error while generating OTP");
+
+    })
+  }
+
+
+
   get f(){
     return this.form.controls;
+  }
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      if(this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        // this.timeLeft = 60;
+        this.isResend = true;
+      }
+    },1000)
   }
       
 

@@ -64,10 +64,15 @@
                                 <div *ngIf="f.number.errors.pattern">Enter only number.</div>
                             </div>
                         </div>
+                        <div *ngIf="!isResend">
+                            <p class="h6 mb-3  text-white">{{timeLeft}} Seconds left</p> 
+                        </div>
                          <div class="form-group">
-                        <button class="btn btn-primary mr-3" type="submit" [disabled]="!form.valid">Submit</button>
+                        <button class="btn btn-primary btn-sm mr-3" type="submit" [disabled]="!form.valid">Submit</button>
                        
-                        <button type="reset" class="btn btn-warning" (click)="loginErrorText=null">Clear</button>
+                        <button type="reset" class="btn btn-warning btn-sm mr-3" (click)="loginErrorText=null">Clear</button>
+
+                        <button type="reset" class="btn btn-info btn-sm" (click)="onClickResendOTP()" *ngIf="isResend">Resend</button>
                     </div>
                     </form>
                 </div>
