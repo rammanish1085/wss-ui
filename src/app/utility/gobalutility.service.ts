@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import swal from 'sweetalert2';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 
@@ -14,28 +15,53 @@ export class GobalutilityService {
     Swal.fire(message)
   }
   
-  public alertWithWarning(){
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
-      }
-    })
-  }
+  errorAlertMessage( message:string){
+    return swal({
+        html: message,
+        animation: true,
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        allowEnterKey: true,
+        focusConfirm: true,
+        buttonsStyling: false,
+        confirmButtonClass: 'btn btn-danger',
+        // confirmButtonColor: "#d9534f",
+        confirmButtonText: 'OK',
+    });
+}
 
-  public alertWithSuccess2(message:any,tokenId:any){
-    Swal.fire(message +"    " + tokenId)
+successAlertMessage(message:string){
+    return swal({
+        html: message,
+        animation: true,
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        allowEnterKey: true,
+        focusConfirm: true,
+        buttonsStyling: false,
+        confirmButtonClass: 'btn btn-success',
+        // confirmButtonColor: "#5cb85c",
+        confirmButtonText: 'OK',
+    });
+}
+
+confirmAlertMessage(message:string){
+    return swal({
+        html: message,
+        animation: true,
+        showCancelButton: true,
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        allowEnterKey: true,
+        focusConfirm: true,
+        buttonsStyling: false,
+        confirmButtonClass: 'btn btn-success mx-sm-3',
+        cancelButtonClass: 'btn btn-danger',
+        // confirmButtonColor: "#5cb85c",
+        // cancelButtonColor: '#d33',
+        confirmButtonText: 'YES ',
+        cancelButtonText: 'NO ',
+    });
   }
 
 

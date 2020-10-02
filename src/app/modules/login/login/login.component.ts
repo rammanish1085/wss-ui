@@ -1,10 +1,10 @@
-import {AuthorizationService} from '../../../services/authorization-service/authorization.service';
+import { AuthorizationService } from '../../../services/authorization-service/authorization.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { FormBuilder } from '@angular/forms';
-import {OtpService} from 'src/app/services/OTP/otp.service';
+import { OtpService } from 'src/app/services/OTP/otp.service';
 import { GobalutilityService } from 'src/app/utility/gobalutility.service';
 
 
@@ -23,10 +23,12 @@ export class LoginComponent implements OnInit {
   loginError = false;
   loginErrorText;
   loggedUser: User;
-  isLogIn : boolean = true;
+  isLogIn: boolean = true;
   timeLeft: number = 60;
   interval;
-  isResend :boolean;
+  isResend: boolean;
+  isOtpResend: boolean;
+  durationMillisecond: number;
 
   user: FormGroup;
 
@@ -34,7 +36,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup = new FormGroup({});
 
   constructor(private authorizationService: AuthorizationService, private router: Router,
-    private fb: FormBuilder,private otpService:OtpService,private globalutilityService:GobalutilityService) {
+    private fb: FormBuilder, private otpService: OtpService, private globalutilityService: GobalutilityService) {
     this.form = fb.group({
       number: ['', [Validators.required, Validators.pattern("^[0-9]*$")]]
     })
@@ -46,10 +48,10 @@ export class LoginComponent implements OnInit {
     this.user = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
-    });    
+    });
   }
-   
-  
+
+
   processLoginForm() {
     console.log("Process Login Form started");
     console.log(this.user.value);
@@ -89,15 +91,14 @@ export class LoginComponent implements OnInit {
   generateOTP() {
     this.otpService.generateOTP().subscribe(success => {
       console.log("Inside success generating otp");
-      // console.log(success.body);
       if (success.status === 200) {
-        console.log("OTP Generated Successfully");
-        // this.isResend = true;
+        this.globalutilityService.successAlertMessage("OTP Sent Successfully !!")
+        this.durationMillisecond = 1000;
         this.startTimer();
 
       }
     }, error => {
-      console.log("Error while generating OTP");
+      this.globalutilityService.errorAlertMessage("Error While Generating OTP");
 
     })
   }
@@ -121,13 +122,17 @@ export class LoginComponent implements OnInit {
   }
 
   onClickResendOTP() {
+
     this.otpService.generateOTP().subscribe(success => {
       console.log("Inside success generating otp");
       // console.log(success.body);
       if (success.status === 200) {
         console.log("OTP Generated Successfully");
-      //  this.isResend = false;
-       // this.startTimer();
+        this.isOtpResend = false;
+        this.isResend = false;
+        this.timeLeft = 60;
+        this.durationMillisecond = 10000;
+        this.startTimer();
 
       }
     }, error => {
@@ -136,22 +141,20 @@ export class LoginComponent implements OnInit {
     })
   }
 
-
-
-  get f(){
+  get f() {
     return this.form.controls;
   }
 
   startTimer() {
     this.interval = setInterval(() => {
-      if(this.timeLeft > 0) {
+      if (this.timeLeft > 0) {
         this.timeLeft--;
       } else {
-        // this.timeLeft = 60;
+        // this.timeLeft = 10;
         this.isResend = true;
+        this.isOtpResend = true;
       }
-    },1000)
+    }, this.durationMillisecond)
   }
-      
 
 }

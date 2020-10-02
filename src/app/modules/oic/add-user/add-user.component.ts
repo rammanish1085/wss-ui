@@ -65,13 +65,11 @@ export class AddUserComponent implements OnInit {
   onclickAddUserProject(){
    this.prepareProjectUserMapping();
      this.projectUserMappingService.insertProjectUserMapping(this.projectUserMappingObject).subscribe(success=>{
-       console.log(success.body);
-       console.log("Data inserted successfully");
-       this.globalUtilityService.alertWithSuccess("Data Inserted Successfully");
+       this.globalUtilityService.successAlertMessage("Project Assigned Successfully !!!")
        this.reset();
        this.getAssignProject();
      },()=>{
-      this.globalUtilityService.alertWithSuccess("Project Already Exist for user");
+      this.globalUtilityService.errorAlertMessage("Project Already Exist for selected user !!!");
        this.reset();
      });
 

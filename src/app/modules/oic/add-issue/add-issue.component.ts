@@ -150,7 +150,7 @@ export class AddIssueComponent implements OnInit {
 
     if(success.status === 201){
       this.tokenId = success.body;
-      this.globalutilityService.alertWithSuccess2("Issue Created Successfully With Id:",this.tokenId.tokenNumber);
+      this.globalutilityService.successAlertMessage("Issue Created Successfully With Id:"+this.tokenId.tokenNumber);
       this.resetForm();
     }
 },error=>{})
