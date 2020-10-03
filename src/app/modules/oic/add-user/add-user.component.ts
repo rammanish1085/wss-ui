@@ -3,7 +3,6 @@ import { AuthorizationService } from 'src/app/services/authorization-service/aut
 import {UserService} from 'src/app/services/users/user.service';
 import {ProjectUserMappingService} from 'src/app/services/project/project-user-mapping.service';
 import {GobalutilityService} from 'src/app/utility/gobalutility.service';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { User } from 'src/app/models/user.model';
 
 @Component({
@@ -22,7 +21,6 @@ export class AddUserComponent implements OnInit {
   projectUserMapping:any;
   locationCode :string;
   
-
 
   constructor(private userService:UserService,private authorizationService: AuthorizationService,private projectUserMappingService:ProjectUserMappingService,private globalUtilityService:GobalutilityService) { }
 
@@ -65,11 +63,11 @@ export class AddUserComponent implements OnInit {
   onclickAddUserProject(){
    this.prepareProjectUserMapping();
      this.projectUserMappingService.insertProjectUserMapping(this.projectUserMappingObject).subscribe(success=>{
-       this.globalUtilityService.successAlertMessage("Project Assigned Successfully !!!")
+       this.globalUtilityService.successAlertMessage("Project assigned successfully !!!")
        this.reset();
        this.getAssignProject();
      },()=>{
-      this.globalUtilityService.errorAlertMessage("Project Already Exist for selected user !!!");
+      this.globalUtilityService.errorAlertMessage("Project already exist for selected user !!!");
        this.reset();
      });
 

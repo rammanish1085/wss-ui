@@ -10,6 +10,7 @@ import { GlobalConfiguration } from './config/global.config';
 import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { AuthorizationInterceptor } from '../app/interceptor/authorization.interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthGuard} from 'src/app/guard/auth.guard'
 
 
 
@@ -22,7 +23,13 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
     HttpClientModule,
     AppRoutingModule,
      ],
-  providers: [AuthorizationService,LoginService,LogoutService,GlobalConfiguration,HttpClient,
+  providers: [
+    AuthorizationService,
+    LoginService,
+    LogoutService,
+    GlobalConfiguration,
+    HttpClient,
+    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthorizationInterceptor,

@@ -5,33 +5,41 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { AddIssueComponent } from './add-issue/add-issue.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from 'src/app/components/dashboard/dashboard.component';
+import { AuthGuard } from 'src/app/guard/auth.guard';
 
 const routes: Routes = [
   {
-    path:'', component:OicComponent,
+    path:'', component:OicComponent,canActivate: [AuthGuard],
+    
     children: [
       {
-          path: 'home', component: HomeComponent
+                
+        path: '',
+        canActivateChild: [AuthGuard],
+        children: [
+
+         { path: 'home', 
+           component: HomeComponent
         },
-  
-        {
-        path: '',
-        children: [
-          {path:'add-user',component:AddUserComponent}
+          {
+            path:'add-user',
+            component:AddUserComponent
+          },
+          {
+            path:'add-issue',
+            component:AddIssueComponent
+
+          },
+          {
+            path:'dashboard',
+            component:DashboardComponent
+          },
+          {
+            path: '', redirectTo: 'home', pathMatch: 'full'
+          }
         ]
-      },
-      {
-        path: '',
-        children: [
-          {path:'add-issue',component:AddIssueComponent}
-        ]
-      },
-      {
-        path: '',
-        children: [
-          {path:'dashboard',component:DashboardComponent}
-        ]
-      }
+      }     
+      
     ]
   }
 ];
