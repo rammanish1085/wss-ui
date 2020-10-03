@@ -9,7 +9,7 @@
    justify-content: center;
 }
 .table td {
-    border-top: 0px;
+    border-top: 1px;
 }
 
 .button{
@@ -25,4 +25,11 @@
 .input-group-text {
     color: #ffffff;
     background-color: #17a2b8;
+    }
+
+    .xyz{
+        display: flex;
+        justify-content: center;
+        color: red;
+        font-size: larger;
     }

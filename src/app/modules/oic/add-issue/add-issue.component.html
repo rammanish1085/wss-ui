@@ -69,53 +69,64 @@
     
     <div class="row">
       <div class="col-lg-8 mb-2 mt-2 align-items-stretch">
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input"[(ngModel)]="isAttachment" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Attachment</label>
-    </div>
-    </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="isAttachment" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Attachment</label>
+        </div>
+      </div>
+     
     </div>
     
-    <!--File upload Code Start From Here  -->
-    <div>
-      <table class="table" *ngIf="isAttachment">
+    
+    <!--File upload Code End Here  -->
+
+
+    <div *ngIf="isAttachment">
+
+      <div class="xyz mb-3 mt-3">
+        <div>
+          <small class="mr-4">Maximum file size allow 5 Mb</small>
+      </div>
+        <div>
+       <small>Allow file file type to upload - [ jpg, pdf ,doc ,xls ] only</small> 
+        </div>
+      </div>
+    </div>
+
+    <div class="table" *ngIf="isAttachment">
+     
+      <div  class="mr-3"><label for="exampleFormControlFile1">Attatch File </label></div>
+
+      <div><input type="file" class="form-control-file" (change)="onFileChange($event)" accept="image/*,.pdf,.doc,.docx,.xml,.xls" multiple></div>
+
+    </div>
+
+    <div *ngIf="isAttachment">
+    
+
+      <table class="table">
         <tbody>
-          <tr *ngFor="let field of fieldArray; let i = index">
+          <tr *ngFor="let field of myFiles; let i = index">
+
+            <td>{{i+1}}</td>
             <td>
-              <label for="exampleFormControlFile1">Attatch File</label>
+             {{field.name}}
             </td>
             <td>
-              <input type="file" class="form-control-file" id="exampleFormControlFile1">
-            </td>
-    
+              {{field.size/1000000 | number}}Mb
+             </td>
             <td>
               <button class="btn btn-danger btn-sm" type="button" (click)="deleteFieldValue(i)"><i
                   class="fa fa-minus-square fa-lg" aria-hidden="true"></i></button>
             </td>
           </tr>
-          <tr>
-            <td>
-              <label for="exampleFormControlFile1">Attatch File </label>
-            </td>
-            <td>
-              <input type="file" class="form-control-file" id="exampleFormControlFile1">
-            </td>
-    
-            <td>
-              <button class="btn btn-primary btn-sm" type="button" (click)="addFieldValue()"><i
-                  class="fa fa-plus-square fa-lg" aria-hidden="true"></i></button>
-            </td>
-          </tr>
+          
         </tbody>
       </table>
     </div>
-    <!--File upload Code End Here  -->
     
     <div class="button mt-4"><button class="btn btn-primary" (click)="onClickSubmit()">Submit</button></div>
-
-
-
-    
+  
   </div>
 </div>
 

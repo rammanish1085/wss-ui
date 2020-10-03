@@ -9,6 +9,7 @@ import {IssueMasterService} from 'src/app/services/project/issue-master.service'
 import {GobalutilityService} from 'src/app/utility/gobalutility.service'
 import { map } from 'rxjs/operators';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -54,6 +55,8 @@ export class AddIssueComponent implements OnInit {
 
   public fieldArray: Array<any> = [];
   public newAttribute: any = {};
+
+  myFiles:string [] = [];
 
   ngOnInit() {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
@@ -146,14 +149,17 @@ export class AddIssueComponent implements OnInit {
   onClickSubmit(){
      
    this.preparedIssueMasterObject();
-   this.issueMasterService.insertIssueMaster(this.insertIssueMaster).subscribe(success=>{
 
-    if(success.status === 201){
-      this.tokenId = success.body;
-      this.globalutilityService.successAlertMessage("Issue Created Successfully With Id:"+this.tokenId.tokenNumber);
-      this.resetForm();
-    }
-},error=>{})
+   console.log("Object received");
+   console.log(this.insertIssueMaster);
+//    this.issueMasterService.insertIssueMaster(this.insertIssueMaster).subscribe(success=>{
+
+//     if(success.status === 201){
+//       this.tokenId = success.body;
+//       this.globalutilityService.successAlertMessage("Issue Created Successfully With Id:"+this.tokenId.tokenNumber);
+//       this.resetForm();
+//     }
+// },error=>{})
 }
 
   private preparedIssueMasterObject(){
@@ -166,6 +172,7 @@ export class AddIssueComponent implements OnInit {
     this.insertIssueMaster.problemStatement = this.issueMaster.problemStatement;
     this.insertIssueMaster.subject=this.issueMaster.subject;
     this.insertIssueMaster.description= this.issueMaster.description;
+    this.insertIssueMaster.file= this.myFiles;
    }
 
 
@@ -176,8 +183,9 @@ export class AddIssueComponent implements OnInit {
   }
 
   deleteFieldValue(index) {
-    this.fieldArray.splice(index, 1);
-  }
+    this.myFiles.splice(index, 1);
+    console.log(this.myFiles);
+     }
   reset() {
     //  this.selectedModule = undefined;
     this.issueMaster.projectModule = undefined;
@@ -191,5 +199,25 @@ export class AddIssueComponent implements OnInit {
     this.issueMaster.description= undefined;
   }
    
+
+  onFileChange(event) {
+
+    this.myFiles =[];
+
+    const size = event.srcElement.files[0].size;
+
+    console.log(size)
+
+    if(size>5000000){
+      this.globalutilityService.errorAlertMessage("File Size greater 5 Mb");
+      }else{
+   
+    for (var i = 0; i < event.target.files.length; i++) { 
+        this.myFiles.push(event.target.files[i]);
+    }
+  }
+   console.log(this.myFiles);
+
+}
 
 }
