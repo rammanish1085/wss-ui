@@ -7,28 +7,27 @@ import { AuthorizationService } from '../services/authorization-service/authoriz
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(private router: Router,private authorizationService: AuthorizationService){
+
+  otp: string = "FAIL";
+
+  constructor(private router: Router, private authorizationService: AuthorizationService) {
 
   }
-  public canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot) : boolean{
-   // const expectedRoles : [any] = route.data.expectedRoles;
-    //console.log("Recieved expectedRole in canActivate " + expectedRole);
-    if(this.authorizationService.isLogedIn()){
-        // let loggedInUserRole = this.authorizationService.getLoggedInUserRole();
-        // let matchedRole = expectedRoles.find(role => role === loggedInUserRole);
-        return true;
-        
-    }else{
-      this.router.navigate(['/login']);
-    return false;
-}
-   
-}
+  public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-public canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
-    //console.log("canActivateChild methhod running");
-    //console.log("Calling canActivate");
-    return this.canActivate(childRoute,state);
-}
-  
+    this.otp = localStorage.getItem("key");
+
+    if (this.authorizationService.isLogedIn() && this.otp === "SUCCESS") {
+      return true;
+    } else {
+      this.router.navigate(['/login']);
+      return false;
+    }
+
+  }
+
+  public canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
+        return this.canActivate(childRoute, state);
+  }
+
 }

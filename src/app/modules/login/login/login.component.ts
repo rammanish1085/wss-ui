@@ -107,15 +107,21 @@ export class LoginComponent implements OnInit {
   processOtpForm() {
     this.otpService.validateOTP(this.form.value.number).subscribe(success => {
       if (success.status === 200) {
+
+        localStorage.setItem("key", "SUCCESS");
+
         this.router.navigate(['oic']);
       }
 
     }, error => {
       if (error.status === 400) {
         this.globalutilityService.alertWithSuccess("Enter OTP is not valid !!")
+        localStorage.setItem("key", "FAIL");
       } else if (error.status === 401) {
+        localStorage.setItem("key", "FAIL");
         this.globalutilityService.alertWithSuccess("OTP has been expired !!");
       } else if (error.status === 417) {
+        localStorage.setItem("key", "FAIL");
         this.globalutilityService.alertWithSuccess("Enter OTP is not matched !!");
       }
     })

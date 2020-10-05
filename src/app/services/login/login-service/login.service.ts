@@ -20,7 +20,7 @@ export class LoginService {
   private readonly SESSION_DURATION_MINUTES : number = 30;
 
   private readonly SESSION_END_TIME_KEY = "session_horcrux";
-  private readonly TOKEN_KEY = "ngb_horcrux";
+  private readonly TOKEN_KEY = "cit_horcrux";
   private AUTHENTICATION_URL : string;
   private AUTHORIZATION_HEADER_TEXT = "Authorization";
   private jwtHelper: JwtHelperService;

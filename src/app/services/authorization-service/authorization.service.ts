@@ -2,7 +2,6 @@ import {LoginService} from '../login/login-service/login.service';
 import {LogoutService} from '../logout/logout-service/logout.service';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-//import { Response} from '@angular/http';
 import { GlobalConfiguration } from '../../config/global.config';
 import { User } from '../../models/user.model';
 import { Router } from "@angular/router";
@@ -10,7 +9,7 @@ import { Router } from "@angular/router";
 export class AuthorizationService {
 
   private readonly SESSION_END_TIME_KEY = "session_horcrux";
-  private readonly TOKEN_KEY = "ngb_horcrux";
+  private readonly TOKEN_KEY = "cit_horcrux";
   private AUTHENTICATION_URL;
   private AUTHORIZATION_HEADER_TEXT = "Authorization";
   private jwtHelper: JwtHelperService;

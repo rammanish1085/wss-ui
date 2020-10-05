@@ -23,7 +23,7 @@ export class OtpService {
       }));
   }
 
-  validateOTP(otp:number) {
+  validateOTP(otp: number) {
     console.log("Inside generate OTP");
     return this.http.get(this.contextPath + 'otp/validateOtp/otp/' + otp, { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
@@ -31,29 +31,8 @@ export class OtpService {
       }));
   }
 
-
-  // public validateOTP(otp: any) {
-  //   let httpParams = new HttpParams();
-  //   httpParams = httpParams.append("otpnum", "" + otp);
-  //    let options = {
-  //       params: httpParams
-  //   };
-  //   if(response){
-  //     options['observe'] = "response";
-  //   }
-
-  //   return this.http.get(this.contextPath + 'otp/validateOtp', options);
-  // }
-
-
-  // public validateOTP(otpnum:number){
-    
-  //   let httpParams = new HttpParams();
-  //   httpParams = httpParams.append("otpnum","" + otpnum);
-  //   let options = { params : httpParams };
-  //   options['observe'] = "response";
-  //    return this.http.get(this.contextPath + 'otp/validateOtp/', options);
-  //  }
-
+  isOtpValid(otp: any): boolean {
+    return otp;
+  }
 
 }

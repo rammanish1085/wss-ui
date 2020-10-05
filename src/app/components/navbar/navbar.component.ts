@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
 
   logoutClicked() {
     console.log("logout clicked from ngb-navbar");
+    localStorage.clear();
     this.authorizationService.logout();
   }
 
