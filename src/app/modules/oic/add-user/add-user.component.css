@@ -1,18 +1,14 @@
-.container{
-    display: flex;
-    justify-content: space-around;
+.container {
+  display: flex;
+  justify-content: center;
 }
-.button{
-    display: flex;
-    justify-content: center;
-    margin-top: 25px;
-}
+
 .card-header {
-    font-size: 20px;
-    background-color: rgb(23 162 184);
+  font-size: 20px;
+  background-color: rgb(23 162 184);
 }
 
 .table thead th {
-       background-color: #17a2b8;
-       color:white;
+  background-color: #17a2b8;
+  color: white;
 }
