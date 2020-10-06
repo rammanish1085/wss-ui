@@ -9,6 +9,7 @@ import {IssueMasterService} from 'src/app/services/project/issue-master.service'
 import {GobalutilityService} from 'src/app/utility/gobalutility.service'
 import  {IssueMaster} from 'src/app/models/issueMaster.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { VirtualTimeScheduler } from 'rxjs';
 
 @Component({
   selector: 'app-add-issue',
@@ -79,11 +80,8 @@ export class AddIssueComponent implements OnInit {
 
 
   private getOicProject() {
-    console.log('Getting Data Called');
     this.userService.getAllProject().subscribe(succes => {
-      console.log("succes");
-      console.log(succes.body);
-      this.projectsOic = succes.body;
+       this.projectsOic = succes.body;
     }, error => {
       console.log("error");
       console.log(error);
@@ -95,30 +93,30 @@ export class AddIssueComponent implements OnInit {
     this.projectUserMappingService.getAssignedProjectByUsernameAndLocationCode(this.username, this.locationCode).subscribe(success => {
       this.projectsOther = success.body;
     }, error => {
-      this.reset();
-
+      
     })
 
   }
 
   onChangeProjectOic() {
-    console.log("onChangeProjectOic called");
-    console.log(this.issueMasterForm.value);
-    this.reset();
-     this.projectDescriptionService.getProjectModuleByProjectName(this.issueMasterForm.value.projectName).subscribe(success => {
+    this.resetProjectModule();
+    this.projectDescriptionService.getProjectModuleByProjectName(this.issueMasterForm.value.projectName).subscribe(success => {
       if (success.status === 200) {
         this.moduleList = success.body;
       } else if (success.status === 204) {
        console.log("onChangeProjectOic called No content found");
+       this.resetProjectModule();
 
       }
 
-    }, error => { })
+    }, error => { 
+
+     
+    })
   }
 
   onChangeProjectOther() {
-    this.reset();
-    this.projectDescriptionService.getProjectModuleByProjectName(this.issueMasterForm.value.projectName).subscribe(success => {
+     this.projectDescriptionService.getProjectModuleByProjectName(this.issueMasterForm.value.projectName).subscribe(success => {
       if (success.status === 200) {
         this.moduleList = success.body;
       } else if (success.status === 204) {
@@ -126,7 +124,7 @@ export class AddIssueComponent implements OnInit {
       }
 
     }, error => {
-      this.reset();
+      
     })
 
   }
@@ -138,7 +136,7 @@ export class AddIssueComponent implements OnInit {
     this.projectProblemStatmentService.getProjectProblemStatementByModule(this.issueMasterForm.value.projectModule.id).subscribe(success => {
       if (success.status === 200) {
         this.projectProblemStatmentList = success.body;
-        // this.reset();
+        
       }
       else if (success.status === 204) {
         this.isOther = false;
@@ -146,8 +144,8 @@ export class AddIssueComponent implements OnInit {
       }
 
     }, error => {
+      this.resetProjectModule();
       console.log("onChangeProjectModule() called error");
-      this.reset();
     })
   }
 
@@ -159,16 +157,11 @@ export class AddIssueComponent implements OnInit {
    console.log("Object  prepared received");
    console.log(this.issueMasterModel);
    this.issueMasterService.insertIssueMaster(this.issueMasterModel,this.myFiles).subscribe(success=>{
-
-    console.log("inside success");
-
-    console.log(success)
-
-    // if(success.status === 201){
-    //   this.tokenId = success.body;
-    //   this.globalutilityService.successAlertMessage("Issue Created Successfully With Id:"+this.tokenId.tokenNumber);
-    //   this.resetForm();
-    // }
+    if(success.status === 201){
+      this.resetIssueMasterForm();
+      this.tokenId = success.body;
+      this.globalutilityService.successAlertMessage("Issue Created Successfully With Id:"+this.tokenId.tokenNumber);
+    }
 },error=>{})
 }
 
@@ -184,13 +177,7 @@ export class AddIssueComponent implements OnInit {
     this.issueMasterModel.setProblemStatement(this.issueMasterForm.value.projectProblemStatement);
    
    }
-
-
-   onChangeCheckBox(){
-     console.log("Inside Checkbox");
-     console.log(this.issueMasterForm.value);
-   }
-
+  
  
   deleteFieldValue(index) {
   if (this.myFiles.length <= 1) {
@@ -201,11 +188,6 @@ export class AddIssueComponent implements OnInit {
     }
   }
 
-  reset() {
-    //  this.selectedModule = undefined;
-    
-  }
- 
    
 
   onFileChange(event) {
@@ -232,6 +214,31 @@ resetFile(){
   this.issueMasterForm.patchValue({
     attachment: '',
   });
+
+}
+
+resetIssueMasterForm(){
+  this.myFiles =[];
+  this.issueMasterForm.patchValue({
+    projectName: '',
+    projectModule:'',
+    projectProblemStatement :'',
+    description:'',
+    attachment:''
+  });
+
+}
+
+resetProjectModule(){
+  this.moduleList = undefined;
+  this.projectProblemStatmentList = undefined;
+  this.isOther = false;
+  this.issueMasterForm.patchValue({
+    projectModule:'',
+    projectProblemStatement:''
+    
+  });
+
 
 }
 
