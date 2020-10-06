@@ -8,6 +8,7 @@ import { ProjectProblemStatementService } from 'src/app/services/project/project
 import {IssueMasterService} from 'src/app/services/project/issue-master.service'
 import {GobalutilityService} from 'src/app/utility/gobalutility.service'
 import  {IssueMaster} from 'src/app/models/issueMaster.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-issue',
@@ -39,25 +40,31 @@ export class AddIssueComponent implements OnInit {
   moduleList: any;
 
   isOther: boolean;
-
-  isAttachment :boolean;
-
+  
   projectProblemStatmentList: any;
-
-  issueMaster: any = {};
-
+  
   insertIssueMaster:any={};
 
   tokenId:any;
 
-  issue :IssueMaster;
-
-  public fieldArray: Array<any> = [];
-  public newAttribute: any = {};
+  issueMasterModel :IssueMaster;
 
   myFiles:File [] = [];
+ 
+  issueMasterForm: FormGroup;
 
   ngOnInit() {
+
+    this.issueMasterForm = new FormGroup({
+      projectName: new FormControl('', Validators.required),
+      projectModule: new FormControl('', Validators.required),
+      projectProblemStatement: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      isAttachment: new FormControl('', Validators.required),
+      attachment: new FormControl('', Validators.required),
+
+    });
+
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.role = this.loggedInUser.getRole();
     this.username = this.loggedInUser.getUsername();
@@ -96,9 +103,9 @@ export class AddIssueComponent implements OnInit {
 
   onChangeProjectOic() {
     console.log("onChangeProjectOic called");
+    console.log(this.issueMasterForm.value);
     this.reset();
-    console.log(this.issueMaster);
-    this.projectDescriptionService.getProjectModuleByProjectName(this.issueMaster.projectName).subscribe(success => {
+     this.projectDescriptionService.getProjectModuleByProjectName(this.issueMasterForm.value.projectName).subscribe(success => {
       if (success.status === 200) {
         this.moduleList = success.body;
       } else if (success.status === 204) {
@@ -111,7 +118,7 @@ export class AddIssueComponent implements OnInit {
 
   onChangeProjectOther() {
     this.reset();
-    this.projectDescriptionService.getProjectModuleByProjectName(this.issueMaster.projectName).subscribe(success => {
+    this.projectDescriptionService.getProjectModuleByProjectName(this.issueMasterForm.value.projectName).subscribe(success => {
       if (success.status === 200) {
         this.moduleList = success.body;
       } else if (success.status === 204) {
@@ -127,15 +134,15 @@ export class AddIssueComponent implements OnInit {
   onChangeProjectModule() {
     console.log("onChangeProjectModule() called");
     this.isOther = true;
-    console.log(this.issueMaster.projectModule.projectModule);
-    this.projectProblemStatmentService.getProjectProblemStatementByModule(this.issueMaster.projectModule.id).subscribe(success => {
+    console.log(this.issueMasterForm.value);
+    this.projectProblemStatmentService.getProjectProblemStatementByModule(this.issueMasterForm.value.projectModule.id).subscribe(success => {
       if (success.status === 200) {
         this.projectProblemStatmentList = success.body;
         // this.reset();
       }
       else if (success.status === 204) {
         this.isOther = false;
-        this.issueMaster.problemStatement = undefined;
+       
       }
 
     }, error => {
@@ -143,15 +150,19 @@ export class AddIssueComponent implements OnInit {
       this.reset();
     })
   }
-  onClickSubmit(){
+
+
+  onSubmitIssueMasterForm(){
      
    this.preparedIssueMasterObject();
 
-   console.log("Object received");
-   console.log(this.insertIssueMaster);
-   this.issueMasterService.insertIssueMaster(this.issue,this.myFiles).subscribe(success=>{
+   console.log("Object  prepared received");
+   console.log(this.issueMasterModel);
+   this.issueMasterService.insertIssueMaster(this.issueMasterModel,this.myFiles).subscribe(success=>{
 
     console.log("inside success");
+
+    console.log(success)
 
     // if(success.status === 201){
     //   this.tokenId = success.body;
@@ -162,46 +173,39 @@ export class AddIssueComponent implements OnInit {
 }
 
   private preparedIssueMasterObject(){
-
-    this.issue= new IssueMaster();
-
-    this.issue.setUsername(this.username);
-    this.issue.setLocationCode(this.locationCode);
-    // this.insertIssueMaster.username=this.username;
-    // this.insertIssueMaster.name=this.name;
-    // this.insertIssueMaster.locationCode = this.locationCode;
-    // this.insertIssueMaster.locationName =this.locationName;
-    // this.insertIssueMaster.projectName = this.issueMaster.projectName;
-    // this.insertIssueMaster.projectModule = this.issueMaster.projectModule.projectModule;
-    // this.insertIssueMaster.problemStatement = this.issueMaster.problemStatement;
-    // this.insertIssueMaster.subject=this.issueMaster.subject;
-    // this.insertIssueMaster.description= this.issueMaster.description;
-    // this.insertIssueMaster.file= this.myFiles;
+    this.issueMasterModel= new IssueMaster();
+    this.issueMasterModel.setUsername(this.username);
+    this.issueMasterModel.setName(this.name);
+    this.issueMasterModel.setLocationCode(this.locationCode);
+    this.issueMasterModel.setLocationName(this.locationName);
+    this.issueMasterModel.setProjectName(this.issueMasterForm.value.projectName);
+    this.issueMasterModel.setProjectModule(this.issueMasterForm.value.projectModule.projectModule);
+    this.issueMasterModel.setDescription(this.issueMasterForm.value.description);
+    this.issueMasterModel.setProblemStatement(this.issueMasterForm.value.projectProblemStatement);
+   
    }
 
 
+   onChangeCheckBox(){
+     console.log("Inside Checkbox");
+     console.log(this.issueMasterForm.value);
+   }
 
-  addFieldValue() {
-    this.fieldArray.push(this.newAttribute)
-    this.newAttribute = {};
+ 
+  deleteFieldValue(index) {
+  if (this.myFiles.length <= 1) {
+      this.myFiles.splice(index, 1);
+      this.resetFile();
+    } else {
+      this.myFiles.splice(index, 1);
+    }
   }
 
-  deleteFieldValue(index) {
-    this.myFiles.splice(index, 1);
-    console.log(this.myFiles);
-     }
   reset() {
     //  this.selectedModule = undefined;
-    this.issueMaster.projectModule = undefined;
-    this.issueMaster.problemStatement = undefined;
+    
   }
-  resetForm(){
-    this.issueMaster.projectModule = undefined;
-    this.issueMaster.projectName = undefined;
-    this.issueMaster.problemStatement = undefined;
-    this.issueMaster.subject=undefined;
-    this.issueMaster.description= undefined;
-  }
+ 
    
 
   onFileChange(event) {
@@ -223,5 +227,13 @@ export class AddIssueComponent implements OnInit {
    console.log(this.myFiles);
 
 }
+
+resetFile(){
+  this.issueMasterForm.patchValue({
+    attachment: '',
+  });
+
+}
+
 
 }

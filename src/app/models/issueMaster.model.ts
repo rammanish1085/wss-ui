@@ -1,9 +1,50 @@
 export class IssueMaster{
    
-    public username : string;
-    public locationCode : string;
-    public locationName : string;
-    
+  public username: string;
+  public name: string;
+  public locationCode: string;
+  public locationName: string;
+  public projectName: string;
+  public projectModule: string;
+  public problemStatement: string;
+  public description: string;
+
+  setName(name: string) {
+    this.name = name;
+  }
+
+  getName(): string {
+    return this.name;
+
+  }
+
+  setProjectName(projectName:string){
+    this.projectName = projectName;
+  }
+
+  getProjectName():string{
+    return this.projectName;
+  }
+
+  setProjectModule(projectModule:string){
+    this.projectModule = projectModule;
+
+  }
+
+  setProblemStatement(problemStatement:string){
+     this.problemStatement = problemStatement;
+  }
+
+  getProblemStatement():string{
+    return this.problemStatement;
+  }
+
+  setDescription(description:string){
+      this.description = description;
+  }
+  getDescription():string{
+    return this.description;
+  }
 
     setUsername(username : string){
         this.username = username;
@@ -28,6 +69,6 @@ export class IssueMaster{
     getLocationName():string{
       return this.locationName;
     }
-  
+
 
 }
