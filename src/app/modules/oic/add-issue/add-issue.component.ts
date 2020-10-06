@@ -7,10 +7,7 @@ import { ProjectDescriptionService } from 'src/app/services/project/project-desc
 import { ProjectProblemStatementService } from 'src/app/services/project/project-problem-statement.service';
 import {IssueMasterService} from 'src/app/services/project/issue-master.service'
 import {GobalutilityService} from 'src/app/utility/gobalutility.service'
-import { map } from 'rxjs/operators';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { DomSanitizer } from '@angular/platform-browser';
-
+import  {IssueMaster} from 'src/app/models/issueMaster.model';
 
 @Component({
   selector: 'app-add-issue',
@@ -53,10 +50,12 @@ export class AddIssueComponent implements OnInit {
 
   tokenId:any;
 
+  issue :IssueMaster;
+
   public fieldArray: Array<any> = [];
   public newAttribute: any = {};
 
-  myFiles:string [] = [];
+  myFiles:File [] = [];
 
   ngOnInit() {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
@@ -65,8 +64,6 @@ export class AddIssueComponent implements OnInit {
     this.name = this.loggedInUser.getName();
     this.locationCode = this.loggedInUser.getLocationCode();
     this.locationName = this.loggedInUser.getLocationShortName();
-
-
     console.log(this.loggedInUser);
     this.getOicProject();
     this.getOtherProject();
@@ -152,27 +149,34 @@ export class AddIssueComponent implements OnInit {
 
    console.log("Object received");
    console.log(this.insertIssueMaster);
-//    this.issueMasterService.insertIssueMaster(this.insertIssueMaster).subscribe(success=>{
+   this.issueMasterService.insertIssueMaster(this.issue,this.myFiles).subscribe(success=>{
 
-//     if(success.status === 201){
-//       this.tokenId = success.body;
-//       this.globalutilityService.successAlertMessage("Issue Created Successfully With Id:"+this.tokenId.tokenNumber);
-//       this.resetForm();
-//     }
-// },error=>{})
+    console.log("inside success");
+
+    // if(success.status === 201){
+    //   this.tokenId = success.body;
+    //   this.globalutilityService.successAlertMessage("Issue Created Successfully With Id:"+this.tokenId.tokenNumber);
+    //   this.resetForm();
+    // }
+},error=>{})
 }
 
   private preparedIssueMasterObject(){
-    this.insertIssueMaster.username=this.username;
-    this.insertIssueMaster.name=this.name;
-    this.insertIssueMaster.locationCode = this.locationCode;
-    this.insertIssueMaster.locationName =this.locationName;
-    this.insertIssueMaster.projectName = this.issueMaster.projectName;
-    this.insertIssueMaster.projectModule = this.issueMaster.projectModule.projectModule;
-    this.insertIssueMaster.problemStatement = this.issueMaster.problemStatement;
-    this.insertIssueMaster.subject=this.issueMaster.subject;
-    this.insertIssueMaster.description= this.issueMaster.description;
-    this.insertIssueMaster.file= this.myFiles;
+
+    this.issue= new IssueMaster();
+
+    this.issue.setUsername(this.username);
+    this.issue.setLocationCode(this.locationCode);
+    // this.insertIssueMaster.username=this.username;
+    // this.insertIssueMaster.name=this.name;
+    // this.insertIssueMaster.locationCode = this.locationCode;
+    // this.insertIssueMaster.locationName =this.locationName;
+    // this.insertIssueMaster.projectName = this.issueMaster.projectName;
+    // this.insertIssueMaster.projectModule = this.issueMaster.projectModule.projectModule;
+    // this.insertIssueMaster.problemStatement = this.issueMaster.problemStatement;
+    // this.insertIssueMaster.subject=this.issueMaster.subject;
+    // this.insertIssueMaster.description= this.issueMaster.description;
+    // this.insertIssueMaster.file= this.myFiles;
    }
 
 
