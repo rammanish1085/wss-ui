@@ -116,11 +116,13 @@ export class AddIssueComponent implements OnInit {
   }
 
   onChangeProjectOther() {
+    this.resetProjectModule();
      this.projectDescriptionService.getProjectModuleByProjectName(this.issueMasterForm.value.projectName).subscribe(success => {
       if (success.status === 200) {
         this.moduleList = success.body;
       } else if (success.status === 204) {
         console.log("onChangeProjectOther() called no content found");
+        this.resetProjectModule();
       }
 
     }, error => {
