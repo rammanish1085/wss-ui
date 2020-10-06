@@ -2,7 +2,7 @@
   <div class="card-header text-center main-header text-white">ADD USER</div>
   <div class="card-body">
     <div class="container mt-3">
-      <form [formGroup]="userProject"  (ngSubmit)="onclickAddUserProject()">
+      <form [formGroup]="userProjectFrom"  (ngSubmit)="onclickAddUserProject()">
          <div class="row">
 
           <div class="col-md-5">
@@ -29,7 +29,7 @@
         <div class="col-md-1">
 
          <div class="button">
-          <button  type="submit" [disabled]="userProject.invalid" class="btn btn-success btn-sm">Add</button>
+          <button  type="submit" [disabled]="userProjectFrom.invalid" class="btn btn-success btn-sm">Add</button>
         </div>
       </div>
       </div>

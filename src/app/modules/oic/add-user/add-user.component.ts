@@ -5,7 +5,6 @@ import {ProjectUserMappingService} from 'src/app/services/project/project-user-m
 import {GobalutilityService} from 'src/app/utility/gobalutility.service';
 import { User } from 'src/app/models/user.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ConstantPool } from '@angular/compiler';
 
 @Component({
   selector: 'app-add-user',
@@ -16,24 +15,18 @@ export class AddUserComponent implements OnInit {
 
   project:any;
   users : any;
-  selectedProject:any;
-  selectedUser : any;
   projectUserMappingObject :any ={};
   loggedInUser: User;
   projectUserMapping:any;
   locationCode :string;
 
-  userProject: FormGroup;
-
-
-  form: FormGroup = new FormGroup({});
-  
+  userProjectFrom: FormGroup;
 
   constructor(private userService:UserService,private authorizationService: AuthorizationService,private projectUserMappingService:ProjectUserMappingService,private globalUtilityService:GobalutilityService) { }
 
   ngOnInit() {
 
-    this.userProject = new FormGroup({
+    this.userProjectFrom = new FormGroup({
       project: new FormControl('', Validators.required),
       user: new FormControl('', Validators.required)
     });
@@ -76,7 +69,7 @@ export class AddUserComponent implements OnInit {
   onclickAddUserProject(){
    console.log("Getting form value");
 
-   console.log(this.userProject.value);
+   console.log(this.userProjectFrom.value);
 
    this.prepareProjectUserMapping();
      this.projectUserMappingService.insertProjectUserMapping(this.projectUserMappingObject).subscribe(success=>{
@@ -91,11 +84,11 @@ export class AddUserComponent implements OnInit {
      }
 
   prepareProjectUserMapping(){
-    this.projectUserMappingObject.username=this.userProject.value.user.username;
-    this.projectUserMappingObject.name =this.userProject.value.user.name;
+    this.projectUserMappingObject.username=this.userProjectFrom.value.user.username;
+    this.projectUserMappingObject.name =this.userProjectFrom.value.user.name;
     this.projectUserMappingObject.locationCode=this.loggedInUser.getLocationCode();
     this.projectUserMappingObject.locationName=this.loggedInUser.getLocationShortName();
-    this.projectUserMappingObject.projectName=this.userProject.value.project.name;
+    this.projectUserMappingObject.projectName=this.userProjectFrom.value.project.name;
     this.projectUserMappingObject.deleted=false;
     this.projectUserMappingObject.createdBy=this.loggedInUser.getUsername() +" "+ this.loggedInUser.getName();
   }   
@@ -111,7 +104,7 @@ getAssignProject(){
 
 }
 reset(){
-    this.userProject.patchValue({
+    this.userProjectFrom.patchValue({
     project: '',
     user:''
   });
