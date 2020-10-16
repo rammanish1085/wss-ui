@@ -15,44 +15,13 @@ export class IssueMasterService {
     this.contextPath = this.globalConfiguration.getBackendURLPrefix();
   }
 
-
-  // insertIssueMaster1(issueMaster: any, uploadFile: File) {
-
-  //   return this.http.post(this.contextPath + '/issue-master', issueMaster, { observe: 'response' }).pipe(
-  //     map((response: HttpResponse<any>) => {
-  //       return response;
-  //     }));
-  // }
-
-
-
-  // tslint:disable-next-line: typedef
-  insertIssueMaster(issueMaster: IssueMaster, myFiles: File []) {
-
-    console.log('Getting Upload File');
-
-    console.log(myFiles);
-
-    const formData = new FormData();
-
-    // tslint:disable-next-line: prefer-for-of
-    // for (let i = 0; i < myFiles.length; i++) {
-    //   formData.append('files[]', myFiles[i]);
-    // }
-
-    formData.append('files', JSON.stringify(myFiles));
-
-
-   // formData.append('files',JSON.stringify(files));
-
+  insertIssueMaster(issueMaster: IssueMaster, myFiles: File [] ) {
+    let formData = new FormData();
+        myFiles.forEach(file  => {
+        formData.append('files', file);
+    });
 
     formData.append('issueMaster', JSON.stringify(issueMaster));
-
-    console.log('Getting Form Data');
-
-    console.log(formData);
-
-    console.log(formData.get('issueMaster'));
 
     return this.http.post(this.contextPath + 'issue-master', formData, { observe: 'response' }).pipe(
       map((response: HttpResponse<any>) => {

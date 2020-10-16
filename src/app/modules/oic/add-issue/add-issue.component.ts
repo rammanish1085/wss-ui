@@ -5,9 +5,9 @@ import { ProjectUserMappingService } from 'src/app/services/project/project-user
 import { UserService } from 'src/app/services/users/user.service';
 import { ProjectDescriptionService } from 'src/app/services/project/project-description.service';
 import { ProjectProblemStatementService } from 'src/app/services/project/project-problem-statement.service';
-import {IssueMasterService} from 'src/app/services/project/issue-master.service'
-import {GobalutilityService} from 'src/app/utility/gobalutility.service'
-import  {IssueMaster} from 'src/app/models/issueMaster.model';
+import { IssueMasterService } from 'src/app/services/project/issue-master.service'
+import { GobalutilityService } from 'src/app/utility/gobalutility.service'
+import { IssueMaster } from 'src/app/models/issueMaster.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { VirtualTimeScheduler } from 'rxjs';
 
@@ -19,8 +19,8 @@ import { VirtualTimeScheduler } from 'rxjs';
 export class AddIssueComponent implements OnInit {
 
 
-  constructor(private authorizationService: AuthorizationService, private projectDescriptionService: ProjectDescriptionService, private issueMasterService:IssueMasterService,
-    private userService: UserService,private globalutilityService:GobalutilityService, private projectUserMappingService: ProjectUserMappingService, private projectProblemStatmentService: ProjectProblemStatementService) { }
+  constructor(private authorizationService: AuthorizationService, private projectDescriptionService: ProjectDescriptionService, private issueMasterService: IssueMasterService,
+    private userService: UserService, private globalutilityService: GobalutilityService, private projectUserMappingService: ProjectUserMappingService, private projectProblemStatmentService: ProjectProblemStatementService) { }
 
   projectsOic: any;
 
@@ -34,24 +34,24 @@ export class AddIssueComponent implements OnInit {
 
   locationCode: any;
 
-  locationName:string;
+  locationName: string;
 
   name: string;
 
   moduleList: any;
 
   isOther: boolean;
-  
+
   projectProblemStatmentList: any;
-  
-  insertIssueMaster:any={};
 
-  tokenId:any;
+  insertIssueMaster: any = {};
 
-  issueMasterModel :IssueMaster;
+  tokenId: any;
 
-  myFiles:File [];
- 
+  issueMasterModel: IssueMaster;
+
+  myFiles: File[] = [];
+
   issueMasterForm: FormGroup;
 
   ngOnInit() {
@@ -81,7 +81,7 @@ export class AddIssueComponent implements OnInit {
 
   private getOicProject() {
     this.userService.getAllProject().subscribe(succes => {
-       this.projectsOic = succes.body;
+      this.projectsOic = succes.body;
     }, error => {
       console.log("error");
       console.log(error);
@@ -93,7 +93,7 @@ export class AddIssueComponent implements OnInit {
     this.projectUserMappingService.getAssignedProjectByUsernameAndLocationCode(this.username, this.locationCode).subscribe(success => {
       this.projectsOther = success.body;
     }, error => {
-      
+
     })
 
   }
@@ -104,20 +104,20 @@ export class AddIssueComponent implements OnInit {
       if (success.status === 200) {
         this.moduleList = success.body;
       } else if (success.status === 204) {
-       console.log("onChangeProjectOic called No content found");
-       this.resetProjectModule();
+        console.log("onChangeProjectOic called No content found");
+        this.resetProjectModule();
 
       }
 
-    }, error => { 
+    }, error => {
 
-     
+
     })
   }
 
   onChangeProjectOther() {
     this.resetProjectModule();
-     this.projectDescriptionService.getProjectModuleByProjectName(this.issueMasterForm.value.projectName).subscribe(success => {
+    this.projectDescriptionService.getProjectModuleByProjectName(this.issueMasterForm.value.projectName).subscribe(success => {
       if (success.status === 200) {
         this.moduleList = success.body;
       } else if (success.status === 204) {
@@ -126,7 +126,7 @@ export class AddIssueComponent implements OnInit {
       }
 
     }, error => {
-      
+
     })
 
   }
@@ -139,11 +139,11 @@ export class AddIssueComponent implements OnInit {
     this.projectProblemStatmentService.getProjectProblemStatementByModule(this.issueMasterForm.value.projectModule.id).subscribe(success => {
       if (success.status === 200) {
         this.projectProblemStatmentList = success.body;
-        
+
       }
       else if (success.status === 204) {
         this.isOther = false;
-       
+
       }
 
     }, error => {
@@ -153,23 +153,23 @@ export class AddIssueComponent implements OnInit {
   }
 
 
-  onSubmitIssueMasterForm(){
-     
-   this.preparedIssueMasterObject();
+  onSubmitIssueMasterForm() {
 
-   console.log("Object  prepared received");
-   console.log(this.issueMasterModel);
-   this.issueMasterService.insertIssueMaster(this.issueMasterModel,this.myFiles).subscribe(success=>{
-    if(success.status === 201){
-      this.resetIssueMasterForm();
-      this.tokenId = success.body;
-      this.globalutilityService.successAlertMessage("Issue Created Successfully With Id:"+this.tokenId.tokenNumber);
-    }
-},error=>{})
-}
+    this.preparedIssueMasterObject();
 
-  private preparedIssueMasterObject(){
-    this.issueMasterModel= new IssueMaster();
+    console.log("Object  prepared received");
+    console.log(this.issueMasterModel);
+    this.issueMasterService.insertIssueMaster(this.issueMasterModel, this.myFiles).subscribe(success => {
+      if (success.status === 201) {
+        this.resetIssueMasterForm();
+        this.tokenId = success.body;
+        this.globalutilityService.successAlertMessage("Issue Created Successfully With Id:" + this.tokenId.tokenNumber);
+      }
+    }, error => { })
+  }
+
+  private preparedIssueMasterObject() {
+    this.issueMasterModel = new IssueMaster();
     this.issueMasterModel.setUsername(this.username);
     this.issueMasterModel.setName(this.name);
     this.issueMasterModel.setLocationCode(this.locationCode);
@@ -178,12 +178,12 @@ export class AddIssueComponent implements OnInit {
     this.issueMasterModel.setProjectModule(this.issueMasterForm.value.projectModule.projectModule);
     this.issueMasterModel.setDescription(this.issueMasterForm.value.description);
     this.issueMasterModel.setProblemStatement(this.issueMasterForm.value.projectProblemStatement);
-   
-   }
-  
- 
+
+  }
+
+
   deleteFieldValue(index) {
-  if (this.myFiles.length <= 1) {
+    if (this.myFiles.length <= 1) {
       this.myFiles.splice(index, 1);
       this.resetFile();
     } else {
@@ -191,67 +191,67 @@ export class AddIssueComponent implements OnInit {
     }
   }
 
-   
+
 
   onFileChange(event) {
 
-    this.myFiles =[];
+    this.myFiles = [];
 
     const size = event.srcElement.files[0].size;
 
     console.log(size)
 
-    if(size>5000000){
+    if (size > 5000000) {
       this.globalutilityService.errorAlertMessage("File Size greater 5 Mb");
-      }else{
-   
-    for (var i = 0; i < event.target.files.length; i++) { 
-        this.myFiles.push(event.target.files[i]);
     }
+    else {
+         for (var i = 0; i < event.target.files.length; i++) {
+          this.myFiles.push(event.target.files[i]);
+      }
+    }
+    console.log(this.myFiles);
+
   }
-   console.log(this.myFiles);
 
-}
+  resetFile() {
+    this.issueMasterForm.patchValue({
+      attachment: '',
+    });
 
-resetFile(){
-  this.issueMasterForm.patchValue({
-    attachment: '',
-  });
+  }
 
-}
+  resetIssueMasterForm() {
+    this.myFiles = [];
+    this.issueMasterForm.patchValue({
+      projectName: '',
+      projectModule: '',
+      projectProblemStatement: '',
+      description: '',
+      attachment: ''
+    });
 
-resetIssueMasterForm(){
-  this.myFiles =[];
-  this.issueMasterForm.patchValue({
-    projectName: '',
-    projectModule:'',
-    projectProblemStatement :'',
-    description:'',
-    attachment:''
-  });
+  }
 
-}
-
-resetProjectModule(){
-  this.moduleList = undefined;
-  this.projectProblemStatmentList = undefined;
-  this.isOther = false;
-  this.issueMasterForm.patchValue({
-    projectModule:'',
-    projectProblemStatement:''
-    
-  });
-}
-  resetProblemStatement(){
+  resetProjectModule() {
+    this.moduleList = undefined;
     this.projectProblemStatmentList = undefined;
     this.isOther = false;
     this.issueMasterForm.patchValue({
-      projectProblemStatement:''
-      
+      projectModule: '',
+      projectProblemStatement: ''
+
+    });
+  }
+  resetProblemStatement() {
+    this.projectProblemStatmentList = undefined;
+    this.isOther = false;
+    this.issueMasterForm.patchValue({
+      projectProblemStatement: ''
+
     });
 
 
-}
+  }
 
 
 }
