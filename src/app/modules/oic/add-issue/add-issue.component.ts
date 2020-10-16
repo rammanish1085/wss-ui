@@ -50,7 +50,7 @@ export class AddIssueComponent implements OnInit {
 
   issueMasterModel :IssueMaster;
 
-  myFiles:File [] = [];
+  myFiles:File [];
  
   issueMasterForm: FormGroup;
 
@@ -133,6 +133,7 @@ export class AddIssueComponent implements OnInit {
 
   onChangeProjectModule() {
     console.log("onChangeProjectModule() called");
+    this.resetProblemStatement();
     this.isOther = true;
     console.log(this.issueMasterForm.value);
     this.projectProblemStatmentService.getProjectProblemStatementByModule(this.issueMasterForm.value.projectModule.id).subscribe(success => {
@@ -240,6 +241,14 @@ resetProjectModule(){
     projectProblemStatement:''
     
   });
+}
+  resetProblemStatement(){
+    this.projectProblemStatmentList = undefined;
+    this.isOther = false;
+    this.issueMasterForm.patchValue({
+      projectProblemStatement:''
+      
+    });
 
 
 }
