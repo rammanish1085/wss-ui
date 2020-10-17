@@ -1,21 +1,24 @@
 
 #showcase{
-    background-image: url('src/assets/login2.jpg');
+    background-image: url('src/assets/bg5.png');
     background-size: cover;
     background-position: center;
     height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content:flex-end;
     align-items: center;
 }
 .img-fluid{
     width: 60px;
 }
 .card-footer{
- background-color:yellow;
+ background-color:#a95c0d;
 }.card{
    background-color: #f3aa4e;
-}
+   background-color: rgba(241, 128, 12,0.2);
+   margin-right: 200px;
+   
+   }
 .input-group-text {
     color: #a85b0c;
 }

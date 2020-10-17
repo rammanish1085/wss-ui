@@ -3,7 +3,7 @@
        <div class="user-picture m-auto">
             <img src="./assets/img/mppkvvcl.png" class="img-fluid" alt="">
         </div>
-        <div class="header">Welcome to CIT - Login</div>
+        <div class="header text-white">Welcome to CIT - Login</div>
         <div class="card-body" *ngIf="isLogIn">
             <div *ngIf="logging">
                 <div class="form-group">
@@ -36,10 +36,10 @@
                                 formControlName="password">
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-lg"
-                                [disabled]="logging || user.invalid">Signin</button>
+                            <button type="submit" class="btn btn-success btn-sm"
+                                [disabled]="logging || user.invalid">Log In</button>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <button type="reset" class="btn btn-warning btn-lg"
+                            <button type="reset" class="btn btn-warning btn-sm"
                                 (click)="loginErrorText=null">Clear</button>
                         </div>
                     </form>
@@ -53,12 +53,12 @@
                     <form [formGroup]="form" (ngSubmit)="processOtpForm()">
 
                         <div>
-                            <Label><h5>{{loggedUser.getName()}}</h5></Label>
+                            <Label class="text-white"><h5>{{loggedUser.getName()}}</h5></Label>
                         </div>
             
                         <div class="form-group">
-                            <label for="number">Enter OTP </label>
-                             <input formControlName="number" id="number"  type="text" class="form-control">
+                            <label for="number" class="text-white">Enter OTP </label>
+                             <input formControlName="number" id="number"  type="text" autofocus class="form-control" autocomplete="off">
                                 <div *ngIf="f.number.touched && f.number.invalid" class="alert alert-danger">
                                 <div *ngIf="f.number.errors.required">Number is required.</div>
                                 <div *ngIf="f.number.errors.pattern">Enter only number.</div>
@@ -80,7 +80,7 @@
             </div> 
             
         </div>
-        <div class="card-footer text-muted">
+        <div class="card-footer  text-white">
             <strong>&copy; MPPKVCL Indore</strong>
         </div>
     </div>
