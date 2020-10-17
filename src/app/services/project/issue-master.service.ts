@@ -29,6 +29,16 @@ export class IssueMasterService {
       }));
   }
 
+
+  getAllAssignedProblem(username: string, locationCode: any) {
+    console.log("Inside getting users");
+    return this.http.get(this.contextPath + '/issue-master/user-name/' + username + '/location-code/' + locationCode, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+
+
 }
 
 

@@ -1,1 +1,44 @@
-<p>view-issue works!</p>
+<div class="card border-dark">
+    <div class="card-header text-center main-header text-white">VIEW ISSUE</div>
+    <div class="card-body">
+    <div class="row mb-4">
+  
+      <div class="col-md-12">
+        <div class="card border-0 rounded-0">
+           <div class="card-body">
+            <div class="table-responsive-md">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Token No</th>
+                    <th scope="col">location code</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Project Module</th>
+                    <th scope="col">Project Problem Statment</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Attachment</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let ps of assignedProblemStatement let i = index">
+                    <td><small>{{i+1}}</small></td>
+                    <td><small>{{ps.tokenNumber}}</small></td>
+                    <td><small>{{ps.locationCode}}</small></td>
+                    <td><small>{{ps.projectName}}</small></td>
+                    <td><small>{{ps.projectModule}}</small></td>
+                    <td><small>{{ps.problemStatement}}</small></td>
+                    <td><span *ngIf="ps.status==='COMPLETED'" class="badge badge-success rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='PENDING'" class="badge badge-danger rounded-0 p-1">{{ps.status}}</span></td>
+                    <td><button class="btn btn-info btn-sm">view</button></td>            
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+  
+          </div>
+        </div>
+  
+      </div>
+    </div>
+    </div>
+  </div>
