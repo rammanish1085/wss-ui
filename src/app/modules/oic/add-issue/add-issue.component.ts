@@ -55,17 +55,15 @@ export class AddIssueComponent implements OnInit {
   issueMasterForm: FormGroup;
 
   ngOnInit() {
-
     this.issueMasterForm = new FormGroup({
       projectName: new FormControl('', Validators.required),
       projectModule: new FormControl('', Validators.required),
       projectProblemStatement: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
-      isAttachment: new FormControl('', Validators.required),
-      attachment: new FormControl('', Validators.required),
+      isAttachment: new FormControl(false),
+     
 
     });
-
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.role = this.loggedInUser.getRole();
     this.username = this.loggedInUser.getUsername();
@@ -76,6 +74,18 @@ export class AddIssueComponent implements OnInit {
     this.getOicProject();
     this.getOtherProject();
 
+  }
+
+  isAttachmentClicked() {
+    this.issueMasterForm.get('isAttachment').valueChanges.subscribe(checked => {
+      if (checked) {
+        const validators = [Validators.required];
+        this.issueMasterForm.addControl('attachment', new FormControl('', validators));
+      } else {
+        this.issueMasterForm.removeControl('attachment');
+      }
+
+    });
   }
 
 
@@ -205,8 +215,8 @@ export class AddIssueComponent implements OnInit {
       this.globalutilityService.errorAlertMessage("File Size greater 5 Mb");
     }
     else {
-         for (var i = 0; i < event.target.files.length; i++) {
-          this.myFiles.push(event.target.files[i]);
+      for (var i = 0; i < event.target.files.length; i++) {
+        this.myFiles.push(event.target.files[i]);
       }
     }
     console.log(this.myFiles);
@@ -227,7 +237,8 @@ export class AddIssueComponent implements OnInit {
       projectModule: '',
       projectProblemStatement: '',
       description: '',
-      attachment: ''
+      attachment: '',
+      isAttachment: ''
     });
 
   }
