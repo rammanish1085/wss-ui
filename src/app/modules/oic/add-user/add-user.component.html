@@ -2,39 +2,39 @@
   <div class="card-header text-center main-header text-white">ADD USER</div>
   <div class="card-body">
     <div class="container mt-3">
-      <form [formGroup]="userProjectFrom"  (ngSubmit)="onclickAddUserProject()">
-         <div class="row">
+      <form [formGroup]="userProjectFrom" (ngSubmit)="onclickAddUserProject()">
+        <div class="row">
 
           <div class="col-md-5">
-         
-          <div>
-            <select class="form-control" name="projectName" formControlName="project" required>
-              <option value="" disabled>Select Project</option>
-              <option *ngFor="let pro of project" [ngValue]="pro" class="form-control form-control-sm text-center">
-                {{pro.name}}</option>
-            </select>
+
+            <div>
+              <select class="form-control" name="projectName" formControlName="project" required>
+                <option value="" disabled>Select Project</option>
+                <option *ngFor="let pro of project" [ngValue]="pro" class="form-control form-control-sm text-center">
+                  {{pro.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+
+            <div>
+              <select class="form-control" name="user" formControlName="user" required>
+                <option value="" disabled>Select User</option>
+                <option *ngFor="let user of users" [ngValue]="user" class="form-control form-control-sm">
+                  {{user.username}}&nbsp;({{user.name}})
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-1">
+
+            <div class="button">
+              <button type="submit" [disabled]="userProjectFrom.invalid" class="btn btn-success btn-sm">Add</button>
+            </div>
           </div>
         </div>
-        <div class="col-md-6">
-          
-          <div>
-            <select class="form-control" name="user" formControlName="user" required>
-              <option value="" disabled>Select User</option>
-              <option *ngFor="let user of users" [ngValue]="user" class="form-control form-control-sm">
-                {{user.username}}&nbsp;({{user.name}})
-              </option>
-            </select>         
-         </div>
-        </div>
-        <div class="col-md-1">
-
-         <div class="button">
-          <button  type="submit" [disabled]="userProjectFrom.invalid" class="btn btn-success btn-sm">Add</button>
-        </div>
-      </div>
-      </div>
       </form>
-     </div>
+    </div>
 
     <div class="containe-fluid">
 
@@ -45,7 +45,7 @@
             <div class="card-title mb-1 p-3 mt-5 text-center">
               <!-- <h5>Project User Mapping</h5> -->
             </div>
-            <div class="card-body">
+            <div class="card-body" *ngIf="projectUserMapping.length>0">
               <div class="table-responsive-md">
                 <table class="table table-hover">
                   <thead>
@@ -67,7 +67,8 @@
                       <td>{{project.locationCode}}</td>
                       <td>{{project.locationName}}</td>
                       <td>{{project.projectName}}</td>
-                      <td><button class="btn btn-danger btn-sm">Delete</button></td>
+                      <td><button class="btn btn-danger btn-sm" (click)="onClickDeleteUser(project)">Delete</button>
+                      </td>
 
                     </tr>
                   </tbody>
