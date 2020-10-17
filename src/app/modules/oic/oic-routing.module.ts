@@ -6,6 +6,8 @@ import { AddIssueComponent } from './add-issue/add-issue.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from 'src/app/components/dashboard/dashboard.component';
 import { AuthGuard } from 'src/app/guard/auth.guard';
+import { ViewIssueComponent } from './view-issue/view-issue.component';
+import { TrackIssueComponent } from './track-issue/track-issue.component';
 
 const routes: Routes = [
   {
@@ -30,6 +32,19 @@ const routes: Routes = [
             component:AddIssueComponent
 
           },
+
+          {
+            path:'view-issue',
+            component:ViewIssueComponent
+
+          },
+
+          {
+            path:'track-issue',
+            component:TrackIssueComponent
+
+          },
+
           {
             path:'dashboard',
             component:DashboardComponent

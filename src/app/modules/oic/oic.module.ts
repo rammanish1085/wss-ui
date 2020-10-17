@@ -11,15 +11,16 @@ import { AddIssueComponent } from './add-issue/add-issue.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from '../../components/dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ViewIssueComponent } from './view-issue/view-issue.component';
+import { TrackIssueComponent } from './track-issue/track-issue.component';
 
 
 
 
 @NgModule({
-  declarations: [OicComponent,NavbarComponent,SidebarComponent, AddUserComponent,FooterComponent, AddIssueComponent, HomeComponent,DashboardComponent],
+  declarations: [OicComponent,NavbarComponent,SidebarComponent, AddUserComponent,FooterComponent, AddIssueComponent, HomeComponent,DashboardComponent, ViewIssueComponent, TrackIssueComponent],
   imports: [
     CommonModule,
     OicRoutingModule,
