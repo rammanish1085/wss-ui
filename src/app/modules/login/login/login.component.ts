@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
   durationMillisecond: number;
 
   user: FormGroup;
+  otpSend:boolean;
 
 
   form: FormGroup = new FormGroup({});
@@ -92,7 +93,8 @@ export class LoginComponent implements OnInit {
     this.otpService.generateOTP().subscribe(success => {
       console.log("Inside success generating otp");
       if (success.status === 200) {
-        this.globalutilityService.successAlertMessage("OTP Sent Successfully !!")
+        // this.globalutilityService.successAlertMessage("OTP Sent Successfully !!")
+        this.otpSend = true;
         this.durationMillisecond = 1000;
         this.startTimer();
 
@@ -155,6 +157,7 @@ export class LoginComponent implements OnInit {
     this.interval = setInterval(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
+        this.otpSend = false;
       } else {
         // this.timeLeft = 10;
         this.isResend = true;

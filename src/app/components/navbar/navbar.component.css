@@ -1,6 +1,7 @@
 .header{
     display: flex;
     justify-content: flex-start;
+   
 }
 .bg-dark {
     background-color: #117a8b!important;

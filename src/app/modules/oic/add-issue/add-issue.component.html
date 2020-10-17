@@ -1,11 +1,11 @@
-
+<div class="container">
 <div class="card border-dark">
   <div class="card-header text-center main-header text-white">ADD ISSUE</div>
   <div class="card-body">
 
    <form [formGroup]="issueMasterForm"  (ngSubmit)="onSubmitIssueMasterForm()">
      <div class="row">
-      <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch" *ngIf="role ==='oic'">
+      <div class="col-md-3 mb-4 mt-4" *ngIf="role ==='oic'">
         <div>
           <select class="form-control" name="projectOic" formControlName="projectName"
             (change)="onChangeProjectOic()" required>
@@ -15,7 +15,7 @@
         </div>
       </div>
     
-      <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch" *ngIf="role !=='oic'">
+      <div class="col-md-3 mb-4 mt-4" *ngIf="role !=='oic'">
         <div>
           <select class="form-control" name="projectOthers" formControlName="projectName"
             (change)="onChangeProjectOther()" required>
@@ -26,7 +26,7 @@
         </div>
       </div>
     
-      <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch">
+      <div class="col-md-3 mb-4 mt-4">
         <div>
           <select class="form-control" name="projectModule" formControlName="projectModule"
             (change)="onChangeProjectModule()" required>
@@ -37,7 +37,7 @@
         </div>
       </div>
     
-      <div class="col-md-12 col-lg-3 mb-4 mt-4 align-items-stretch">
+      <div class="col-md-3 mb-4 mt-4">
         <div>
           <select class="form-control" name="problemStatement" formControlName="projectProblemStatement" required>
             <option value="" disabled>Select Problem statement</option>
@@ -50,7 +50,7 @@
      </div>
          
      <div class="row">
-      <div class="col-lg-8 mb-2 mt-2 align-items-stretch">
+      <div class="col-md-8 mb-2 mt-2">
        <div class="form-group">
       <label for="comment">Problem Description:</label>
       <textarea class="form-control" rows="3" id="comment"  formControlName="description" required></textarea>
@@ -59,7 +59,7 @@
      </div>
     
      <div class="row">
-      <div class="col-lg-8 mb-2 mt-2 align-items-stretch">
+      <div class="col-md-8 mb-2 mt-2">
         <div class="form-check">
           <input type="checkbox" class="form-check-input" formControlName="isAttachment" id="exampleCheck1" (click)="isAttachmentClicked()">
           <label class="form-check-label" for="exampleCheck1">Attachment</label>
@@ -121,6 +121,6 @@
      </form>
     
   </div>
+ </div>
+
 </div>
-
-
