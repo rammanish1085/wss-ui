@@ -9,7 +9,7 @@ import { IssueMasterService } from 'src/app/services/project/issue-master.servic
 import { GobalutilityService } from 'src/app/utility/gobalutility.service'
 import { IssueMaster } from 'src/app/models/issueMaster.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { VirtualTimeScheduler } from 'rxjs';
+
 
 @Component({
   selector: 'app-add-issue',
