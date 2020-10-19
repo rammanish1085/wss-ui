@@ -76,33 +76,29 @@
 
      <div *ngIf="issueMasterForm.value.isAttachment">
 
-      <div class="xyz mb-3 mt-3">
-       
-        <div>
-          <small class="mr-4">Maximum 5 file allow</small>
-       </div>
-
-        <div>
-          <small class="mr-4">Maximum file size allow 5 Mb</small>
-      </div>
-        <div>
-       <small>Allow file type to upload - [ jpg, pdf ,doc ,xls ] only</small> 
+        <div class="fileinfo mb-3 mt-3">
+        
+          <div>
+            <small class="mr-4">Maximum 5 file allow</small>
+          </div>
+        
+          <div>
+            <small class="mr-4">Maximum file size allow 5 Mb</small>
+          </div>
+          <div>
+            <small>Allow file type to upload - [ jpg, pdf ,doc ,xls ] only</small>
+          </div>
         </div>
-      </div>
-     </div>
-
-     <div class="table" *ngIf="issueMasterForm.value.isAttachment">
      
-      <div  class="mr-3"><label for="exampleFormControlFile1">Attatch File </label></div>
 
-      <div><input type="file" class="form-control-file" (change)="onFileChange($event)"  formControlName="attachment" 
-        accept="image/*,.pdf,.doc,.docx,.xml,.xls" multiple required></div>
+       <div class="table">
+          <div  class="mr-3"><label for="exampleFormControlFile1">Attatch File </label></div>
+          <div><input type="file" class="form-control-file" (change)="onFileChange($event)"formControlName="attachment" accept="image/*,.pdf,.doc,.docx,.xml,.xls" multiple required></div>
+        </div>
 
-     </div>
-
-     <div *ngIf="issueMasterForm.value.isAttachment">
+       <div>
          <table class="table">
-        <tbody>
+         <tbody>
           <tr *ngFor="let field of myFiles; let i = index">
 
             <td>{{i+1}}</td>
@@ -117,11 +113,12 @@
             </td>
           </tr>
           
-        </tbody>
-      </table>
-     </div>
+          </tbody>
+         </table>
+       </div>
     
      <div class="button mt-4"><button type="submit" [disabled]="!issueMasterForm.valid" class="btn btn-primary">Submit</button></div>
+     </div>
 
      </form>
     
