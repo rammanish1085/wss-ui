@@ -12,9 +12,9 @@ export class DashboardService {
   constructor(private http: HttpClient, private globalConfiguration: GlobalConfiguration) {
     this.contextPath = this.globalConfiguration.getBackendURLPrefix();
   }
-  getAllAssignedProblem(username: string, locationCode: any) {
+  getAllAssignedProblem(username: string) {
     console.log("Inside getting users");
-    return this.http.get(this.contextPath + '/project-problem-assignment/user-name/' + username + '/location-code/' + locationCode, { observe: 'response' }).pipe(map(
+    return this.http.get(this.contextPath + '/project-problem-assignment/user-name/' + username, { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
         return response;
       }));

@@ -30,8 +30,8 @@ export class AddUserComponent implements OnInit {
     this.userProjectFrom = new FormGroup({
       project: new FormControl('', Validators.required),
       user: new FormControl('', Validators.required)
+     
     });
-
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.locationCode = this.loggedInUser.getLocationCode();
 

@@ -21,14 +21,12 @@ export class DashboardComponent implements OnInit {
 
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
-    this.locationCode = this.loggedInUser.getLocationCode();
-
-    this.getAllAssignedProblemStatement(this.username, this.locationCode);
+     this.getAllAssignedProblemStatement(this.username);
   }
 
-  getAllAssignedProblemStatement(username: any, locationCode: any) {
+  getAllAssignedProblemStatement(username: any) {
 
-    this.dashboardService.getAllAssignedProblem("34420125",locationCode).subscribe(success=>{
+    this.dashboardService.getAllAssignedProblem(username).subscribe(success=>{
     
       console.log("Getting Assign problem");
 
