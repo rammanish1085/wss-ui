@@ -12,6 +12,7 @@ export class DashboardService {
   constructor(private http: HttpClient, private globalConfiguration: GlobalConfiguration) {
     this.contextPath = this.globalConfiguration.getBackendURLPrefix();
   }
+
   getAllAssignedProblem(username: string) {
     console.log("Inside getting users");
     return this.http.get(this.contextPath + '/project-problem-assignment/user-name/' + username, { observe: 'response' }).pipe(map(
@@ -20,8 +21,30 @@ export class DashboardService {
       }));
   }
 
+  getFileByTokenNumber(tokenNumber: string) {
+    console.log("Inside getting users");
+    return this.http.get(this.contextPath + '/file/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+
+  resolveIssueByTokenNumber(tokenNumber: string) {
+     return this.http.put(this.contextPath + 'project-problem-assignment/accept/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+
+  rejectIssueByTokenNumber(tokenNumber: string) {
+    return this.http.put(this.contextPath + 'project-problem-assignment/reject/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
+     (response: HttpResponse<any>) => {
+       return response;
+     }));
+ }
 
 
+ 
 
 
 }

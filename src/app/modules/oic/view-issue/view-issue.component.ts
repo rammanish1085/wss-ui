@@ -15,6 +15,9 @@ export class ViewIssueComponent implements OnInit {
   username: string;
   locationCode: string;
   assignedProblemStatement:any;
+  isView:boolean;
+  viewIssue:any;
+  files:any;
 
   constructor(private issueMasterService: IssueMasterService, private authorizationService: AuthorizationService) { }
 
@@ -43,4 +46,36 @@ export class ViewIssueComponent implements OnInit {
     })
 
   }
+  public onClickView(ps :any){
+
+    this.viewIssue = ps;
+    this.isView = true;
+    this.getFileByTokenNumber(ps.tokenNumber);
+    console.log("View Clicked");
+    console.log(ps);
+
+  }
+  public onClickBack(){
+    this.isView = false;
+
+  }
+
+  getFileByTokenNumber(tokenNumber: any) {
+
+    this.issueMasterService.getFileByTokenNumber(tokenNumber).subscribe(success=>{
+    
+      console.log("Gettinf File");
+
+      console.log(success.body);
+
+      this.files = success.body;
+
+
+    },error=>{
+
+    })
+
+  }
+  
+
 }

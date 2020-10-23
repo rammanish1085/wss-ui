@@ -14,6 +14,9 @@ export class DashboardComponent implements OnInit {
   username: string;
   locationCode: string;
   assignedProblemStatement:any;
+  files:any;
+  isView:boolean;
+  viewIssue:any;
 
   constructor(private dashboardService: DashboardService, private authorizationService: AuthorizationService) { }
 
@@ -33,6 +36,69 @@ export class DashboardComponent implements OnInit {
       console.log(success.body);
 
       this.assignedProblemStatement = success.body;
+
+
+    },error=>{
+
+    })
+
+  }
+
+  public onClickView(ps :any){
+
+    this.viewIssue = ps;
+    this.isView = true;
+    this.getFileByTokenNumber(ps.tokenNumber);
+    console.log("View Clicked");
+    console.log(ps);
+
+  }
+  public onClickBack(){
+    this.isView = false;
+
+  }
+
+  onClickResolve(ps:any){
+    console.log("Resolve Issue Clicked");
+    console.log(ps);
+    this.resolveIssue(ps.tokenNumber);
+
+  }
+  resolveIssue(tokenNumber: any) {
+    this.dashboardService.resolveIssueByTokenNumber(tokenNumber).subscribe(success=>{
+      console.log("inside Success")
+      console.log(success.body)
+      this.getAllAssignedProblemStatement(this.username);
+      // this.onClickView(this.assignedProblemStatement);
+    },error=>{})
+  }
+
+  onClickReject(ps:any){
+    console.log("Resolve Issue Clicked");
+    console.log(ps);
+    this.rejectIssue(ps.tokenNumber);
+
+  }
+  rejectIssue(tokenNumber: any) {
+    this.dashboardService.rejectIssueByTokenNumber(tokenNumber).subscribe(success=>{
+      console.log("inside Success")
+      console.log(success.body)
+      this.getAllAssignedProblemStatement(this.username);
+      // this.onClickView(this.assignedProblemStatement);
+    },error=>{})
+  }
+
+
+
+  getFileByTokenNumber(tokenNumber: any) {
+
+    this.dashboardService.getFileByTokenNumber(tokenNumber).subscribe(success=>{
+    
+      console.log("Gettinf File");
+
+      console.log(success.body);
+
+      this.files = success.body;
 
 
     },error=>{

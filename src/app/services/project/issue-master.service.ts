@@ -38,6 +38,14 @@ export class IssueMasterService {
       }));
   }
 
+  getFileByTokenNumber(tokenNumber: string) {
+    console.log("Inside getting users");
+    return this.http.get(this.contextPath + '/file/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+
 
 }
 

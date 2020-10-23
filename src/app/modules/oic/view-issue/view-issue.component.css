@@ -2,3 +2,10 @@
     font-size: 20px;
     background-color: rgb(23 162 184);
 }
+.card-body {
+padding:.25px;
+}
+
+.table td,th {
+    border-top: 1px;
+  }
