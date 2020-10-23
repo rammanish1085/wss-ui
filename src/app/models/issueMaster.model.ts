@@ -4,6 +4,7 @@ export class IssueMaster{
   public name: string;
   public locationCode: string;
   public locationName: string;
+  public officeType :string;
   public projectName: string;
   public projectModule: string;
   public problemStatement: string;
@@ -68,6 +69,14 @@ export class IssueMaster{
 
     getLocationName():string{
       return this.locationName;
+    }
+
+    setOfficeType(officeType:string){
+      this.officeType = officeType;
+    }
+
+    getOfficeType():string{
+      return this.officeType;
     }
 
 

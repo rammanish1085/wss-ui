@@ -36,6 +36,8 @@ export class AddIssueComponent implements OnInit {
 
   locationName: string;
 
+  officeType : string;
+
   name: string;
 
   moduleList: any;
@@ -70,6 +72,7 @@ export class AddIssueComponent implements OnInit {
     this.name = this.loggedInUser.getName();
     this.locationCode = this.loggedInUser.getLocationCode();
     this.locationName = this.loggedInUser.getLocationShortName();
+    this.officeType = this.loggedInUser.getOfficeType();
     console.log(this.loggedInUser);
     this.getOicProject();
     this.getOtherProject();
@@ -175,7 +178,12 @@ export class AddIssueComponent implements OnInit {
         this.tokenId = success.body;
         this.globalutilityService.successAlertMessage("Issue Created Successfully With Id:" + this.tokenId.tokenNumber);
       }
-    }, error => { })
+    }, error => {
+      if(error.status ===417){
+        this.globalutilityService.errorAlertMessage("Unable to create issue");
+        this.resetIssueMasterForm();
+      }
+     })
   }
 
   private preparedIssueMasterObject() {
@@ -184,6 +192,7 @@ export class AddIssueComponent implements OnInit {
     this.issueMasterModel.setName(this.name);
     this.issueMasterModel.setLocationCode(this.locationCode);
     this.issueMasterModel.setLocationName(this.locationName);
+    this.issueMasterModel.setOfficeType(this.officeType);
     this.issueMasterModel.setProjectName(this.issueMasterForm.value.projectName);
     this.issueMasterModel.setProjectModule(this.issueMasterForm.value.projectModule.projectModule);
     this.issueMasterModel.setDescription(this.issueMasterForm.value.description);
