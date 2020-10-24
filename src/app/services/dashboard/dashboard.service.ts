@@ -51,5 +51,13 @@ export class DashboardService {
     }))
 }
 
+getUserByTokenNumber(tokenNumber: any) {
+  console.log("Inside getting users");
+  return this.http.get(this.contextPath + '/project-problem-assignment/user/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
+    (response: HttpResponse<any>) => {
+      return response;
+    }));
+}
+
 
 }

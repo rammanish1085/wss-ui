@@ -15,12 +15,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ViewIssueComponent } from './view-issue/view-issue.component';
 import { TrackIssueComponent } from './track-issue/track-issue.component';
+import { RequestNotificationComponent } from './request-notification/request-notification.component';
 
 
 
 
 @NgModule({
-  declarations: [OicComponent,NavbarComponent,SidebarComponent, AddUserComponent,FooterComponent, AddIssueComponent, HomeComponent,DashboardComponent, ViewIssueComponent, TrackIssueComponent],
+  declarations: [OicComponent,NavbarComponent,SidebarComponent, AddUserComponent,FooterComponent, AddIssueComponent, HomeComponent,DashboardComponent, ViewIssueComponent, TrackIssueComponent, RequestNotificationComponent],
   imports: [
     CommonModule,
     OicRoutingModule,

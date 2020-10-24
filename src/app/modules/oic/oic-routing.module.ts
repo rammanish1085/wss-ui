@@ -8,6 +8,7 @@ import { DashboardComponent } from 'src/app/components/dashboard/dashboard.compo
 import { AuthGuard } from 'src/app/guard/auth.guard';
 import { ViewIssueComponent } from './view-issue/view-issue.component';
 import { TrackIssueComponent } from './track-issue/track-issue.component';
+import { RequestNotificationComponent } from './request-notification/request-notification.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,11 @@ const routes: Routes = [
           {
             path:'dashboard',
             component:DashboardComponent
+          },
+
+          {
+            path:'notification',
+            component:RequestNotificationComponent
           },
           {
             path: '', redirectTo: 'home', pathMatch: 'full'

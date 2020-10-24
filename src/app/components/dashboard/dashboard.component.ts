@@ -1,5 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 import { DashboardService } from 'src/app/services/dashboard/dashboard.service'
@@ -24,10 +25,19 @@ export class DashboardComponent implements OnInit {
   name:string;
   forwardIssue:any;
   remark:any;
+  requestInfoUser:any;
+  requestInfoForm: FormGroup;
 
   constructor(private dashboardService: DashboardService, private authorizationService: AuthorizationService, private globalutilityService: GobalutilityService) { }
 
   ngOnInit(): void {
+
+    this.requestInfoForm = new FormGroup({
+      remark: new FormControl('', Validators.required),
+      user: new FormControl('', Validators.required)
+     
+    });     
+ 
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
     this.locationCode = this.loggedInUser.getLocationCode();
@@ -133,10 +143,21 @@ onClickRequestInfo(viewIssue:any){
   this.isRequestInfo = true;
   console.log("request info click");
   console.log(viewIssue);
+  this.dashboardService.getUserByTokenNumber(viewIssue.tokenNumber).subscribe(success=>{
+    console.log("success");
+    console.log(success);
+    this.requestInfoUser = success.body;
+
+  },error=>{
+
+    console.log("eroor");
+  })
 }
+  
 
 public onClickRequestInfoBack(){
   this.isRequestInfo = false;
+  this.reset();
 }
 
 onForwardSubmit(){
@@ -179,6 +200,17 @@ private prepareFarwardIssueObject(){
 
     })
 
+  }
+  onSubmitRequestInfo(){
+    console.log(this.requestInfoForm.value);
+  }
+
+
+  reset() {
+    this.requestInfoForm.patchValue({
+      remark: '',
+      user: ''
+    });
   }
 
 }
