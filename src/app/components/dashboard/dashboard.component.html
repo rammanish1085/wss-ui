@@ -42,7 +42,7 @@
 
     <div class="container" *ngIf="isView">
       <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm" (click)="onClickBack()" ><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
-          <div class="table-responsive-md">
+        <div class="table-responsive-md">
          <table class="table table-hover">
           <tbody>
            <tr>
@@ -91,16 +91,16 @@
     
     <div class="d-flex justify-content-center mr-2"> 
      <div>
-      <button class="btn btn-success btn-sm mr-4" (click)="onClickResolve(viewIssue)">Resolve</button>
+      <button class="btn btn-success btn-sm mr-4" [disabled]="isDisable" (click)="onClickResolve(viewIssue)">Resolve</button>
      </div>
      <div>
-      <button class="btn btn-warning btn-sm mr-4" (click)="onClickReject(viewIssue)">Reject</button>
+      <button class="btn btn-warning btn-sm mr-4" [disabled]="isDisable" (click)="onClickReject(viewIssue)">Reject</button>
      </div>
      <div>
-      <button class="btn btn-primary btn-sm mr-4" (click)="onClickBack()">Forward</button>
+      <button class="btn btn-primary btn-sm mr-4" [disabled]="isDisable" (click)="onClickforward(viewIssue)">Forward</button>
      </div>
      <div>
-      <button class="btn btn-info btn-sm" (click)="onClickBack()">Request Info</button>
+      <button class="btn btn-info btn-sm" [disabled]="isDisable" (click)="onClickRequestInfo()">Request Info</button>
      </div>
     </div>
   </div> 
@@ -108,3 +108,66 @@
   </div>
   </div>
 </div>
+
+<div class="card mt-2" *ngIf="isForward">
+  <div class="card-header text-center main-header text-white">FORWARD ISSUE</div>
+  <div class="card-body">
+    <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm" (click)="onClickForwardBack()" ><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+     <table class="table d-flex justify-content-center">
+      <tbody>
+        <tr>
+            <th>Token Number</th> <td><small>{{viewIssue.tokenNumber}}</small></td>
+        </tr>
+        <tr>
+         <th>Project Name</th> <td><small>{{viewIssue.projectName}}</small></td>
+        </tr>
+        <tr>
+          <th>Project Module</th> <td><small>{{viewIssue.projectModule}}</small></td>
+        </tr>
+        <tr>
+          <th>Problem Statement</th> <td><small>{{viewIssue.projectProblemStatement}}</small></td>
+         </tr>
+         <tr>
+          <th>Description</th> <td><small>{{viewIssue.description}}</small></td>
+         </tr>
+         <tr>
+           <th>Remark</th> <td><textarea class="form-control" rows="3" id="comment" required></textarea></td>
+         </tr>
+     </tbody>
+   </table>
+   <div class="d-flex justify-content-center p-2 mb-2"><button class="btn btn-primary btn-sm" (click)="onForwardSubmit(viewIssue)">Submit</button></div>
+  
+  </div>
+</div> 
+
+<div class="card mt-2" *ngIf="isRequestInfo">
+  <div class="card-header text-center main-header text-white">REQUEST INFO</div>
+  <div class="card-body">
+    <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm" (click)="onClickRequestInfoBack()" ><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+     <table class="table d-flex justify-content-center">
+      <tbody>
+        <tr>
+            <th>Token Number</th> <td><small>{{viewIssue.tokenNumber}}</small></td>
+        </tr>
+        <tr>
+         <th>Project Name</th> <td><small>{{viewIssue.projectName}}</small></td>
+        </tr>
+        <tr>
+          <th>Project Module</th> <td><small>{{viewIssue.projectModule}}</small></td>
+        </tr>
+        <tr>
+          <th>Problem Statement</th> <td><small>{{viewIssue.projectProblemStatement}}</small></td>
+         </tr>
+         <tr>
+          <th>Description</th> <td><small>{{viewIssue.description}}</small></td>
+         </tr>
+         <tr>
+           <th>Remark</th> <td><textarea class="form-control" rows="3" id="comment" required></textarea></td>
+         </tr>
+     </tbody>
+   </table>
+   <div class="d-flex justify-content-center p-2 mb-2"><button class="btn btn-primary btn-sm" (click)="onClickRequestInfo()">Submit</button></div>
+  
+  </div>
+</div> 
+

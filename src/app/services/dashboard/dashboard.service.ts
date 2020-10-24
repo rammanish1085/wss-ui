@@ -30,21 +30,16 @@ export class DashboardService {
   }
 
   resolveIssueByTokenNumber(tokenNumber: string) {
-     return this.http.put(this.contextPath + 'project-problem-assignment/accept/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
+     return this.http.get(this.contextPath + 'project-problem-assignment/accept/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
         return response;
       }));
   }
 
   rejectIssueByTokenNumber(tokenNumber: string) {
-    return this.http.put(this.contextPath + 'project-problem-assignment/reject/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
+    return this.http.get(this.contextPath + 'project-problem-assignment/reject/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
      (response: HttpResponse<any>) => {
        return response;
      }));
  }
-
-
- 
-
-
 }
