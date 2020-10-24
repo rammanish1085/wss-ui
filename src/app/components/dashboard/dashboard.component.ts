@@ -140,17 +140,17 @@ public onClickRequestInfoBack(){
 }
 
 onForwardSubmit(){
-  console.log("submit clicked");
-  console.log(this.viewIssue)
   this.prepareFarwardIssueObject();
-  console.log("After object prepared")
-  console.log(this.forwardIssue);
-  this.dashboardService.forwardIssueToParent(this.forwardIssue).subscribe(success=>{
-    console.log("inside Success forward")
-    console.log(success);
+   this.dashboardService.forwardIssueToParent(this.forwardIssue).subscribe(success=>{
+    if(success.status === 201){
+      this.globalutilityService.alertWithSuccess("Issue Forwarded Successfully")
+      this.isForward = false;
+    }
   },error=>{
-    console.log("inside error forward")
-    console.log(error);
+    if(error.status === 417){
+      this.globalutilityService.errorAlertMessage("Unable to forward issue")
+      this.isForward = false;
+     }
   })
 
 }
