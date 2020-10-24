@@ -28,7 +28,7 @@
                   <td><small>{{ps.projectName}}</small></td>
                   <td><small>{{ps.projectModule}}</small></td>
                   <td><small>{{ps.projectProblemStatement}}</small></td>
-                  <td><span *ngIf="ps.status==='REJECTED'" class="badge badge-warning rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='COMPLETED'" class="badge badge-success rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='PENDING'" class="badge badge-danger rounded-0 p-1">{{ps.status}}</span></td>
+                  <td><span *ngIf="ps.status==='FORWARDED'" class="badge badge-warning rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='REJECTED'" class="badge badge-warning rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='COMPLETED'" class="badge badge-success rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='PENDING'" class="badge badge-danger rounded-0 p-1">{{ps.status}}</span></td>
                   <td><button class="btn btn-info btn-sm" (click)="onClickView(ps)">view</button></td>            
                 </tr>
               </tbody>
@@ -72,6 +72,10 @@
            </tr>
            <tr>
             <td><b>Description</b></td> <td>{{viewIssue.description}}</td>
+           </tr>
+
+           <tr>
+            <td *ngIf="viewIssue.officeType === 'CIRCLE' || viewIssue.officeType === 'REGION'"><b>Remark</b></td> <td *ngIf="viewIssue.officeType === 'CIRCLE'">{{viewIssue.divisionRemark}}</td> <td *ngIf="viewIssue.officeType === 'REGION'">{{viewIssue.circleRemark}}</td>
            </tr>
           
           </tbody>
@@ -131,7 +135,7 @@
           <th>Description</th> <td><small>{{viewIssue.description}}</small></td>
          </tr>
          <tr>
-           <th>Remark</th> <td><textarea class="form-control" rows="3" id="comment" required></textarea></td>
+           <th>Remark</th> <td><textarea class="form-control" rows="3" id="comment" [(ngModel)]="remark" name="remarks" required></textarea></td>
          </tr>
      </tbody>
    </table>

@@ -21,14 +21,18 @@ export class DashboardComponent implements OnInit {
   isDisable:boolean;
   isForward :boolean;
   isRequestInfo :boolean;
+  name:string;
+  forwardIssue:any;
+  remark:any;
 
   constructor(private dashboardService: DashboardService, private authorizationService: AuthorizationService, private globalutilityService: GobalutilityService) { }
 
   ngOnInit(): void {
-
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
-     this.getAllAssignedProblemStatement(this.username);
+    this.locationCode = this.loggedInUser.getLocationCode();
+    this.name = this.loggedInUser.getName();
+    this.getAllAssignedProblemStatement(this.username);
   }
 
   getAllAssignedProblemStatement(username: any) {
@@ -53,7 +57,7 @@ export class DashboardComponent implements OnInit {
     console.log("Checking Status");
     console.log(ps.status)
 
-    if(ps.status==='COMPLETED' || ps.status==='REJECTED'){
+    if(ps.status==='COMPLETED' || ps.status==='REJECTED' || ps.status==='FORWARDED'){
       this.isDisable = true;
     }else{
       this.isDisable = false;
@@ -138,6 +142,25 @@ public onClickRequestInfoBack(){
 onForwardSubmit(){
   console.log("submit clicked");
   console.log(this.viewIssue)
+  this.prepareFarwardIssueObject();
+  console.log("After object prepared")
+  console.log(this.forwardIssue);
+  this.dashboardService.forwardIssueToParent(this.forwardIssue).subscribe(success=>{
+    console.log("inside Success forward")
+    console.log(success);
+  },error=>{
+    console.log("inside error forward")
+    console.log(error);
+  })
+
+}
+private prepareFarwardIssueObject(){
+  this.forwardIssue = this.viewIssue;
+  this.forwardIssue.locationCode = this.locationCode;
+  this.forwardIssue.locationName = this.loggedInUser.getLocationName();
+  this.forwardIssue.username = this.username;
+  this.forwardIssue.name = this.name;
+  this.forwardIssue.remark = this.remark;
 
 }
 

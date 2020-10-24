@@ -29,7 +29,7 @@
                     <td><small>{{ps.projectModule}}</small></td>
                     <td><small>{{ps.problemStatement}}</small></td>
                     <td><small>{{ps.assignedUsername}}&nbsp; &nbsp; {{ps.assignedName}}</small></td>
-                    <td><span *ngIf="ps.status==='REJECTED'" class="badge badge-warning rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='COMPLETED'" class="badge badge-success rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='PENDING'" class="badge badge-danger rounded-0 p-1">{{ps.status}}</span></td>
+                    <td><span *ngIf="ps.status==='FORWARDED'" class="badge badge-warning rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='REJECTED'" class="badge badge-warning rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='COMPLETED'" class="badge badge-success rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='PENDING'" class="badge badge-danger rounded-0 p-1">{{ps.status}}</span></td>
                     <td><button class="btn btn-info btn-sm" (click)="onClickView(ps)" >view</button></td>            
                   </tr>
                 </tbody>
@@ -48,7 +48,7 @@
              <tr>
                <td><b>Token Number</b></td> <td><span class="badge badge-warning rounded-0 p-1">{{viewIssue.tokenNumber}}</span></td>
                <td><b>Status</b></td> <td><span *ngIf="viewIssue.status==='COMPLETED'" class="badge badge-success rounded-0 p-1">{{viewIssue.status}}</span><span *ngIf="viewIssue.status==='PENDING'" class="badge badge-danger rounded-0 p-1">{{viewIssue.status}}</span></td>
-             </tr>
+             </tr> 
              <tr>
               <td><b>Assigned User</b></td> <td><span class="badge badge-dark rounded-0 p-1">{{viewIssue.assignedUsername}}</span></td>
               <td><b>Assigned Username</b></td> <td><span class="badge badge-dark rounded-0 p-1">{{viewIssue.assignedName}}</span></td>

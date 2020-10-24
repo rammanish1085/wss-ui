@@ -42,4 +42,14 @@ export class DashboardService {
        return response;
      }));
  }
+ 
+ forwardIssueToParent(forwardIssue: any) {
+
+  return this.http.post(this.contextPath + 'project-problem-assignment', forwardIssue, { observe: 'response' }).pipe(
+    map((response: HttpResponse<any>) => {
+      return response;
+    }))
+}
+
+
 }
