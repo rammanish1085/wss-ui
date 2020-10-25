@@ -25,9 +25,9 @@ export class DashboardComponent implements OnInit {
   isRequestInfo :boolean;
   name:string;
   forwardIssue:any;
-  remark:any;
   requestInfoUser:any;
   requestInfoForm: FormGroup;
+  requestForwardForm :FormGroup;
   requestInfoObject:any ={};
 
   constructor(private dashboardService: DashboardService, private authorizationService: AuthorizationService,private requestInformationService:RequestInformationService, 
@@ -39,7 +39,14 @@ export class DashboardComponent implements OnInit {
       remark: new FormControl('', Validators.required),
       user: new FormControl('', Validators.required)
      
+    });
+    
+    this.requestForwardForm = new FormGroup({
+      remark: new FormControl('', Validators.required),
+         
     });     
+    
+
     
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
@@ -164,7 +171,7 @@ public onClickRequestInfoBack(){
 }
 
 onForwardSubmit(){
-  this.prepareFarwardIssueObject();
+ this.prepareFarwardIssueObject();
    this.dashboardService.forwardIssueToParent(this.forwardIssue).subscribe(success=>{
     if(success.status === 201){
       this.globalutilityService.alertWithSuccess("Issue Forwarded Successfully")
@@ -184,7 +191,7 @@ private prepareFarwardIssueObject(){
   this.forwardIssue.locationName = this.loggedInUser.getLocationName();
   this.forwardIssue.username = this.username;
   this.forwardIssue.name = this.name;
-  this.forwardIssue.remark = this.remark;
+  this.forwardIssue.remark = this.requestForwardForm.value.remark;
 
 }
 
