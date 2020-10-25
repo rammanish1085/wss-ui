@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user.model';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 import { DashboardService } from 'src/app/services/dashboard/dashboard.service'
 import { GobalutilityService } from 'src/app/utility/gobalutility.service';
+import {RequestInformationService} from 'src/app/services/project/request-information.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -27,8 +28,10 @@ export class DashboardComponent implements OnInit {
   remark:any;
   requestInfoUser:any;
   requestInfoForm: FormGroup;
+  requestInfoObject:any ={};
 
-  constructor(private dashboardService: DashboardService, private authorizationService: AuthorizationService, private globalutilityService: GobalutilityService) { }
+  constructor(private dashboardService: DashboardService, private authorizationService: AuthorizationService,private requestInformationService:RequestInformationService, 
+    private globalutilityService: GobalutilityService) { }
 
   ngOnInit(): void {
 
@@ -37,7 +40,7 @@ export class DashboardComponent implements OnInit {
       user: new FormControl('', Validators.required)
      
     });     
- 
+    
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
     this.locationCode = this.loggedInUser.getLocationCode();
@@ -203,6 +206,22 @@ private prepareFarwardIssueObject(){
   }
   onSubmitRequestInfo(){
     console.log(this.requestInfoForm.value);
+    this.prepareRequestInfoObject();
+    console.log("After Object prepared");
+    console.log(this.requestInfoObject);
+    this.requestInformationService.requestInformationToOrigin(this.requestInfoObject).subscribe(success=>{
+      console.log("Inside success");
+    },error=>{})
+
+    
+  }
+  prepareRequestInfoObject() {
+  this.requestInfoObject.tokenNumber = this.requestInfoForm.value.user.tokenNumber;
+  this.requestInfoObject.username = this.requestInfoForm.value.user.username;
+  this.requestInfoObject.name = this.requestInfoForm.value.user.name;
+  this.requestInfoObject.requestedUsername = this.username;
+  this.requestInfoObject.requestedName = this.name;
+  this.requestInfoObject.requestMessage = this.requestInfoForm.value.remark;
   }
 
 
