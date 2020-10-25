@@ -200,7 +200,7 @@
               <select class="form-control" name="requestinfo" formControlName="user"  required>
                 <option value="" disabled>Select user</option>
                 <option *ngFor="let info of requestInfoUser" [ngValue]="info" class="form-control form-control-sm text-center">
-                  {{info.username}}</option>
+                  {{info.username}}&nbsp;{{info.name}}</option>
               </select>
             </div>
            </td>
