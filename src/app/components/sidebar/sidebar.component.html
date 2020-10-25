@@ -37,13 +37,13 @@
         <li class="active"><a [routerLink]="['track-issue']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">Track Issue</a></li>
 
       </ul>
-
+      
       <li>
-        <a [routerLink]="['notification']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
-          <i class="fa fa-bell fa-lg mr-2 "></i> Notification <span class="badge badge-light">4</span>
+        <a [routerLink]="['notification']" [routerLinkActiveOptions]="{exact:true}" (click)="oclickNotification()" routerLinkActive="active">
+          <i class="fa fa-bell fa-lg mr-2 "></i> Notification <span class="badge badge-light">{{notification}}</span>
         </a>
       </li>
-
+       
 
       <li data-toggle="collapse" data-target="#new" class="collapsed">
         <a><i class="fa fa-file fa-lg mr-2"></i> Report <span class="arrow"></span></a>

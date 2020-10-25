@@ -191,30 +191,33 @@ private prepareFarwardIssueObject(){
   getFileByTokenNumber(tokenNumber: any) {
 
     this.dashboardService.getFileByTokenNumber(tokenNumber).subscribe(success=>{
-    
-      console.log("Gettinf File");
-
       console.log(success.body);
-
       this.files = success.body;
-
-
     },error=>{
 
     })
 
   }
   onSubmitRequestInfo(){
-    console.log(this.requestInfoForm.value);
     this.prepareRequestInfoObject();
-    console.log("After Object prepared");
-    console.log(this.requestInfoObject);
     this.requestInformationService.requestInformationToOrigin(this.requestInfoObject).subscribe(success=>{
       console.log("Inside success");
-    },error=>{})
+      console.log(success);
+      if(success.status === 201){
+        this.isRequestInfo = false;
+          this.reset();
+        this.globalutilityService.alertWithSuccess("Request info sent successfully")
+      }
+    },
+    error=>{
+      if(error.status === 417){
+        this.globalutilityService.errorAlertMessage("Unable to sent request info");
+        this.isRequestInfo = false;
+      }
 
-    
+    })
   }
+
   prepareRequestInfoObject() {
   this.requestInfoObject.tokenNumber = this.requestInfoForm.value.user.tokenNumber;
   this.requestInfoObject.username = this.requestInfoForm.value.user.username;

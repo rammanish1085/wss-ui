@@ -21,5 +21,12 @@ export class RequestInformationService {
       }))
   }
 
+  getRequestInformation(username: string) {
+    return this.http.get(this.contextPath + 'request-information/user-name/' + username, { observe: 'response' }).pipe(map(
+     (response: HttpResponse<any>) => {
+       return response;
+     }));
+ }
+
 
 }
