@@ -63,9 +63,9 @@
               </tr>
               <tr>
                 <td><b>Assigned User</b></td>
-                <td><span class="badge badge-dark rounded-0 p-1">{{viewIssue.assignUsername}}</span></td>
+                <td><span  *ngIf="viewIssue.status==='FORWARDED'" class="badge badge-dark rounded-0 p-1">{{viewIssue.forwardUsername}}</span><span  *ngIf="viewIssue.status==='COMPLETED' || viewIssue.status==='PENDING'" class="badge badge-dark rounded-0 p-1">{{viewIssue.assignUsername}}</span></td>
                 <td><b>Assigned Username</b></td>
-                <td><span class="badge badge-dark rounded-0 p-1">{{viewIssue.assignName}}</span></td>
+                <td><span  *ngIf="viewIssue.status==='FORWARDED'" class="badge badge-dark rounded-0 p-1">{{viewIssue.forwardName}}</span><span  *ngIf="viewIssue.status==='COMPLETED' || viewIssue.status==='PENDING'" class="badge badge-dark rounded-0 p-1">{{viewIssue.assignName}}</span></td>
               </tr>
               <tr>
                 <td><b>Created By</b></td>
