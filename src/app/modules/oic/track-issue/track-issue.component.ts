@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {IssueStatusService} from 'src/app/services/project/issue-status.service'
  
 @Component({
@@ -9,21 +10,41 @@ import {IssueStatusService} from 'src/app/services/project/issue-status.service'
 export class TrackIssueComponent implements OnInit {
   
   statusList:any;
+  tokenNumber:string;
+  isStatus :boolean;
+  tokenSearchFrom :FormGroup
   constructor(private issueStatusService:IssueStatusService) { }
 
   ngOnInit(): void {
-    this.getStatus();
+
+    this.tokenSearchFrom = new FormGroup({
+      tokenNumber: new FormControl('', Validators.required),
+      });
+    
   }
-  getStatus() {
-    this.issueStatusService.getRequestInformation("NGB-1-26102020-22").subscribe(success=>{
+  searchClicked() {
+    console.log("seacrch clicked");
+    console.log(this.tokenSearchFrom.value);
+    this.tokenNumber =this.tokenSearchFrom.value.tokenNumber;
+    
+      this.issueStatusService.getRequestInformation(this.tokenSearchFrom.value.tokenNumber).subscribe(success=>{
+      this.isStatus = true;
       console.log("inside succes");
       console.log(success.body);
       this.statusList = success.body;
+      this.reset();
 
     },error=>{
+      this.reset()
 
     })
     
+  }
+
+  reset() {
+    this.tokenSearchFrom.patchValue({
+      tokenNumber: ''     
+    });
   }
 
 }

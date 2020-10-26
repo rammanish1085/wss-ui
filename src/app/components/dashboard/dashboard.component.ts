@@ -176,11 +176,14 @@ onForwardSubmit(){
     if(success.status === 201){
       this.globalutilityService.alertWithSuccess("Issue Forwarded Successfully")
       this.isForward = false;
+      this.getAllAssignedProblemStatement(this.username);
+      this.resetForwardForm()
     }
   },error=>{
     if(error.status === 417){
       this.globalutilityService.errorAlertMessage("Unable to forward issue")
       this.isForward = false;
+      this.resetForwardForm()
      }
   })
 
@@ -239,6 +242,12 @@ private prepareFarwardIssueObject(){
     this.requestInfoForm.patchValue({
       remark: '',
       user: ''
+    });
+  }
+  
+  resetForwardForm() {
+    this.requestForwardForm.patchValue({
+      remark: ''     
     });
   }
 
