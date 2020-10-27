@@ -6,6 +6,10 @@
          <div class="card border-0 rounded-0">
            <div class="card-body">
             <div class="table-responsive-md">
+
+              <nav class="navbar">
+                  <input type="text" class="form-control" name="tokenNumber" [(ngModel)]="tokenNumber" (ngModelChange)="search()" placeholder="Enter token number to search">
+              </nav>
               <table class="table table-hover" *ngIf="!isView">
                 <thead>
                   <tr>
@@ -21,7 +25,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let ps of assignedProblemStatement let i = index">
+                  <tr *ngFor=" let i = index let ps of assignedProblemStatement |
+                  paginate: {id:'paging_issues',itemsPerPage:3,currentPage: page,totalItems:total_issues}; ">
                     <td><small>{{i+1}}</small></td>
                     <td><small>{{ps.tokenNumber}}</small></td>
                     <td><small>{{ps.locationCode}}</small></td>
@@ -34,6 +39,8 @@
                   </tr>
                 </tbody>
               </table>
+              <pagination-controls id="paging_issues" maxSize="5" class="d-flex justify-content-center" directionLinks="true" (pageChange)="page=$event">
+              </pagination-controls>
             </div>
   
           </div>

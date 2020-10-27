@@ -14,6 +14,7 @@ import {AuthGuard} from 'src/app/guard/auth.guard'
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,8 @@ import {AuthGuard} from 'src/app/guard/auth.guard'
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
+    AppRoutingModule
+    
      ],
   providers: [
     AuthorizationService,

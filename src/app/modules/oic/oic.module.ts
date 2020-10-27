@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ViewIssueComponent } from './view-issue/view-issue.component';
 import { TrackIssueComponent } from './track-issue/track-issue.component';
 import { RequestNotificationComponent } from './request-notification/request-notification.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -28,7 +29,8 @@ import { RequestNotificationComponent } from './request-notification/request-not
     FormsModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ]
 })
 export class OicModule { }
