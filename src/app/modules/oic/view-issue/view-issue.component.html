@@ -26,7 +26,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor=" let i = index let ps of assignedProblemStatement |
-                  paginate: {id:'paging_issues',itemsPerPage:3,currentPage: page,totalItems:total_issues}; ">
+                  paginate: {id:'paging_issues',itemsPerPage:5,currentPage: page,totalItems:total_issues}; ">
                     <td><small>{{i+1}}</small></td>
                     <td><small>{{ps.tokenNumber}}</small></td>
                     <td><small>{{ps.locationCode}}</small></td>
