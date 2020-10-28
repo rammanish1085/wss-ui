@@ -29,18 +29,25 @@ export class DashboardService {
       }));
   }
 
-  resolveIssueByTokenNumber(tokenNumber: string) {
-     return this.http.get(this.contextPath + 'project-problem-assignment/accept/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
-      (response: HttpResponse<any>) => {
+  resolveIssueByTokenNumber(tokenNumber: string,comments:string) {
+
+    let formData = new FormData();
+    formData.append('tokenNumber',tokenNumber);
+    formData.append('comments',comments);
+    return this.http.post(this.contextPath + 'project-problem-assignment/accept', formData, { observe: 'response' }).pipe(
+      map((response: HttpResponse<any>) => {
         return response;
       }));
-  }
+    }
 
-  rejectIssueByTokenNumber(tokenNumber: string) {
-    return this.http.get(this.contextPath + 'project-problem-assignment/reject/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
-     (response: HttpResponse<any>) => {
-       return response;
-     }));
+  rejectIssueByTokenNumber(tokenNumber: string,comments:string) {
+    let formData = new FormData();
+    formData.append('tokenNumber',tokenNumber);
+    formData.append('comments',comments);
+    return this.http.post(this.contextPath + 'project-problem-assignment/reject', formData, { observe: 'response' }).pipe(
+      map((response: HttpResponse<any>) => {
+        return response;
+      }));
  }
  
  forwardIssueToParent(forwardIssue: any) {

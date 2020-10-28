@@ -5,7 +5,7 @@ import { User } from 'src/app/models/user.model';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 import { DashboardService } from 'src/app/services/dashboard/dashboard.service'
 import { GobalutilityService } from 'src/app/utility/gobalutility.service';
-import {RequestInformationService} from 'src/app/services/project/request-information.service'
+import { RequestInformationService } from 'src/app/services/project/request-information.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -16,21 +16,23 @@ export class DashboardComponent implements OnInit {
   loggedInUser: User;
   username: string;
   locationCode: string;
-  assignedProblemStatement:any;
-  files:any;
-  isView:boolean;
-  viewIssue:any;
-  isDisable:boolean;
-  isForward :boolean;
-  isRequestInfo :boolean;
-  name:string;
-  forwardIssue:any;
-  requestInfoUser:any;
-  requestInfoForm: FormGroup;
-  requestForwardForm :FormGroup;
-  requestInfoObject:any ={};
+  assignedProblemStatement: any;
+  files: any;
+  isView: boolean;
+  viewIssue: any;
+  isDisable: boolean;
+  isForward: boolean;
+  isRequestInfo: boolean;
+  isResolve: boolean;
+  isReject: boolean;
+  name: string;
+  forwardIssue: any;
+  requestInfoUser: any;
+  requestInfoForm; rejectForm; resolveForm: FormGroup;
+  requestForwardForm: FormGroup;
+  requestInfoObject: any = {};
 
-  constructor(private dashboardService: DashboardService, private authorizationService: AuthorizationService,private requestInformationService:RequestInformationService, 
+  constructor(private dashboardService: DashboardService, private authorizationService: AuthorizationService, private requestInformationService: RequestInformationService,
     private globalutilityService: GobalutilityService) { }
 
   ngOnInit(): void {
@@ -38,16 +40,24 @@ export class DashboardComponent implements OnInit {
     this.requestInfoForm = new FormGroup({
       remark: new FormControl('', Validators.required),
       user: new FormControl('', Validators.required)
-     
+
     });
-    
+
     this.requestForwardForm = new FormGroup({
       remark: new FormControl('', Validators.required),
-         
-    });     
-    
 
-    
+    });
+
+    this.resolveForm = new FormGroup({
+      comments: new FormControl('', Validators.required),
+    });
+
+    this.rejectForm = new FormGroup({
+      comments: new FormControl('', Validators.required),
+    });
+
+
+
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
     this.locationCode = this.loggedInUser.getLocationCode();
@@ -57,8 +67,8 @@ export class DashboardComponent implements OnInit {
 
   getAllAssignedProblemStatement(username: any) {
 
-    this.dashboardService.getAllAssignedProblem(username).subscribe(success=>{
-    
+    this.dashboardService.getAllAssignedProblem(username).subscribe(success => {
+
       console.log("Getting Assign problem");
 
       console.log(success.body);
@@ -66,23 +76,23 @@ export class DashboardComponent implements OnInit {
       this.assignedProblemStatement = success.body;
 
 
-    },error=>{
+    }, error => {
 
     })
 
   }
 
-  public onClickView(ps :any){
+  public onClickView(ps: any) {
 
     console.log("Checking Status");
     console.log(ps.status)
 
-    if(ps.status==='COMPLETED' || ps.status==='REJECTED' || ps.status==='FORWARDED'){
+    if (ps.status === 'COMPLETED' || ps.status === 'REJECTED' || ps.status === 'FORWARDED') {
       this.isDisable = true;
-    }else{
+    } else {
       this.isDisable = false;
     }
-    
+
 
     this.viewIssue = ps;
     this.isView = true;
@@ -91,23 +101,23 @@ export class DashboardComponent implements OnInit {
     console.log(ps);
 
   }
-  public onClickBack(){
+  public onClickBack() {
     this.isView = false;
     this.isForward = false;
 
   }
 
-  onClickResolve(ps:any){
+  onClickResolve(ps: any) {
     this.isForward = false;
-    console.log("Resolve Issue Clicked");
-    console.log(ps);
-    this.resolveIssue(ps.tokenNumber);
-
+    this.isReject = false;
+    this.isRequestInfo = false;
+    this.isResolve = true;
   }
-  resolveIssue(tokenNumber: any) {
-    this.dashboardService.resolveIssueByTokenNumber(tokenNumber).subscribe(success => {
+
+  onResolveSubmit() {
+    this.dashboardService.resolveIssueByTokenNumber(this.viewIssue.tokenNumber, this.resolveForm.value.comments).subscribe(success => {
       if (success.status === 201) {
-        this.globalutilityService.alertWithSuccess("Issue resolve successfully");
+        this.globalutilityService.successAlertMessage("Issue resolve successfully");
       }
       this.getAllAssignedProblemStatement(this.username);
     }, error => {
@@ -115,126 +125,153 @@ export class DashboardComponent implements OnInit {
         this.globalutilityService.errorAlertMessage("Unable to resolve !!");
       }
     })
+
   }
 
-  onClickReject(ps:any){
+  onClickResolveBack() {
     this.isForward = false;
+    this.isReject = false;
+    this.isRequestInfo = false;
+    this.isResolve = false;
+  }
+  onClickReject(ps: any) {
+    this.isForward = false;
+    this.isReject = true;
+    this.isRequestInfo = false;
+    this.isResolve = false;
     console.log("Resolve Issue Clicked");
     console.log(ps);
-    this.rejectIssue(ps.tokenNumber);
 
   }
-  rejectIssue(tokenNumber: any) {
-    this.dashboardService.rejectIssueByTokenNumber(tokenNumber).subscribe(success=>{
+
+  onRejectSubmit() {
+    this.dashboardService.rejectIssueByTokenNumber(this.viewIssue.tokenNumber, this.rejectForm.value.comments).subscribe(success => {
       if (success.status === 201) {
-        this.globalutilityService.alertWithSuccess("Issue rejected successfully");
+        this.globalutilityService.successAlertMessage("Issue rejected successfully");
       }
       this.getAllAssignedProblemStatement(this.username);
-    },error=>{
+    }, error => {
       if (error.status === 417) {
         this.globalutilityService.errorAlertMessage("Unable to reject issue !!");
       }
     })
+
   }
 
-  onClickforward(viewIssue:any){
+
+  onClickRejectBack() {
+    this.isForward = false;
+    this.isReject = false;
     this.isRequestInfo = false;
+    this.isResolve = false;
+
+  }
+
+  onClickforward(viewIssue: any) {
     this.isForward = true;
+    this.isReject = false;
+    this.isRequestInfo = false;
+    this.isResolve = false;
     console.log("forward click");
     console.log(viewIssue);
   }
 
-  public onClickForwardBack(){
+  public onClickForwardBack() {
     this.isForward = false;
-}
+    this.isReject = false;
+    this.isRequestInfo = false;
+    this.isResolve = false;
+  }
 
-onClickRequestInfo(viewIssue:any){
-  this.isForward = false;
-  this.isRequestInfo = true;
-  console.log("request info click");
-  console.log(viewIssue);
-  this.dashboardService.getUserByTokenNumber(viewIssue.tokenNumber).subscribe(success=>{
-    console.log("success");
-    console.log(success);
-    this.requestInfoUser = success.body;
+  onClickRequestInfo(viewIssue: any) {
+    this.isForward = false;
+    this.isReject = false;
+    this.isRequestInfo = true;
+    this.isResolve = false;
+    console.log("request info click");
+    console.log(viewIssue);
+    this.dashboardService.getUserByTokenNumber(viewIssue.tokenNumber).subscribe(success => {
+      console.log("success");
+      console.log(success);
+      this.requestInfoUser = success.body;
 
-  },error=>{
+    }, error => {
 
-    console.log("eroor");
-  })
-}
-  
+      console.log("eroor");
+    })
+  }
 
-public onClickRequestInfoBack(){
-  this.isRequestInfo = false;
-  this.reset();
-}
 
-onForwardSubmit(){
- this.prepareFarwardIssueObject();
-   this.dashboardService.forwardIssueToParent(this.forwardIssue).subscribe(success=>{
-    if(success.status === 201){
-      this.globalutilityService.alertWithSuccess("Issue Forwarded Successfully")
-      this.isForward = false;
-      this.getAllAssignedProblemStatement(this.username);
-      this.resetForwardForm()
-    }
-  },error=>{
-    if(error.status === 417){
-      this.globalutilityService.errorAlertMessage("Unable to forward issue")
-      this.isForward = false;
-      this.resetForwardForm()
-     }
-  })
+  public onClickRequestInfoBack() {
+    this.isRequestInfo = false;
+    this.reset();
+  }
 
-}
-private prepareFarwardIssueObject(){
-  this.forwardIssue = this.viewIssue;
-  this.forwardIssue.locationCode = this.locationCode;
-  this.forwardIssue.locationName = this.loggedInUser.getLocationName();
-  this.forwardIssue.username = this.username;
-  this.forwardIssue.name = this.name;
-  this.forwardIssue.remark = this.requestForwardForm.value.remark;
+  onForwardSubmit() {
+    this.prepareFarwardIssueObject();
+    this.dashboardService.forwardIssueToParent(this.forwardIssue).subscribe(success => {
+      if (success.status === 201) {
+        this.globalutilityService.alertWithSuccess("Issue Forwarded Successfully")
+        this.isForward = false;
+        this.getAllAssignedProblemStatement(this.username);
+        this.resetForwardForm()
+      }
+    }, error => {
+      if (error.status === 417) {
+        this.globalutilityService.errorAlertMessage("Unable to forward issue")
+        this.isForward = false;
+        this.resetForwardForm()
+      }
+    })
 
-}
+  }
+  private prepareFarwardIssueObject() {
+    this.forwardIssue = this.viewIssue;
+    this.forwardIssue.locationCode = this.locationCode;
+    this.forwardIssue.locationName = this.loggedInUser.getLocationName();
+    this.forwardIssue.username = this.username;
+    this.forwardIssue.name = this.name;
+    this.forwardIssue.remark = this.requestForwardForm.value.remark;
+
+  }
 
   getFileByTokenNumber(tokenNumber: any) {
 
-    this.dashboardService.getFileByTokenNumber(tokenNumber).subscribe(success=>{
+    this.dashboardService.getFileByTokenNumber(tokenNumber).subscribe(success => {
       console.log(success.body);
       this.files = success.body;
-    },error=>{
+    }, error => {
 
     })
 
   }
-  onSubmitRequestInfo(){
+  onSubmitRequestInfo() {
     this.prepareRequestInfoObject();
-    this.requestInformationService.requestInformationToOrigin(this.requestInfoObject).subscribe(success=>{
+    this.requestInformationService.requestInformationToOrigin(this.requestInfoObject).subscribe(success => {
       console.log("Inside success");
       console.log(success);
-      if(success.status === 201){
+      if (success.status === 201) {
         this.isRequestInfo = false;
-          this.reset();
+        this.reset();
         this.globalutilityService.alertWithSuccess("Request info sent successfully")
       }
     },
-    error=>{
-      if(error.status === 417){
-        this.globalutilityService.errorAlertMessage("Unable to sent request info");
-        this.isRequestInfo = false;
-      }
+      error => {
+        if (error.status === 417) {
+          this.globalutilityService.errorAlertMessage("Unable to sent request info");
+          this.isRequestInfo = false;
+        }
 
-    })
+      })
   }
 
   prepareRequestInfoObject() {
-  this.requestInfoObject.tokenNumber = this.requestInfoForm.value.user.tokenNumber;
-  this.requestInfoObject.username = this.requestInfoForm.value.user.username;
-  this.requestInfoObject.name = this.requestInfoForm.value.user.name;
-  this.requestInfoObject.requestedUsername = this.username;
-  this.requestInfoObject.requestedName = this.name;
-  this.requestInfoObject.requestMessage = this.requestInfoForm.value.remark;
+    this.requestInfoObject.tokenNumber = this.requestInfoForm.value.user.tokenNumber;
+    this.requestInfoObject.username = this.requestInfoForm.value.user.username;
+    this.requestInfoObject.name = this.requestInfoForm.value.user.name;
+    this.requestInfoObject.requestedUsername = this.username;
+    this.requestInfoObject.requestedName = this.name;
+    this.requestInfoObject.requestMessage = this.requestInfoForm.value.remark;
   }
 
 
@@ -244,10 +281,10 @@ private prepareFarwardIssueObject(){
       user: ''
     });
   }
-  
+
   resetForwardForm() {
     this.requestForwardForm.patchValue({
-      remark: ''     
+      remark: ''
     });
   }
 

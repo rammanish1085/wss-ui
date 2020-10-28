@@ -88,16 +88,14 @@
                 <td>{{viewIssue.projectModule}}</td>
               </tr>
               <tr>
-                <td><b>Problem Statement</b></td>
-                <td>{{viewIssue.projectProblemStatement}}</td>
+                <td><b>Problem Statement</b></td><td>{{viewIssue.projectProblemStatement}}</td><td><b>Status Comments</b></td><td>{{viewIssue.userComments}}</td>
               </tr>
               <tr>
-                <td><b>Description</b></td>
-                <td>{{viewIssue.description}}</td>
+                <td><b>Description</b></td><td>{{viewIssue.description}}</td>
               </tr>
 
               <tr>
-                <td *ngIf="viewIssue.officeType === 'CIRCLE' || viewIssue.officeType === 'REGION'"><b>Remark</b></td>
+                <td *ngIf="viewIssue.officeType === 'CIRCLE' || viewIssue.officeType === 'IT'"><b>Remark</b></td>
                 <td *ngIf="viewIssue.officeType === 'CIRCLE'">{{viewIssue.divisionRemark}}</td>
                 <td *ngIf="viewIssue.officeType === 'REGION'">{{viewIssue.circleRemark}}</td>
               </tr>
@@ -153,22 +151,6 @@
             <th>Token Number</th>
             <td><small>{{viewIssue.tokenNumber}}</small></td>
           </tr>
-          <!-- <tr>
-            <th>Project Name</th>
-            <td><small>{{viewIssue.projectName}}</small></td>
-          </tr>
-          <tr>
-            <th>Project Module</th>
-            <td><small>{{viewIssue.projectModule}}</small></td>
-          </tr>
-          <tr>
-            <th>Problem Statement</th>
-            <td><small>{{viewIssue.projectProblemStatement}}</small></td>
-          </tr>
-          <tr>
-            <th>Description</th>
-            <td><small>{{viewIssue.description}}</small></td>
-          </tr> -->
           <tr>
             <th>Remark</th>
             <td><textarea class="form-control" rows="2" id="remark" formControlName="remark" name="remarks"
@@ -181,6 +163,58 @@
     </form>
     </div>
 </div>
+
+
+<div class="card mt-2" *ngIf="isResolve">
+  <div class="card-header text-center main-header text-white">RESOLVE ISSUE</div>
+  <div class="card-body">
+    <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
+        (click)="onClickResolveBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+    <form [formGroup]="resolveForm" (ngSubmit)="onResolveSubmit()">
+      <table class="table d-flex justify-content-center">
+        <tbody>
+          <tr>
+            <th>Token Number</th>
+            <td><small >{{viewIssue.tokenNumber}}</small></td>
+          </tr>
+           <tr>
+            <th>comments</th>
+            <td><textarea class="form-control" rows="2" id="remark" formControlName="comments" name="remarks"
+                required></textarea></td>
+          </tr>
+          <tr><th></th><td><button type="submit" [disabled]="resolveForm.invalid" class="btn btn-primary btn-sm ml-5">Submit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+    </div>
+</div>
+
+<div class="card mt-2" *ngIf="isReject">
+  <div class="card-header text-center main-header text-white">REJECT ISSUE</div>
+  <div class="card-body">
+    <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
+        (click)="onClickRejectBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+    <form [formGroup]="rejectForm" (ngSubmit)="onRejectSubmit()">
+      <table class="table d-flex justify-content-center">
+        <tbody>
+          <tr>
+            <th>Token Number</th>
+            <td><small>{{viewIssue.tokenNumber}}</small></td>
+          </tr>
+           <tr>
+            <th>comments</th>
+            <td><textarea class="form-control" rows="2" id="remark" formControlName="comments" name="remarks"
+                required></textarea></td>
+          </tr>
+          <tr><th></th><td><button type="submit" [disabled]="rejectForm.invalid" class="btn btn-primary btn-sm ml-5">Submit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+    </div>
+</div>
+
 
 <div class="card mt-2" *ngIf="isRequestInfo">
   <div class="card-header text-center main-header text-white">REQUEST INFO</div>
