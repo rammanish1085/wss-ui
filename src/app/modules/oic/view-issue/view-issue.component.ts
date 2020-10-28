@@ -90,6 +90,19 @@ export class ViewIssueComponent implements OnInit {
 
   }
 
+  viewFileClicked(file:any){
+    console.log("file view Clicked");
+    console.log(file);
+    this.issueMasterService.viewFileByTokenNumberAndFileName(file.tokenNumber,file.name).subscribe(success=>{
+      console.log("Inside Success");
+      console.log(success);
+    },error=>{
+      console.log("Inside erro");
+      console.log(error);
+    })
+  }
+
+
   search()
   {
     if(this.tokenNumber=="")

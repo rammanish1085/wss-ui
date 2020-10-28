@@ -46,6 +46,16 @@ export class IssueMasterService {
       }));
   }
 
+  viewFileByTokenNumberAndFileName(tokenNumber: string,fileName:string) {
+    let formData = new FormData();
+    formData.append('tokenNumber',tokenNumber);
+    formData.append('fileName',fileName);
+    return this.http.post(this.contextPath + 'file/downloadFile', formData, { observe: 'response' }).pipe(
+      map((response: HttpResponse<any>) => {
+        return response;
+      }));
+ }
+
 
 }
 
