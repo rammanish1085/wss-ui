@@ -6,6 +6,8 @@ import { AuthorizationService } from 'src/app/services/authorization-service/aut
 import { DashboardService } from 'src/app/services/dashboard/dashboard.service'
 import { GobalutilityService } from 'src/app/utility/gobalutility.service';
 import { RequestInformationService } from 'src/app/services/project/request-information.service'
+import { IssueMasterService } from 'src/app/services/project/issue-master.service';
+import { GlobalConstants } from 'src/app/utility/global.constants';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,7 +34,8 @@ export class DashboardComponent implements OnInit {
   requestForwardForm: FormGroup;
   requestInfoObject: any = {};
 
-  constructor(private dashboardService: DashboardService, private authorizationService: AuthorizationService, private requestInformationService: RequestInformationService,
+  constructor(private dashboardService: DashboardService,private issueMasterService:IssueMasterService,
+     private authorizationService: AuthorizationService, private requestInformationService: RequestInformationService,
     private globalutilityService: GobalutilityService) { }
 
   ngOnInit(): void {
@@ -211,7 +214,7 @@ export class DashboardComponent implements OnInit {
     this.prepareFarwardIssueObject();
     this.dashboardService.forwardIssueToParent(this.forwardIssue).subscribe(success => {
       if (success.status === 201) {
-        this.globalutilityService.alertWithSuccess("Issue Forwarded Successfully")
+        this.globalutilityService.successAlertMessage("Issue Forwarded Successfully")
         this.isForward = false;
         this.getAllAssignedProblemStatement(this.username);
         this.resetForwardForm()
@@ -253,7 +256,7 @@ export class DashboardComponent implements OnInit {
       if (success.status === 201) {
         this.isRequestInfo = false;
         this.reset();
-        this.globalutilityService.alertWithSuccess("Request info sent successfully")
+        this.globalutilityService.successAlertMessage("Request info sent successfully")
       }
     },
       error => {
@@ -287,5 +290,43 @@ export class DashboardComponent implements OnInit {
       remark: ''
     });
   }
+
+  viewFileClicked(file: any) {
+    console.log("file view Clicked");
+    console.log(file);
+    this.issueMasterService.viewFile(file.tokenNumber, file.name, GlobalConstants.FALSE).subscribe(success => {
+      this.saveFile(success, file.originalName)
+    }, error => {
+      this.handleError(error);
+    })
+  }
+
+
+
+  /**
+   * Save blob to file
+   * @param blob
+   */
+  saveFile(success: any, fileName: string) {
+    if (success) {
+      // this.exportType ="pdf"
+      let blob = GobalutilityService.createBlobFromResponse(success);
+      this.globalutilityService.saveFile(blob, fileName);
+      // this.reset();
+    }
+  }
+
+  /**
+   * Handle errors
+   * @param error
+   */
+  handleError(error: any) {
+    this.globalutilityService.parseStringFromBlob(error.error);
+    // this.reset();
+    this.globalutilityService.errorAlertMessage("Unable to download file.");
+  }
+
+
+
 
 }

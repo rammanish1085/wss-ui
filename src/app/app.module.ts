@@ -11,6 +11,7 @@ import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { AuthorizationInterceptor } from '../app/interceptor/authorization.interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthGuard} from 'src/app/guard/auth.guard'
+import {GlobalConstants} from 'src/app/utility/global.constants';
 
 
 
@@ -30,6 +31,7 @@ import {AuthGuard} from 'src/app/guard/auth.guard'
     LoginService,
     LogoutService,
     GlobalConfiguration,
+    GlobalConstants,
     HttpClient,
     AuthGuard,
     {

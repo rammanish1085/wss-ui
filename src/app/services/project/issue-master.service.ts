@@ -56,6 +56,24 @@ export class IssueMasterService {
       }));
  }
 
+ viewFile(tokenNumber: string, fileName: string, response) {
+  let httpParams = new HttpParams();
+  httpParams = httpParams.append("tokenNumber", tokenNumber)
+  .append("fileName", fileName)
+ 
+  let options : any = {
+    responseType: 'blob',
+    params: httpParams
+  }
+
+  if (response) {
+    options["observe"] = 'response';
+  }
+
+  return this.http.get(this.contextPath +"/file/downloadFile", options);
+}
+
+
 
 }
 
