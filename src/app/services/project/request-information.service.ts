@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { GlobalConfiguration } from 'src/app/config/global.config';
@@ -7,6 +7,14 @@ import { GlobalConfiguration } from 'src/app/config/global.config';
   providedIn: 'root'
 })
 export class RequestInformationService {
+
+
+  getFileByTokenNumber(tokenNumber:any) {
+    return this.http.get(this.contextPath + '/request-information-file/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
 
   contextPath: any;
   constructor(private http: HttpClient, private globalConfiguration: GlobalConfiguration) {
@@ -29,11 +37,27 @@ export class RequestInformationService {
  }
 
  getByRequestUsername(requestedUsername: string) {
-  console.log("Inside getting users");
   return this.http.get(this.contextPath + '/request-information/requested-username/' + requestedUsername, { observe: 'response' }).pipe(map(
     (response: HttpResponse<any>) => {
       return response;
     }));
+}
+
+viewFile(tokenNumber: string, fileName: string, response) {
+  let httpParams = new HttpParams();
+  httpParams = httpParams.append("tokenNumber", tokenNumber)
+  .append("fileName", fileName)
+ 
+  let options : any = {
+    responseType: 'blob',
+    params: httpParams
+  }
+
+  if (response) {
+    options["observe"] = 'response';
+  }
+
+  return this.http.get(this.contextPath +"/request-information-file/downloadFile", options);
 }
 
 }

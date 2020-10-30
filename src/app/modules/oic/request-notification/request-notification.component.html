@@ -1,4 +1,4 @@
-<div class="card border-dark" *ngIf="isReply || !isRequestInformation">
+<div class="card border-dark" *ngIf="!isReply || isRequestInformation">
     <div class="card-header text-center main-header text-white">REQUEST INFORAMTION</div>
     <div class="card-body">
            <div class="row">
@@ -22,7 +22,7 @@
                       <tr *ngFor="let info of requestInfo let i = index">
                         <td>{{i+1}}</td>
                         <td>{{info.tokenNumber}}</td>
-                        <td>{{info.requestMessage}}</td>
+                        <td><textarea class="form-control" rows="2" readonly id="remark"[ngModel]="info.requestMessage"  name="remarks"></textarea></td>
                         <td>{{info.requestedUsername}}</td>
                         <td>{{info.requestedName}}</td>
                        <td><button class="btn btn-info btn-sm" (click)="onClickReply(info)">Reply</button>
@@ -55,7 +55,7 @@
                         <th scope="col">Token number</th>
                         <th scope="col">Request Message</th>
                         <th scope="col">Response Message</th>
-                        <th scope="col">Reply by</th>
+                        <th scope="col">Response by</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
@@ -63,10 +63,10 @@
                       <tr *ngFor="let info of requestInfoList let i = index">
                         <td>{{i+1}}</td>
                         <td>{{info.tokenNumber}}</td>
-                        <td>{{info.requestMessage}}</td>
-                        <td>{{info.responseMessage}}</td>
-                        <td>{{info.username}}</td>
-                       <td><button class="btn btn-info btn-sm">view</button>
+                        <td><textarea class="form-control" rows="2" readonly id="remark"[ngModel]="info.requestMessage"  name="requestMessage"></textarea></td>
+                        <td><textarea class="form-control" rows="2" readonly id="remark"[ngModel]="info.responseMessage"  name="remarks"></textarea>
+                        <td>{{info.username}}({{info.name}})</td>
+                       <td><button class="btn btn-info btn-sm"(click)="onClickViewResponse(info)">view</button>
                         </td>
                       </tr>
                     </tbody>
@@ -80,6 +80,52 @@
       </div>
     </div>
   </div>
+
+  <div class="card border-dark" *ngIf="isViewResponse">
+    <div class="card-header text-center main-header text-white">VIEW RESPONSE INFORAMTION</div>
+    <div class="card-body">
+      <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
+        (click)="onClickViewResponseBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card border-0 rounded-0">
+               <div class="card-body">
+                <div class="table-responsive-md">
+                  <table class="table d-flex justify-content-center">
+                     <tbody>
+                      <tr>
+                        <th>Token number</th><td>{{viewResponse.tokenNumber}}</td>
+                      </tr>
+                      <tr>
+                        <th>Request Message</th><td><textarea class="form-control" rows="2" readonly id="remark"[ngModel]="viewResponse.requestMessage"  name="requestMessage"></textarea></td>
+                      </tr>
+                        <tr>
+                          <th>Response Message</th><td><textarea class="form-control" rows="2" readonly id="remark"[ngModel]="viewResponse.responseMessage"  name="remarks"></textarea></td>
+                         
+                        </tr>
+                        <tr>
+                          <th>Response By</th> <td>{{viewResponse.username}}({{viewResponse.name}})</td>
+                        </tr>
+                        <hr>
+                        <tr *ngFor="let file of requestInformationFile let i=index">
+                         <td>{{i+1}}</td>
+                          <td>{{file.originalName}}</td>
+                          <td><button class="btn btn-info btn-sm"(click)="onClickViewFile(file)">view</button></td>
+                        </tr>
+                        
+                      
+                    </tbody>
+                  </table>
+                </div>
+  
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
 

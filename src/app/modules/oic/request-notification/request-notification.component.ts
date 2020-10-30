@@ -7,6 +7,7 @@ import { RequestInformationService } from 'src/app/services/project/request-info
 import { GobalutilityService } from 'src/app/utility/gobalutility.service';
 import {RequestInfo} from 'src/app/models/request-info'
 import {RequestInfoService} from 'src/app/services/project/request-info.service'
+import { GlobalConstants } from 'src/app/utility/global.constants';
 
 @Component({
   selector: 'app-request-notification',
@@ -27,6 +28,9 @@ export class RequestNotificationComponent implements OnInit {
   requestInfoList:any;
   isRequestedUser:boolean;
   isRequestInformation :boolean;
+  viewResponse: any;
+  isViewResponse:boolean;
+  requestInformationFile: any;
 
   constructor(private authorizationService: AuthorizationService,private requestInfoService:RequestInfoService,private globalutilityService : GobalutilityService, private requestInformationService: RequestInformationService, private globalUtilityService: GobalutilityService) { }
 
@@ -83,12 +87,37 @@ export class RequestNotificationComponent implements OnInit {
 
   }
 
+  onClickViewResponse(info:any){
+    console.log("view Response clixked");
+    console.log(info);
+    this.viewResponse =info;
+    this.isRequestedUser =true;
+    this.isViewResponse = true;
+    this.getFileByTokenNumber(info.tokenNumber);
+    }
+
+  getFileByTokenNumber(tokenNumber: any) {
+    this.requestInformationService.getFileByTokenNumber(tokenNumber).subscribe(success=>{
+     console.log("Inside Succes");
+     this.requestInformationFile = success.body; 
+
+    },error=>{
+      console.log("Inside Succes");
+
+    })
+  }
+    onClickViewResponseBack(){
+      this.isRequestedUser =false;
+    this.isViewResponse = false;
+    }
+
   oclickNotification() {
     // this.getRequestInformationByUsername(this.username)
   }
   
   onClickReply(info:any){
     this.isReply= true;
+    // this.isRequestInformation = true;
     this.viewRequest = info;
     console.log("reply clicked");
     console.log(info);
@@ -181,6 +210,40 @@ export class RequestNotificationComponent implements OnInit {
     }
   }
 
+  onClickViewFile(file:any){
+    console.log("file view Clicked");
+    console.log(file);
+    this.requestInformationService.viewFile(file.tokenNumber, file.name, GlobalConstants.FALSE).subscribe(success => {
+      this.saveFile(success, file.originalName)
+    }, error => {
+      this.handleError(error);
+    })
+  }
+
+
+  /**
+   * Save blob to file
+   * @param blob
+   */
+  saveFile(success: any, fileName: string) {
+    if (success) {
+      // this.exportType ="pdf"
+      let blob = GobalutilityService.createBlobFromResponse(success);
+      this.globalUtilityService.saveFile(blob, fileName);
+      // this.reset();
+    }
+  }
+
+  /**
+   * Handle errors
+   * @param error
+   */
+  handleError(error: any) {
+    this.globalUtilityService.parseStringFromBlob(error.error);
+    // this.reset();
+    this.globalUtilityService.errorAlertMessage("Unable to download file.");
+  }
+
 
   
   resetFile() {
@@ -190,9 +253,11 @@ export class RequestNotificationComponent implements OnInit {
 
   }
   resetReplyForm() {
+    this.uploadFiles = [];
     this.replyForm.patchValue({
       attachment: '',
-      replyMessage:''
+      replyMessage:'',
+      isAttachment:''
     });
 
   }
