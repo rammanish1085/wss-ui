@@ -28,5 +28,12 @@ export class RequestInformationService {
      }));
  }
 
+ getByRequestUsername(requestedUsername: string) {
+  console.log("Inside getting users");
+  return this.http.get(this.contextPath + '/request-information/requested-username/' + requestedUsername, { observe: 'response' }).pipe(map(
+    (response: HttpResponse<any>) => {
+      return response;
+    }));
+}
 
 }

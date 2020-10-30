@@ -1,4 +1,4 @@
-<div class="card border-dark">
+<div class="card border-dark" *ngIf="isReply || !isRequestInformation">
     <div class="card-header text-center main-header text-white">REQUEST INFORAMTION</div>
     <div class="card-body">
            <div class="row">
@@ -25,7 +25,7 @@
                         <td>{{info.requestMessage}}</td>
                         <td>{{info.requestedUsername}}</td>
                         <td>{{info.requestedName}}</td>
-                       <td><button class="btn btn-info btn-sm">Reply</button>
+                       <td><button class="btn btn-info btn-sm" (click)="onClickReply(info)">Reply</button>
                         </td>
   
                       </tr>
@@ -39,4 +39,86 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="card border-dark" *ngIf="!isRequestedUser">
+    <div class="card-header text-center main-header text-white">RESPONSE INFORAMTION</div>
+    <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card border-0 rounded-0">
+               <div class="card-body">
+                <div class="table-responsive-md">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Token number</th>
+                        <th scope="col">Request Message</th>
+                        <th scope="col">Response Message</th>
+                        <th scope="col">Reply by</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let info of requestInfoList let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{info.tokenNumber}}</td>
+                        <td>{{info.requestMessage}}</td>
+                        <td>{{info.responseMessage}}</td>
+                        <td>{{info.username}}</td>
+                       <td><button class="btn btn-info btn-sm">view</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+  
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="card mt-2" *ngIf="isReply">
+    <div class="card-header text-center main-header text-white">RESPONSE INFORMATION</div>
+    <div class="card-body">
+      <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
+          (click)="onClickReplyBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+      <form [formGroup]="replyForm" (ngSubmit)="onReplyubmit()">
+        <table class="table d-flex justify-content-center">
+          <tbody>
+            <tr>
+              <th>Token Number</th>
+              <td><small>{{viewRequest.tokenNumber}}</small></td>
+            </tr>
+            <tr>
+              <th>Reply Message</th>
+              <td><textarea class="form-control" rows="2" id="remark" formControlName="replyMessage" name="remarks"
+                  required></textarea></td>
+            </tr>
+            <tr>
+              <th>Attachment </th><td><input type="checkbox" class="form-check-input" formControlName="isAttachment" id="exampleCheck1" (click)="isAttachmentClicked()"></td>
+            </tr>
+            <tr *ngIf="replyForm.value.isAttachment"><th>Maximum file</th><td><font color=red>2 file allow</font></td></tr>
+            <tr *ngIf="replyForm.value.isAttachment"><th>Maximum file size</th><td><font color=red>1 Mb</font></td></tr>
+            <tr *ngIf="replyForm.value.isAttachment"><th>File type</th><td><font color=red>[ jpg, pdf ,doc ,xls ] only</font></td></tr>
+            <tr *ngIf="replyForm.value.isAttachment"><td></td><td ><input type="file" class="form-control-file" (change)="onFileChange($event)"formControlName="attachment" accept="image/*,.pdf,.doc,.docx,.xml,.xls" multiple required></td></tr>
+            <tr *ngFor="let file of uploadFiles; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{file.name}}</td>
+              <td> {{file.size/1000000 | number}}Mb</td>
+              <td>
+                <button class="btn btn-danger btn-sm" type="button" (click)="deleteFieldValue(i)"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+              </td>
+            </tr>  
+            <tr><th></th><td><button type="submit" [disabled]="replyForm.invalid" class="btn btn-primary btn-sm ml-5">Submit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      </div>
   </div>

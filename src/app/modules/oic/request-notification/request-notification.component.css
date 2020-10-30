@@ -13,3 +13,6 @@
     color: white;
   }
   
+  .table td {
+    border-top: 1px;
+  }

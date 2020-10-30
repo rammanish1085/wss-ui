@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
   requestInfoForm; rejectForm; resolveForm: FormGroup;
   requestForwardForm: FormGroup;
   requestInfoObject: any = {};
+  
 
   constructor(private dashboardService: DashboardService,private issueMasterService:IssueMasterService,
      private authorizationService: AuthorizationService, private requestInformationService: RequestInformationService,
@@ -77,13 +78,15 @@ export class DashboardComponent implements OnInit {
       console.log(success.body);
 
       this.assignedProblemStatement = success.body;
+ }, error => {
 
-
-    }, error => {
+      console.log("Insise error");
 
     })
 
   }
+
+
 
   public onClickView(ps: any) {
 
@@ -301,18 +304,14 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-
-
   /**
    * Save blob to file
    * @param blob
    */
   saveFile(success: any, fileName: string) {
     if (success) {
-      // this.exportType ="pdf"
       let blob = GobalutilityService.createBlobFromResponse(success);
       this.globalutilityService.saveFile(blob, fileName);
-      // this.reset();
     }
   }
 
@@ -322,7 +321,6 @@ export class DashboardComponent implements OnInit {
    */
   handleError(error: any) {
     this.globalutilityService.parseStringFromBlob(error.error);
-    // this.reset();
     this.globalutilityService.errorAlertMessage("Unable to download file.");
   }
 

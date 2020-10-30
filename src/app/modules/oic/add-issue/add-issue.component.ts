@@ -220,18 +220,20 @@ export class AddIssueComponent implements OnInit {
 
     console.log(size)
 
-    if (size > 5000000) {
-      this.globalutilityService.errorAlertMessage("File Size greater 5 Mb");
-    }
-    if(event.target.files.length>5){
-      this.globalutilityService.errorAlertMessage("Maximum 5 File Allow to upload");
-    } 
-     else {
+    if (size < 1000000) 
+    { 
+     if(event.target.files.length <=5){
+           
       for (var i = 0; i < event.target.files.length; i++) {
         this.myFiles.push(event.target.files[i]);
       }
+    } else{
+        this.globalutilityService.errorAlertMessage("Maximum 5 File Allow to upload");
+      }
+
+    }else{
+    this.globalutilityService.errorAlertMessage("File Size greater 1 Mb");
     }
-    console.log(this.myFiles);
 
   }
 

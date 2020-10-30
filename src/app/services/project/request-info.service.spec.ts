@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { IssueStatusService } from './issue-status.service';
+import { RequestInfoService } from './request-info.service';
 
-describe('IssueStatusService', () => {
-  let service: IssueStatusService;
+describe('RequestInfoService', () => {
+  let service: RequestInfoService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(IssueStatusService);
+    service = TestBed.inject(RequestInfoService);
   });
 
   it('should be created', () => {

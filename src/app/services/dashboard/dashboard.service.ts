@@ -66,5 +66,4 @@ getUserByTokenNumber(tokenNumber: any) {
     }));
 }
 
-
 }
