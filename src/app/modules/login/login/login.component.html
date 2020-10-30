@@ -7,13 +7,13 @@
         <div class="card-body" *ngIf="isLogIn">
             <div *ngIf="logging">
                 <div class="form-group">
-                    <label class="font-weight-bold">Logging In..</label>
-                    <div class="spinner-border"></div>
+                    <label class="font-weight-bold text-white">Logging In..</label>
+                    <div class="spinner-border text-info"></div>
                 </div>
             </div>
             <div *ngIf="loginError">
                 <div class="form-group">
-                    <label class="font-weight-bold">{{loginErrorText}}</label>
+                    <label class="font-weight-bold text-white">{{loginErrorText}}</label>
                 </div>
             </div>
             <div>

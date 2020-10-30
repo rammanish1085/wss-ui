@@ -56,6 +56,8 @@ export class AddIssueComponent implements OnInit {
 
   issueMasterForm: FormGroup;
 
+  isProcessing :boolean;
+
   ngOnInit() {
     this.issueMasterForm = new FormGroup({
       projectName: new FormControl('', Validators.required),
@@ -168,18 +170,22 @@ export class AddIssueComponent implements OnInit {
 
   onSubmitIssueMasterForm() {
 
+    this.isProcessing = true;
+
     this.preparedIssueMasterObject();
 
     console.log("Object  prepared received");
     console.log(this.issueMasterModel);
     this.issueMasterService.insertIssueMaster(this.issueMasterModel, this.myFiles).subscribe(success => {
       if (success.status === 201) {
+        this.isProcessing = false;
         this.resetIssueMasterForm();
         this.tokenId = success.body;
         this.globalutilityService.successAlertMessage("Issue Created Successfully With Id:" + this.tokenId.tokenNumber);
       }
     }, error => {
       if(error.status ===417){
+        this.isProcessing = false;
         this.globalutilityService.errorAlertMessage("Unable to create issue");
         this.resetIssueMasterForm();
       }

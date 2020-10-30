@@ -2,8 +2,7 @@
 <div class="card border-dark">
   <div class="card-header text-center main-header text-white">ADD ISSUE</div>
   <div class="card-body">
-
-   <form [formGroup]="issueMasterForm"  (ngSubmit)="onSubmitIssueMasterForm()">
+     <form [formGroup]="issueMasterForm"  (ngSubmit)="onSubmitIssueMasterForm()">
      <div class="row">
       <div class="col-md-3 mb-4 mt-4" *ngIf="role ==='oic'">
         <div>
@@ -118,8 +117,15 @@
      
 
      </form>
-    
+        
   </div>
  </div>
 
+</div>
+
+<div *ngIf="isProcessing">
+  <div class="form-group d-flex justify-content-center">
+      <label class="font-weight-bold">Processing....</label>
+      <div class="spinner-border text-info"></div>
+  </div>
 </div>

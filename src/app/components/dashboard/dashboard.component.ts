@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
   requestInfoForm; rejectForm; resolveForm: FormGroup;
   requestForwardForm: FormGroup;
   requestInfoObject: any = {};
+  isProcessing: boolean;
   
 
   constructor(private dashboardService: DashboardService,private issueMasterService:IssueMasterService,
@@ -121,14 +122,19 @@ export class DashboardComponent implements OnInit {
   }
 
   onResolveSubmit() {
+    this.isProcessing = true;
     this.dashboardService.resolveIssueByTokenNumber(this.viewIssue.tokenNumber, this.resolveForm.value.comments).subscribe(success => {
       if (success.status === 201) {
         this.globalutilityService.successAlertMessage("Issue resolve successfully");
+        this.isProcessing = false;
+        this.resetResolveForm();
       }
       this.getAllAssignedProblemStatement(this.username);
     }, error => {
       if (error.status === 417) {
+        this.resetResolveForm();
         this.globalutilityService.errorAlertMessage("Unable to resolve !!");
+
       }
     })
 
@@ -151,13 +157,18 @@ export class DashboardComponent implements OnInit {
   }
 
   onRejectSubmit() {
+    this.isProcessing = true;
     this.dashboardService.rejectIssueByTokenNumber(this.viewIssue.tokenNumber, this.rejectForm.value.comments).subscribe(success => {
       if (success.status === 201) {
+        this.isProcessing = false;
+        this.resetRejectForm();
         this.globalutilityService.successAlertMessage("Issue rejected successfully");
       }
       this.getAllAssignedProblemStatement(this.username);
     }, error => {
       if (error.status === 417) {
+        this.isProcessing = false;
+        this.resetRejectForm();
         this.globalutilityService.errorAlertMessage("Unable to reject issue !!");
       }
     })
@@ -291,6 +302,18 @@ export class DashboardComponent implements OnInit {
   resetForwardForm() {
     this.requestForwardForm.patchValue({
       remark: ''
+    });
+  }
+
+  resetResolveForm() {
+    this.resolveForm.patchValue({
+      comments: ''
+    });
+  }
+
+  resetRejectForm() {
+    this.rejectForm.patchValue({
+      comments: ''
     });
   }
 

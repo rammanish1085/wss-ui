@@ -22,6 +22,7 @@ export class AddUserComponent implements OnInit {
   locationCode: string;
 
   userProjectFrom: FormGroup;
+  isProcessing: boolean;
 
   constructor(private userService: UserService, private authorizationService: AuthorizationService, private projectUserMappingService: ProjectUserMappingService, private globalUtilityService: GobalutilityService) { }
 
@@ -68,16 +69,21 @@ export class AddUserComponent implements OnInit {
   }
 
   onclickAddUserProject() {
+
+    this.isProcessing = true;
     console.log('Getting form value');
 
     console.log(this.userProjectFrom.value);
 
     this.prepareProjectUserMapping();
     this.projectUserMappingService.insertProjectUserMapping(this.projectUserMappingObject).subscribe(success => {
+      this.isProcessing = false;
       this.globalUtilityService.successAlertMessage('Project assigned successfully !!!');
       this.reset();
       this.getAssignProject();
-    }, () => {
+    },error => {
+      console.log(error);
+      this.isProcessing = false;
       this.globalUtilityService.errorAlertMessage('Project already exist for selected user !!!');
       this.reset();
     });
