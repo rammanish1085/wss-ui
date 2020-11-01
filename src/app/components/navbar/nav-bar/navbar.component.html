@@ -30,8 +30,11 @@
                                 
             </ul>
              <div>
-                <small class="text-white">Welcome : {{loggedInUser.getName()}} </small>
+                <small class="text-white">Welcome : {{loggedInUser.getName()}} || </small>
              </div>
+             <div class="text-white ml-2">
+                <small>Session Expire In : <app-session-timer></app-session-timer></small>
+              </div>
 
         </div>
     </div>
