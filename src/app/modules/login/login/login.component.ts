@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   loginErrorText;
   loggedUser: User;
   isLogIn: boolean = true;
-  timeLeft: number = 60;
+  timeLeft: number = 120;
   interval;
   isResend: boolean;
   isOtpResend: boolean;
@@ -138,7 +138,7 @@ export class LoginComponent implements OnInit {
         console.log("OTP Generated Successfully");
         this.isOtpResend = false;
         this.isResend = false;
-        this.timeLeft = 60;
+        this.timeLeft = 120;
         this.durationMillisecond = 10000;
         this.startTimer();
 
