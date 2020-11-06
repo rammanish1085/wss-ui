@@ -1,11 +1,11 @@
 <div class="card border-dark">
-  <div class="card-header text-center main-header text-white">ADD USER</div>
+  <div class="card-header text-center  text-white">ADD USER</div>
   <div class="card-body">
     <div class="container mt-3">
       <form [formGroup]="userProjectFrom" (ngSubmit)="onclickAddUserProject()">
         <div class="row">
 
-          <div class="col-md-5">
+          <div class="col-md-5 mt-4">
 
             <div>
               <select class="form-control" name="projectName" formControlName="project" required>
@@ -15,7 +15,7 @@
               </select>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 mt-4">
 
             <div>
               <select class="form-control" name="user" formControlName="user" required>
@@ -26,9 +26,9 @@
               </select>
             </div>
           </div>
-          <div class="col-md-1">
+          <div class="col-md-1 mt-4">
 
-            <div class="button">
+            <div class="button justify-content-center">
               <button type="submit" [disabled]="userProjectFrom.invalid" class="btn btn-success btn-sm">Add</button>
             </div>
           </div>
@@ -44,7 +44,7 @@
 
     <div class="containe-fluid">
 
-      <div class="row mb-4">
+      <div class="row mt-4">
 
         <div class="col-md-12">
           <div class="card border-0 rounded-0">
