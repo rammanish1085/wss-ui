@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/user.model';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 
 @Component({
@@ -8,9 +9,13 @@ import { AuthorizationService } from 'src/app/services/authorization-service/aut
 })
 export class OicComponent implements OnInit {
 
+  public loggedInUser: User;
+  
+
   constructor(private authorizationService: AuthorizationService) { }
 
   ngOnInit(): void {
+    this.loggedInUser = this.authorizationService.getLoggedInUser();
   }
 
   logoutClicked() {

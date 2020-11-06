@@ -19,13 +19,14 @@ import { RequestNotificationComponent } from './request-notification/request-not
 import { NgxPaginationModule } from 'ngx-pagination';
 import {SessionTimerComponent} from 'src/app/components/timer/session-timer/session-timer.component';
 import {LoginModalModule} from 'src/app/modals/login-modal/login-modal.module';
+import { ToDoIssueComponent } from './to-do-issue/to-do-issue.component';
 
 
 
 
 
 @NgModule({
-  declarations: [OicComponent,NavbarComponent,SessionTimerComponent,SidebarComponent, AddUserComponent,FooterComponent, AddIssueComponent, HomeComponent,DashboardComponent, ViewIssueComponent, TrackIssueComponent, RequestNotificationComponent],
+  declarations: [OicComponent,NavbarComponent,SessionTimerComponent,SidebarComponent, AddUserComponent,FooterComponent, AddIssueComponent, HomeComponent,DashboardComponent, ViewIssueComponent, TrackIssueComponent, RequestNotificationComponent, ToDoIssueComponent],
   imports: [
     CommonModule,
     OicRoutingModule,

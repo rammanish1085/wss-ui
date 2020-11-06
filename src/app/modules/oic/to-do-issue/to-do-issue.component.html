@@ -1,0 +1,273 @@
+<div class="card border-dark">
+    <div class="card-header text-center text-white">TO DO ISSUE</div>
+    <div class="card-body">
+      <div class="row mb-4">
+  
+        <div class="col-md-12">
+          <div class="card border-0 rounded-0">
+            <div class="card-body">
+              <div class="table-responsive-md">
+                <table class="table table-hover" *ngIf="!isView">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Token No</th>
+                      <th scope="col">location code</th>
+                      <th scope="col">Project</th>
+                      <th scope="col">Project Module</th>
+                      <th scope="col">Project Problem Statment</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Attachment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let ps of assignedProblemStatement let i = index">
+                      <td><small>{{i+1}}</small></td>
+                      <td><small>{{ps.tokenNumber}}</small></td>
+                      <td><small>{{ps.locationCode}}</small></td>
+                      <td><small>{{ps.projectName}}</small></td>
+                      <td><small>{{ps.projectModule}}</small></td>
+                      <td><small>{{ps.projectProblemStatement}}</small></td>
+                      <td><span *ngIf="ps.status==='FORWARDED'"
+                          class="badge badge-warning rounded-0 p-1">{{ps.status}}</span><span
+                          *ngIf="ps.status==='REJECTED'"
+                          class="badge badge-warning rounded-0 p-1">{{ps.status}}</span><span
+                          *ngIf="ps.status==='COMPLETED'"
+                          class="badge badge-success rounded-0 p-1">{{ps.status}}</span><span
+                          *ngIf="ps.status==='PENDING'" class="badge badge-danger rounded-0 p-1">{{ps.status}}</span></td>
+                      <td><button class="btn btn-info btn-sm" (click)="onClickView(ps)">view</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+  
+            </div>
+          </div>
+  
+        </div>
+  
+        <div class="container" *ngIf="isView">
+          <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm" (click)="onClickBack()"><i
+                class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+          <div class="table-responsive-md">
+            <table class="table table-hover">
+              <tbody>
+                <tr>
+                  <td><b>Token Number</b></td>
+                  <td><span class="badge badge-warning rounded-0 p-1">{{viewIssue.tokenNumber}}</span></td>
+                  <td><b>Status</b></td>
+                  <td><span *ngIf="viewIssue.status==='COMPLETED'"
+                      class="badge badge-success rounded-0 p-1">{{viewIssue.status}}</span><span
+                      *ngIf="viewIssue.status==='PENDING'"
+                      class="badge badge-danger rounded-0 p-1">{{viewIssue.status}}</span></td>
+                </tr>
+                <tr>
+                  <td><b>Assigned User</b></td>
+                  <td><span  *ngIf="viewIssue.status==='FORWARDED'" class="badge badge-dark rounded-0 p-1">{{viewIssue.forwardUsername}}</span><span  *ngIf="viewIssue.status==='COMPLETED' || viewIssue.status==='PENDING'" class="badge badge-dark rounded-0 p-1">{{viewIssue.assignUsername}}</span></td>
+                  <td><b>Assigned Username</b></td>
+                  <td><span  *ngIf="viewIssue.status==='FORWARDED'" class="badge badge-dark rounded-0 p-1">{{viewIssue.forwardName}}</span><span  *ngIf="viewIssue.status==='COMPLETED' || viewIssue.status==='PENDING'" class="badge badge-dark rounded-0 p-1">{{viewIssue.assignName}}</span></td>
+                </tr>
+                <tr>
+                  <td><b>Created By</b></td>
+                  <td>{{viewIssue.username}}&nbsp;{{viewIssue.name}}</td>
+                  <td><b>office Type</b></td>
+                  <td>{{viewIssue.officeType}}</td>
+                </tr>
+  
+                <tr>
+                  <td><b>Location code</b></td>
+                  <td>{{viewIssue.locationCode}}</td>
+                  <td><b>location Name</b></td>
+                  <td>{{viewIssue.locationName}}</td>
+                </tr>
+  
+                <tr>
+                  <td><b>Project Name</b></td>
+                  <td>{{viewIssue.projectName}}</td>
+                  <td><b>Project Module</b></td>
+                  <td>{{viewIssue.projectModule}}</td>
+                </tr>
+                <tr>
+                  <td><b>Problem Statement</b></td><td>{{viewIssue.projectProblemStatement}}</td><td><b>Status Comments</b></td><td>{{viewIssue.userComments}}</td>
+                </tr>
+                <tr>
+                  <td><b>Description</b></td><td>{{viewIssue.description}}</td>
+                </tr>
+  
+                <tr>
+                  <td *ngIf="viewIssue.officeType === 'CIRCLE' || viewIssue.officeType === 'IT'"><b>Remark</b></td>
+                  <td *ngIf="viewIssue.officeType === 'CIRCLE'">{{viewIssue.divisionRemark}}</td>
+                  <td *ngIf="viewIssue.officeType === 'REGION'">{{viewIssue.circleRemark}}</td>
+                </tr>
+  
+              </tbody>
+  
+            </table>
+            <hr>
+            <table class="table d-flex justify-content-center">
+              <tbody>
+                <tr *ngFor="let file of files let i = index">
+                  <td><small>{{file.originalName}}</small></td>
+                  <td><button class="btn btn-info btn-sm" (click)="viewFileClicked(file)">view</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr class="hrline">
+  
+          <div class="d-flex justify-content-center mr-2">
+            <div>
+              <button class="btn btn-success btn-sm mr-4" [disabled]="isDisable"
+                (click)="onClickResolve(viewIssue)">Resolve</button>
+            </div>
+            <div>
+              <button class="btn btn-warning btn-sm mr-4" [disabled]="isDisable"
+                (click)="onClickReject(viewIssue)">Reject</button>
+            </div>
+            <div>
+              <button class="btn btn-primary btn-sm mr-4" [disabled]="isDisable"
+                (click)="onClickforward(viewIssue)">Forward</button>
+            </div>
+            <div>
+              <button class="btn btn-info btn-sm" [disabled]="isDisable" (click)="onClickRequestInfo(viewIssue)">Request
+                Info</button>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="card mt-2" *ngIf="isForward">
+    <div class="card-header text-center text-white">FORWARD ISSUE</div>
+    <div class="card-body">
+      <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
+          (click)="onClickForwardBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+      <form [formGroup]="requestForwardForm" (ngSubmit)="onForwardSubmit()">
+        <table class="table d-flex justify-content-center">
+          <tbody>
+            <tr>
+              <th>Token Number</th>
+              <td><small>{{viewIssue.tokenNumber}}</small></td>
+            </tr>
+            <tr>
+              <th>Remark</th>
+              <td><textarea class="form-control" rows="2" id="remark" formControlName="remark" name="remarks"
+                  required></textarea></td>
+            </tr>
+            <tr><th></th><td><button type="submit" [disabled]="requestForwardForm.invalid" class="btn btn-primary btn-sm ml-5">Submit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      </div>
+  </div>
+  
+  
+  <div class="card mt-2" *ngIf="isResolve">
+    <div class="card-header text-center text-white">RESOLVE ISSUE</div>
+    <div class="card-body">
+      <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
+          (click)="onClickResolveBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+      <form [formGroup]="resolveForm" (ngSubmit)="onResolveSubmit()">
+        <table class="table d-flex justify-content-center">
+          <tbody>
+            <tr>
+              <th>Token Number</th>
+              <td><small >{{viewIssue.tokenNumber}}</small></td>
+            </tr>
+             <tr>
+              <th>comments</th>
+              <td><textarea class="form-control" rows="2" id="remark" formControlName="comments" name="remarks"
+                  required></textarea></td>
+            </tr>
+            <tr><th></th><td><button type="submit" [disabled]="resolveForm.invalid" class="btn btn-primary btn-sm ml-5">Submit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      </div>
+  </div>
+  
+  <div class="card mt-2" *ngIf="isReject">
+    <div class="card-header text-center text-white">REJECT ISSUE</div>
+    <div class="card-body">
+      <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
+          (click)="onClickRejectBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+      <form [formGroup]="rejectForm" (ngSubmit)="onRejectSubmit()">
+        <table class="table d-flex justify-content-center">
+          <tbody>
+            <tr>
+              <th>Token Number</th>
+              <td><small>{{viewIssue.tokenNumber}}</small></td>
+            </tr>
+             <tr>
+              <th>comments</th>
+              <td><textarea class="form-control" rows="2" id="remark" formControlName="comments" name="remarks"
+                  required></textarea></td>
+            </tr>
+            <tr><th></th><td><button type="submit" [disabled]="rejectForm.invalid" class="btn btn-primary btn-sm ml-5">Submit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      </div>
+  </div>
+  
+  
+  <div class="card mt-2" *ngIf="isRequestInfo">
+    <div class="card-header text-center text-white">REQUEST INFO</div>
+    <div class="card-body">
+      <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
+          (click)="onClickRequestInfoBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+  
+      <form [formGroup]="requestInfoForm" (ngSubmit)="onSubmitRequestInfo()">
+  
+        <table class="table d-flex justify-content-center">
+          <tbody>
+            <tr>
+              <th>Token Number</th>
+              <td><small>{{viewIssue.tokenNumber}}</small></td>
+            </tr>
+            <tr>
+              <th>Request to</th>
+              <td>
+                <div>
+                  <select class="form-control" name="requestinfo" formControlName="user" required>
+                    <option value="" disabled>Select user</option>
+                    <option *ngFor="let info of requestInfoUser" [ngValue]="info"
+                      class="form-control form-control-sm text-center">
+                      {{info.username}}&nbsp;{{info.name}}</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>Remark</th>
+              <td><textarea class="form-control" rows="2" formControlName="remark" required></textarea></td>
+            </tr>
+            <tr>
+              <th></th>
+              <td><button type="submit" [disabled]="requestInfoForm.invalid"
+                  class="btn btn-primary btn-sm ml-5">Submit</button></td>
+            </tr>
+  
+          </tbody>
+        </table>
+  
+  
+  
+      </form>
+    </div>
+  </div>
+  
+  
+  <div *ngIf="isProcessing">
+    <div class="form-group d-flex justify-content-center mt-3">
+        <label class="font-weight-bold">Processing....</label>
+        <div class="spinner-border text-info"></div>
+    </div>
+  </div>
+  

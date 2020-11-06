@@ -9,6 +9,7 @@ import { AuthGuard } from 'src/app/guard/auth.guard';
 import { ViewIssueComponent } from './view-issue/view-issue.component';
 import { TrackIssueComponent } from './track-issue/track-issue.component';
 import { RequestNotificationComponent } from './request-notification/request-notification.component';
+import { ToDoIssueComponent } from './to-do-issue/to-do-issue.component';
 
 const routes: Routes = [
   {
@@ -54,6 +55,11 @@ const routes: Routes = [
           {
             path:'notification',
             component:RequestNotificationComponent
+          },
+
+          {
+            path:'to-do-issue',
+            component:ToDoIssueComponent
           },
           {
             path: '', redirectTo: 'home', pathMatch: 'full'
