@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
 
   user: FormGroup;
   otpSend:boolean;
+  fieldTextType: boolean;
 
 
   form: FormGroup = new FormGroup({});
@@ -164,6 +165,10 @@ export class LoginComponent implements OnInit {
         this.isOtpResend = true;
       }
     }, this.durationMillisecond)
+  }
+
+  toggleFieldTextType(){
+    this.fieldTextType = !this.fieldTextType;
   }
 
 }
