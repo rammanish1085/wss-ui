@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {IssueStatusService} from 'src/app/services/project/issue-status.service'
+import { GobalutilityService } from 'src/app/utility/gobalutility.service';
  
 @Component({
   selector: 'app-track-issue',
@@ -14,7 +15,7 @@ export class TrackIssueComponent implements OnInit {
   isStatus :boolean;
   tokenSearchFrom :FormGroup
   isProcessing: boolean;
-  constructor(private issueStatusService:IssueStatusService) { }
+  constructor(private issueStatusService:IssueStatusService,private globalutilityService: GobalutilityService) { }
 
   ngOnInit(): void {
 
@@ -25,19 +26,22 @@ export class TrackIssueComponent implements OnInit {
   }
   searchClicked() {
     this.isProcessing = true;
-    console.log("seacrch clicked");
-    console.log(this.tokenSearchFrom.value);
-    this.tokenNumber =this.tokenSearchFrom.value.tokenNumber;
-    
+     this.tokenNumber =this.tokenSearchFrom.value.tokenNumber;
       this.issueStatusService.getRequestInformation(this.tokenSearchFrom.value.tokenNumber).subscribe(success=>{
-      this.isStatus = true;
       this.isProcessing = false;
-      console.log("inside succes");
-      console.log(success.body);
-      this.statusList = success.body;
-      this.reset();
+      if(success.status === 200){
+        this.statusList = success.body;
+        this.reset();
+      }if(success.status === 204){
+        this.globalutilityService.errorAlertMessage("Issue not found with given token number !!");
+        this.statusList =[];
+        this.reset();
+      }
+      
 
     },error=>{
+      console.log(error);
+      
       this.isProcessing = false;
       this.reset()
 
@@ -46,6 +50,7 @@ export class TrackIssueComponent implements OnInit {
   }
 
   reset() {
+    
     this.tokenSearchFrom.patchValue({
       tokenNumber: ''     
     });
