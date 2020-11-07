@@ -39,7 +39,7 @@
                   </tr>
                 </tbody>
               </table>
-              <pagination-controls id="paging_issues" maxSize="5" class="d-flex justify-content-center" directionLinks="true" (pageChange)="page=$event">
+              <pagination-controls id="paging_issues" maxSize="5" class="d-flex justify-content-center" directionLinks="true"  (pageChange)="page=$event; pageChanged($event)">
               </pagination-controls>
             </div>
   

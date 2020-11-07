@@ -17,13 +17,13 @@
 
     <div *ngIf="isProcessing">
       <div class="form-group d-flex justify-content-center">
-          <label class="font-weight-bold">Processing....</label>
-          <div class="spinner-border text-info"></div>
+        <label class="font-weight-bold">Processing....</label>
+        <div class="spinner-border text-info"></div>
       </div>
     </div>
-  
-    <div class="container px-1 px-md-4 py-5 mx-auto" *ngIf="isStatus">
-        <div class="card">
+
+    <div class="container px-1 px-md-4 py-5 mx-auto" *ngIf="statusList && statusList.length>0">
+      <div class="card">
         <div class="row d-flex justify-content-between px-3 top">
           <div class="d-flex">
             <h5>Token Number <span class="text-primary font-weight-bold">{{tokenNumber}}</span>
@@ -31,21 +31,32 @@
           </div>
 
         </div> <!-- Add class 'active' to progress -->
-        <div class="row" *ngIf="statusList">
+        <div class="row" *ngIf="statusList && statusList.length>0">
           <div class="col-12">
             <ul id="progressbar" class="text-center">
-              <li class="active step0">PENDING ({{statusList[0]?.name}}) <br> ({{statusList[0]?.createdOn | date:'medium'}})</li>
+              <li class="active step0">PENDING ({{statusList[0]?.name}}) <br>
+                ({{statusList[0]?.createdOn | date:'medium'}})</li>
               <ng-template ngFor let-status [ngForOf]="statusList" let-first="first" let-last="last" let-i="index">
-                <!-- <li class="active step0" *ngIf="!first">{{status.status | uppercase}} - {{first}} - {{last}} - {{i}} first</li> -->
                 <li class="active step0"
-                  *ngIf="!first && (statusList[statusList.length - 1]?.status | uppercase ) !== 'COMPLETED'">
+                  *ngIf="!first && !(status.status === 'REJECTED' ||status.status === 'COMPLETED')">
                   {{status.status | uppercase}} ({{status.name}}) <br> ({{status.createdOn  | date:'medium'}})</li>
+
               </ng-template>
               <li class="step0" *ngIf="(statusList[statusList.length - 1]?.status | uppercase ) !== 'REJECTED'"
                 [class.active]="(statusList[statusList.length - 1]?.status | uppercase ) === 'COMPLETED'">
-                COMPLETED <span
-                  *ngIf="(statusList[statusList.length - 1]?.status | uppercase ) === 'COMPLETED'">({{statusList[statusList.length - 1]?.name}})<br> ({{statusList[1]?.createdOn | date:'medium'}})</span>
+                COMPLETED
+                <span
+                  *ngIf="(statusList[statusList.length - 1]?.status | uppercase ) === 'COMPLETED'">({{statusList[statusList.length - 1]?.name}})<br>
+                  ({{statusList[statusList.length - 1]?.createdOn | date:'medium'}})</span>
               </li>
+
+              <li class="step0" *ngIf="(statusList[statusList.length - 1]?.status | uppercase ) === 'REJECTED'"
+                [class.active]="(statusList[statusList.length - 1]?.status | uppercase ) === 'REJECTED'">
+                REJECTED
+                <span>({{statusList[statusList.length - 1]?.name}})<br>
+                  ({{statusList[statusList.length - 1]?.createdOn | date:'medium'}})</span>
+              </li>
+
             </ul>
           </div>
         </div>
@@ -73,5 +84,5 @@
         </div> -->
       </div>
     </div>
-</div>
+  </div>
 </div>

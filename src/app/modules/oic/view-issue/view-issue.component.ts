@@ -130,4 +130,9 @@ export class ViewIssueComponent implements OnInit {
     }
   }
 
+  pageChanged(event:any){
+    console.log(event);
+    
+  }
+
 }
