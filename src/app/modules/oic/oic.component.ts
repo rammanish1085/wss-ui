@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 
@@ -10,7 +10,10 @@ import { AuthorizationService } from 'src/app/services/authorization-service/aut
 export class OicComponent implements OnInit {
 
   public loggedInUser: User;
-  
+
+  isTrue: boolean;
+
+  @Output() messageEvent = new EventEmitter<boolean>();
 
   constructor(private authorizationService: AuthorizationService) { }
 
@@ -23,5 +26,11 @@ export class OicComponent implements OnInit {
     localStorage.clear();
     this.authorizationService.logout();
   }
-
+ 
+sendMessage() {
+  console.log("Message send");
+  
+    this.messageEvent.emit(this.isTrue)
+  }
+ 
 }

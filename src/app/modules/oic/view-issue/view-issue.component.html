@@ -1,4 +1,4 @@
-<div class="card border-dark">
+<div class="card border-dark" *ngIf="!isView">
     <div class="card-header text-center  text-white">VIEW ISSUE</div>
     <div class="card-body">
       <div class="row mb-4">
@@ -7,10 +7,10 @@
            <div class="card-body">
             <div class="table-responsive-md">
 
-              <nav class="navbar">
+              <!-- <nav class="navbar">
                   <input type="text" class="form-control" name="tokenNumber" [(ngModel)]="tokenNumber" (ngModelChange)="search()" placeholder="Enter token number to search">
-              </nav>
-              <table class="table table-hover" *ngIf="!isView">
+              </nav> -->
+              <table class="table table-responsive-md" *ngIf="!isView">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -25,8 +25,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor=" let i = index let ps of assignedProblemStatement |
-                  paginate: {id:'paging_issues',itemsPerPage:5,currentPage: page,totalItems:total_issues}; ">
+                  <tr *ngFor=" let i = index let ps of assignedProblemStatement">
                     <td><small>{{i+1}}</small></td>
                     <td><small>{{ps.tokenNumber}}</small></td>
                     <td><small>{{ps.locationCode}}</small></td>
@@ -39,69 +38,80 @@
                   </tr>
                 </tbody>
               </table>
-              <pagination-controls id="paging_issues" maxSize="5" class="d-flex justify-content-center" directionLinks="true"  (pageChange)="page=$event; pageChanged($event)">
-              </pagination-controls>
-            </div>
+           </div>
   
           </div>
         </div>
        </div>
       
-      <div class="container" *ngIf="isView">
-        <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm" (click)="onClickBack()" ><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
-            <div class="table-responsive-md">
-           <table class="table table-hover">
-            <tbody>
-             <tr>
-               <td><b>Token Number</b></td> <td><span class="badge badge-warning rounded-0 p-1">{{viewIssue.tokenNumber}}</span></td>
-               <td><b>Status</b></td> <td><span *ngIf="viewIssue.status==='COMPLETED'" class="badge badge-success rounded-0 p-1">{{viewIssue.status}}</span>
-                <span *ngIf="viewIssue.status==='REJECTED'" class="badge badge-primary rounded-0 p-1">{{viewIssue.status}}</span>
-                <span *ngIf="viewIssue.status==='PENDING'" class="badge badge-danger rounded-0 p-1">{{viewIssue.status}}</span></td>
-             </tr> 
-             <tr>
-              <td><b>Assigned User</b></td> <td><span class="badge badge-dark rounded-0 p-1">{{viewIssue.assignedUsername}}</span></td>
-              <td><b>Assigned Username</b></td> <td><span class="badge badge-dark rounded-0 p-1">{{viewIssue.assignedName}}</span></td>
-            </tr>
-            <tr>
-              <td><b>Created By</b></td> <td>{{viewIssue.username}}&nbsp;{{viewIssue.name}}</td>
-              <td><b>office Type</b></td> <td>{{viewIssue.officeType}}</td>
-            </tr>
-
-             <tr>
-              <td><b>Location code</b></td> <td>{{viewIssue.locationCode}}</td>
-              <td><b>location Name</b></td> <td>{{viewIssue.locationName}}</td>
-            </tr>
-
-             <tr>
-              <td><b>Project Name</b></td> <td>{{viewIssue.projectName}}</td>
-              <td><b>Project Module</b></td> <td>{{viewIssue.projectModule}}</td>
-              </tr>
-            <tr>
-              <td><b>Problem Statement</b></td> <td>{{viewIssue.problemStatement}}</td><td><b>Status Comments</b></td> <td>{{viewIssue.userComments}}</td>
-             </tr>
-             <tr>
-              <td><b>Description</b></td> <td>{{viewIssue.description}}</td>
-             </tr>
-            
-            </tbody>
-
-          </table>
-
-        </div>
-
-        <div *ngIf="isView">
-          <!-- <hr> -->
-          <table class="table d-flex justify-content-center" >
-           <tbody>
-              <tr *ngFor="let file of files let i = index">
-               <td><small>{{file.originalName}}</small></td>
-                <td><button class="btn btn-info btn-sm" (click)="viewFileClicked(file)" >view</button></td>            
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div> 
+      
        
     </div>
     </div>
   </div>
+
+  <div class="container" *ngIf="isView">
+    <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm" (click)="onClickBack()" ><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+        <div class="table-responsive-md">
+          <!-- <h3 class="d-flex justify-content-center" >Issue Details</h3> -->
+       <table class="table table-hover">
+        <thead class="thead-dark text-center">
+          <th colspan="4"><h5>ISSUE DETAILS</h5></th>
+        </thead>
+        <tbody>
+          <tr><td></td></tr>
+         <tr>
+           <td><b>Token Number</b></td> <td><span class="badge badge-warning rounded-0 p-1">{{viewIssue.tokenNumber}}</span></td>
+           <td><b>Status</b></td> <td><span *ngIf="viewIssue.status==='COMPLETED'" class="badge badge-success rounded-0 p-1">{{viewIssue.status}}</span>
+            <span *ngIf="viewIssue.status==='REJECTED'" class="badge badge-primary rounded-0 p-1">{{viewIssue.status}}</span>
+            <span *ngIf="viewIssue.status==='PENDING'" class="badge badge-danger rounded-0 p-1">{{viewIssue.status}}</span></td>
+         </tr> 
+         <tr>
+          <td><b>Assigned to</b></td> <td>{{viewIssue.assignedUsername}} ({{viewIssue.assignedName}})</td>
+          
+        </tr>
+        <!-- <tr>
+          <td><b>Created By</b></td> <td>{{viewIssue.username}}&nbsp;{{viewIssue.name}}</td>
+          <td><b>office Type</b></td> <td>{{viewIssue.officeType}}</td>
+        </tr>
+
+         <tr>
+          <td><b>Location code</b></td> <td>{{viewIssue.locationCode}}</td>
+          <td><b>location Name</b></td> <td>{{viewIssue.locationName}}</td>
+        </tr> -->
+
+         <tr>
+          <td><b>Project Name</b></td> <td>{{viewIssue.projectName}}</td>
+          <td><b>Project Module</b></td> <td>{{viewIssue.projectModule}}</td>
+          </tr>
+        <tr>
+          <td><b>Problem Statement</b></td> <td>{{viewIssue.problemStatement}}</td><td><b>Description</b></td><td>{{viewIssue.description}}</td>
+         </tr>
+         <tr *ngIf="viewIssue.userComments !== null">
+          <td><b>Status Comments</b></td> <td>{{viewIssue.userComments}}</td>
+         </tr>
+        
+        </tbody>
+
+      </table>
+
+    </div>
+    <hr>
+    <div *ngIf="files && files.length>0">
+      <!-- <hr> -->
+      <table class="table table-responsive-md" >
+        <thead class="thead-dark text-center">
+          <th colspan="3"><h5>Attached files</h5></th></thead>
+       <tbody>
+         <tr><th>#</th>
+          <th>File name</th>
+          <th>Action</th></tr>
+          <tr *ngFor="let file of files let i = index">
+            <td><small>{{i+1}}</small></td>
+           <td><small>{{file.originalName}}</small></td>
+            <td><button class="btn btn-info btn-sm" (click)="viewFileClicked(file)" >view</button></td>            
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div> 

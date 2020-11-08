@@ -25,6 +25,7 @@ export class ViewIssueComponent implements OnInit {
   total_issues: number;
   page: number = 1;
   tokenNumber: any;
+  isTrue: boolean;
 
   constructor(private issueMasterService: IssueMasterService, private globalUtilityService: GobalutilityService, private authorizationService: AuthorizationService, private route: ActivatedRoute, private router: Router) {
     this.assignedProblemStatement = new Array<any>()
@@ -130,9 +131,5 @@ export class ViewIssueComponent implements OnInit {
     }
   }
 
-  pageChanged(event:any){
-    console.log(event);
-    
-  }
-
+  
 }
