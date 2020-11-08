@@ -45,7 +45,7 @@ export class ViewIssueComponent implements OnInit {
       console.log("Getting Assign problem");
       console.log(success.body);
       this.assignedProblemStatement = success.body;
-      this.total_issues = this.assignedProblemStatement.length;
+      // this.total_issues = this.assignedProblemStatement.length;
     }, error => {
       console.log("Getting Error while getting assigned problem");
       console.log(error);

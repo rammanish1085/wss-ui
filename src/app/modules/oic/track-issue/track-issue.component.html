@@ -52,7 +52,7 @@
 
               <li class="step0" *ngIf="(statusList[statusList.length - 1]?.status | uppercase ) === 'REJECTED'"
                 [class.active]="(statusList[statusList.length - 1]?.status | uppercase ) === 'REJECTED'">
-                REJECTED
+                REJECTED by
                 <span>({{statusList[statusList.length - 1]?.name}})<br>
                   ({{statusList[statusList.length - 1]?.createdOn | date:'medium'}})</span>
               </li>

@@ -79,7 +79,7 @@ export class ToDoIssueComponent implements OnInit {
       console.log(success.body);
 
       this.assignedProblemStatement = success.body;
- }, error => {
+       }, error => {
 
       console.log("Insise error");
 
@@ -160,8 +160,13 @@ export class ToDoIssueComponent implements OnInit {
     this.isProcessing = true;
     this.dashboardService.rejectIssueByTokenNumber(this.viewIssue.tokenNumber, this.rejectForm.value.comments).subscribe(success => {
       if (success.status === 201) {
+        this.globalutilityService.successAlertMessage("Issue rejected successfully");
         this.isProcessing = false;
         this.resetRejectForm();
+        this.isReject = false;
+        this.getAllAssignedProblemStatement(this.username);
+        this.onClickResolveBack();
+        this.isView = false;
         this.globalutilityService.successAlertMessage("Issue rejected successfully");
       }
       this.getAllAssignedProblemStatement(this.username);
@@ -231,7 +236,9 @@ export class ToDoIssueComponent implements OnInit {
         this.globalutilityService.successAlertMessage("Issue Forwarded Successfully")
         this.isForward = false;
         this.getAllAssignedProblemStatement(this.username);
-        this.resetForwardForm()
+        this.resetForwardForm();
+        this.onClickResolveBack();
+        this.isView = false;
       }
     }, error => {
       if (error.status === 417) {

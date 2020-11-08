@@ -28,10 +28,12 @@
                   <td><small>{{ps.projectModule}}</small></td>
                   <td><small>{{ps.projectProblemStatement}}</small></td>
                   <td><span *ngIf="ps.status==='FORWARDED'"
-                      class="badge badge-warning rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='REJECTED'"
+                      class="badge badge-primary rounded-0 p-1">{{ps.status}}</span>
+                      <span *ngIf="ps.status==='REJECTED'"
                       class="badge badge-warning rounded-0 p-1">{{ps.status}}</span><span
                       *ngIf="ps.status==='COMPLETED'"
-                      class="badge badge-success rounded-0 p-1">{{ps.status}}</span><span *ngIf="ps.status==='PENDING'"
+                      class="badge badge-success rounded-0 p-1">{{ps.status}}</span>
+                      <span *ngIf="ps.status==='PENDING'"
                       class="badge badge-danger rounded-0 p-1">{{ps.status}}</span></td>
                   <td><button class="btn btn-info btn-sm" (click)="onClickView(ps)">view</button></td>
                 </tr>
@@ -51,6 +53,11 @@
         class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
   <div class="table-responsive-md">
     <table class="table table-hover">
+      <thead class="thead-dark text-center">
+        <th colspan="4">
+          <h5>ISSUE DETAILS</h5>
+        </th>
+      </thead>
       <tbody>
         <tr>
           <td><b>Token Number</b></td>
@@ -63,7 +70,10 @@
               class="badge badge-danger rounded-0 p-1">{{viewIssue.status}}</span>
               <span
               *ngIf="viewIssue.status==='FORWARDED'"
-              class="badge badge-dark rounded-0 p-1">{{viewIssue.status}}</span>
+              class="badge badge-primary rounded-0 p-1">{{viewIssue.status}}</span>
+              <span
+              *ngIf="viewIssue.status==='REJECTED'"
+              class="badge badge-warning rounded-0 p-1">{{viewIssue.status}}</span>
 
             </td>
         </tr>
@@ -81,18 +91,49 @@
               class="badge badge-dark rounded-0 p-1">{{viewIssue.assignName}}</span></td>
         </tr>
 
-        <tr *ngIf="viewIssue.status==='PENDING' && viewIssue.forwardUsername !== null">
+        <tr *ngIf="viewIssue.status==='FORWARDED' && viewIssue.forwardUsername !== null">
          
-          <td><b>Forward User</b></td>
+          <td><b>Forwarded to </b></td>
           <td>
-            <span>{{viewIssue.forwardUsername}}</span>
+            <span>{{viewIssue.forwardUsername}} ({{viewIssue.forwardName}})</span>
           </td>
-          <td><b>Forward Username</b></td>
-          <td><span>{{viewIssue.forwardName}}</span></td>
+
+          <td><b>Remark</b></td>
+          <td>
+            <span>{{viewIssue.remark}}</span>
+          </td>
+         
         </tr>
+        <tr *ngIf="viewIssue.status==='COMPLETED' && viewIssue.forwardUsername !== null">
+         
+          <td><b>Issue resolve by </b></td>
+          <td>
+            <span>{{viewIssue.forwardUsername}} ({{viewIssue.forwardName}})</span>
+          </td>
+
+          <td><b>Remark</b></td>
+          <td>
+            <span>{{viewIssue.userComments}}</span>
+          </td>
+         
+        </tr>
+        <tr *ngIf="viewIssue.status==='REJECTED' && viewIssue.forwardUsername !== null">
+         
+          <td><b>Issue Rejected by </b></td>
+          <td>
+            <span>{{viewIssue.forwardUsername}} ({{viewIssue.forwardName}})</span>
+          </td>
+
+          <td><b>Remark</b></td>
+          <td>
+            <span>{{viewIssue.userComments}}</span>
+          </td>
+         
+        </tr>
+      
         <tr>
           <td><b>Created By</b></td>
-          <td>{{viewIssue.username}}&nbsp;{{viewIssue.name}}</td>
+          <td>{{viewIssue.username}} ( {{viewIssue.name}} )</td>
           <td><b>office Type</b></td>
           <td>{{viewIssue.officeType}}</td>
         </tr>
@@ -113,13 +154,12 @@
         <tr>
           <td><b>Problem Statement</b></td>
           <td>{{viewIssue.projectProblemStatement}}</td>
-          <td><b>Status Comments</b></td>
-          <td>{{viewIssue.userComments}}</td>
+          <td><b>Description</b></td><td>{{viewIssue.description}}</td>
         </tr>
-        <tr>
-          <td><b>Description</b></td>
-          <td>{{viewIssue.description}}</td>
-        </tr>
+        <!-- <tr *ngIf="viewIssue.userComments !== null">
+          
+          <td><b>Status Comments</b></td><td>{{viewIssue.userComments}}</td>
+        </tr> -->
 
         <tr>
           <td *ngIf="viewIssue.officeType === 'CIRCLE' || viewIssue.officeType === 'IT'"><b>Remark</b></td>
@@ -131,9 +171,20 @@
 
     </table>
     <hr>
-    <table class="table d-flex justify-content-center">
+    <table class="table table-responsive-md" *ngIf="files && files.length>0">
+      <thead class="thead-dark text-center">
+        <th colspan="3">
+          <h5>Attached files</h5>
+        </th>
+      </thead>
       <tbody>
+        <tr>
+          <th>#</th>
+          <th>File name</th>
+          <th>Action</th>
+        </tr>
         <tr *ngFor="let file of files let i = index">
+          <td>{{i+1}}</td>
           <td><small>{{file.originalName}}</small></td>
           <td><button class="btn btn-info btn-sm" (click)="viewFileClicked(file)">view</button></td>
         </tr>
