@@ -17,7 +17,7 @@ import { User } from '../../../models/user.model';
 @Injectable()
 export class LoginService {
 
-  private readonly SESSION_DURATION_MINUTES : number = 60;
+  private readonly SESSION_DURATION_MINUTES : number = 5;
 
   private readonly SESSION_END_TIME_KEY = "session_horcrux";
   private readonly TOKEN_KEY = "cit_horcrux";
