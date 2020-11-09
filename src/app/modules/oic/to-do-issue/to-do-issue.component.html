@@ -130,6 +130,36 @@
           </td>
          
         </tr>
+        
+        <tr *ngIf="viewIssue.status==='PENDING' && officeType === 'CIRCLE'">
+         
+          <td><b>Forwarded by </b></td>
+          <td>
+            <span>{{viewIssue.forwardByUsername}} ({{viewIssue.forwardByName}})</span>
+          </td>
+
+          <td><b>Remark</b></td>
+          <td>
+            <span>{{viewIssue.divisionRemark}}</span>
+          </td>
+         
+        </tr>
+
+        <tr *ngIf="viewIssue.status==='PENDING' && officeType === 'MD'">
+         
+          <td><b>Forwarded by </b></td>
+          <td>
+            <span>{{viewIssue.forwardByUsername}} ({{viewIssue.forwardByName}})</span>
+          </td>
+
+          <td><b>Remark</b></td>
+          <td>
+            <span>{{viewIssue.circleRemark}}</span>
+          </td>
+         
+        </tr>
+   
+
       
         <tr>
           <td><b>Created By</b></td>
@@ -323,7 +353,7 @@
                   <option value="" disabled>Select user</option>
                   <option *ngFor="let info of requestInfoUser" [ngValue]="info"
                     class="form-control form-control-sm text-center">
-                    {{info.username}}&nbsp;{{info.name}}</option>
+                    {{info.requestUsername}}&nbsp;{{info.requestName}}</option>
                 </select>
               </div>
             </td>

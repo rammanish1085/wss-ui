@@ -34,6 +34,7 @@ export class ToDoIssueComponent implements OnInit {
   requestForwardForm: FormGroup;
   requestInfoObject: any = {};
   isProcessing: boolean;
+  officeType: string;
   
 
   constructor(private dashboardService: DashboardService,private issueMasterService:IssueMasterService,
@@ -67,7 +68,9 @@ export class ToDoIssueComponent implements OnInit {
     this.username = this.loggedInUser.getUsername();
     this.locationCode = this.loggedInUser.getLocationCode();
     this.name = this.loggedInUser.getName();
+    this.officeType = this.loggedInUser.getOfficeType();
     this.getAllAssignedProblemStatement(this.username);
+
   }
 
   getAllAssignedProblemStatement(username: any) {
@@ -126,6 +129,8 @@ export class ToDoIssueComponent implements OnInit {
         this.globalutilityService.successAlertMessage("Issue resolve successfully");
         this.isProcessing = false;
         this.resetResolveForm();
+        this.onClickResolveBack();
+        this.isView = false;
       }
       this.getAllAssignedProblemStatement(this.username);
     }, error => {
@@ -165,9 +170,8 @@ export class ToDoIssueComponent implements OnInit {
         this.getAllAssignedProblemStatement(this.username);
         this.onClickResolveBack();
         this.isView = false;
-        this.globalutilityService.successAlertMessage("Issue rejected successfully");
       }
-      this.getAllAssignedProblemStatement(this.username);
+      
     }, error => {
       if (error.status === 417) {
         this.isProcessing = false;
@@ -249,10 +253,10 @@ export class ToDoIssueComponent implements OnInit {
   }
   private prepareFarwardIssueObject() {
     this.forwardIssue = this.viewIssue;
-    this.forwardIssue.locationCode = this.locationCode;
-    this.forwardIssue.locationName = this.loggedInUser.getLocationName();
-    this.forwardIssue.username = this.username;
-    this.forwardIssue.name = this.name;
+    // this.forwardIssue.locationCode = this.locationCode;
+    // this.forwardIssue.locationName = this.loggedInUser.getLocationName();
+    // this.forwardIssue.username = this.username;
+    // this.forwardIssue.name = this.name;
     this.forwardIssue.remark = this.requestForwardForm.value.remark;
 
   }
@@ -273,9 +277,11 @@ export class ToDoIssueComponent implements OnInit {
       console.log("Inside success");
       console.log(success);
       if (success.status === 201) {
-        this.isRequestInfo = false;
-        this.reset();
         this.globalutilityService.successAlertMessage("Request info sent successfully")
+        this.reset();
+        this.isRequestInfo = false;
+        this.isView = false;
+        
       }
     },
       error => {
