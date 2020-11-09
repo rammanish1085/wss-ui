@@ -105,7 +105,13 @@
         </div>
         
         <div class="info">
-          <a href="#" class="d-block"><small class="text-white">{{loggedInUser.getName()}} | {{loggedInUser.getUsername()}} </small></a>
+          <a href="#" class="d-block">
+            <small class="text-white">{{loggedInUser.getName()}}</small><br>
+            <small class="text-white">{{loggedInUser.getUsername()}}</small><br>
+            <small class="text-white">{{loggedInUser.getLocationCode()}}</small><br>
+            <small class="text-white">{{loggedInUser.getLocationName()}}</small></a>
+            
+
           <!-- <small class="text-white">{{loggedInUser.getLocationCode()}}</small><br>
           <small class="text-white">{{loggedInUser.getLocationName()}}</small><br>
           <small class="text-white">{{loggedInUser.getRole()}}</small> -->

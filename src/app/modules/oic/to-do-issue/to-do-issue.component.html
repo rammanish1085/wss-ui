@@ -203,7 +203,7 @@
         (click)="onClickReject(viewIssue)">Reject</button>
     </div>
     <div>
-      <button class="btn btn-primary btn-sm mr-4" [disabled]="isDisable"
+      <button  *ngIf="locationCode!=='34420124'" class="btn btn-primary btn-sm mr-4" [disabled]="isDisable"
         (click)="onClickforward(viewIssue)">Forward</button>
     </div>
     <div>

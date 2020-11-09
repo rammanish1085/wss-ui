@@ -99,8 +99,6 @@ export class ToDoIssueComponent implements OnInit {
     } else {
       this.isDisable = false;
     }
-
-
     this.viewIssue = ps;
     this.isView = true;
     this.getFileByTokenNumber(ps.tokenNumber);
