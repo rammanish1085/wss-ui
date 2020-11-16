@@ -4,6 +4,7 @@ import { User } from 'src/app/models/user.model';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
 import { IssueMasterService } from 'src/app/services/project/issue-master.service';
+import { IssueStatusService } from 'src/app/services/project/issue-status.service';
 import { RequestInformationService } from 'src/app/services/project/request-information.service';
 import { GlobalConstants } from 'src/app/utility/global.constants';
 import { GobalutilityService } from 'src/app/utility/gobalutility.service';
@@ -35,9 +36,11 @@ export class ToDoIssueComponent implements OnInit {
   requestInfoObject: any = {};
   isProcessing: boolean;
   officeType: string;
+  statusList: any;
   
 
-  constructor(private dashboardService: DashboardService,private issueMasterService:IssueMasterService,
+  constructor(private dashboardService: DashboardService,
+    private issueMasterService:IssueMasterService,private issueStatusService: IssueStatusService,
      private authorizationService: AuthorizationService, private requestInformationService: RequestInformationService,
     private globalutilityService: GobalutilityService) { }
 
@@ -105,10 +108,31 @@ export class ToDoIssueComponent implements OnInit {
     this.viewIssue = ps;
     this.isView = true;
     this.getFileByTokenNumber(ps.tokenNumber);
+    this.getIssueStatusByTokenNumber(ps.tokenNumber);
     console.log("View Clicked");
     console.log(ps);
 
   }
+ 
+  getIssueStatusByTokenNumber(tokenNumber: any) {
+    this.issueStatusService.getRequestInformation(tokenNumber).subscribe(success => {
+
+      if (success.status === 200) {
+        this.statusList = success.body;
+        console.log("issue status");
+        console.log(this.statusList);
+      } if (success.status === 204) {
+        console.log(success);
+      }
+
+
+    }, error => {
+      console.log(error);
+    })
+  }
+
+
+
   public onClickBack() {
     this.isView = false;
     this.isForward = false;

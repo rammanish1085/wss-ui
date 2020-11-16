@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 import { IssueMasterService } from 'src/app/services/project/issue-master.service';
+import { IssueStatusService } from 'src/app/services/project/issue-status.service';
 import { GlobalConstants } from 'src/app/utility/global.constants';
 import { GobalutilityService } from 'src/app/utility/gobalutility.service'
 
@@ -26,8 +27,10 @@ export class ViewIssueComponent implements OnInit {
   page: number = 1;
   tokenNumber: any;
   isTrue: boolean;
+  statusList: any;
 
-  constructor(private issueMasterService: IssueMasterService, private globalUtilityService: GobalutilityService, private authorizationService: AuthorizationService, private route: ActivatedRoute, private router: Router) {
+  constructor(private issueMasterService: IssueMasterService, private issueStatusService: IssueStatusService,
+    private globalUtilityService: GobalutilityService, private authorizationService: AuthorizationService, private route: ActivatedRoute, private router: Router) {
     this.assignedProblemStatement = new Array<any>()
 
   }
@@ -57,9 +60,33 @@ export class ViewIssueComponent implements OnInit {
     this.viewIssue = ps;
     this.isView = true;
     this.getFileByTokenNumber(ps.tokenNumber);
+    this.getIssueStatusByTokenNumber(ps.tokenNumber);
     console.log("View Clicked");
     console.log(ps);
 
+  }
+  getIssueStatusByTokenNumber(tokenNumber: any) {
+    this.issueStatusService.getRequestInformation(tokenNumber).subscribe(success => {
+
+      if (success.status === 200) {
+        this.statusList = success.body;
+        console.log("issue status");
+        console.log(this.statusList);
+        
+        
+
+      } if (success.status === 204) {
+
+        console.log(success);
+
+      }
+
+
+    }, error => {
+      console.log(error);
+
+
+    })
   }
 
   public onClickBack() {
@@ -131,5 +158,5 @@ export class ViewIssueComponent implements OnInit {
     }
   }
 
-  
+
 }

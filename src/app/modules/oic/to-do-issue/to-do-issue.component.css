@@ -5,3 +5,6 @@
 .table .thead-dark th {
     background-color: #17a2b8;
 }
+hr.view{
+    border-top: 5px solid  #17a2b8;
+}
