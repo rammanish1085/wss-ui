@@ -53,8 +53,9 @@
     class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button>
   </div>
   <div class="card-header">
-    <h3 class="card-title text-white text-center">ISSUE DETAILS</h3>
-
+    <div id="titleDiv">
+      <h3 class="card-title text-white text-center">ISSUE DETAILS</h3>
+    </div>
     <div class="card-tools">
       <button
         type="button"
@@ -130,7 +131,7 @@
         <table class="table table-responsive-md" *ngIf="files && files.length>0">
           <thead class="thead-dark text-center">
             <th colspan="3">
-              <h5>Attached files</h5>
+              <h5>ATTACHED FILES</h5>
             </th>
           </thead>
           <tbody>
@@ -158,7 +159,7 @@
 
 <div class="card" *ngIf="isView">
    <div class="card-header">
-    <h3 class="card-title text-white text-xs-center">ISSUE CURRENT STATUS</h3>
+    <div id="titleDiv"><h3 class="card-title text-white text-xs-center">ISSUE CURRENT STATUS</h3></div>
 
     <div class="card-tools">
       <button
@@ -216,6 +217,61 @@
   </div>
   <!-- /.card-body -->
 </div>
+
+<div class="card" *ngIf="isView && requestInfoList.length>0">
+  <div class="card-header">
+    <div id="titleDiv"> <h3 class="card-title text-white">REQUESTED INFORMATION</h3></div>
+  
+
+   <div class="card-tools">
+     <button
+       type="button"
+       class="btn btn-tool"
+       data-card-widget="collapse"
+     >
+       <i class="fas fa-minus"></i>
+     </button>
+     <button
+       type="button"
+       class="btn btn-tool"
+       data-card-widget="remove"
+     >
+       <i class="fas fa-times"></i>
+     </button>
+   </div>
+ </div>
+ <!-- /.card-header -->
+ <div class="card-body">
+   <div *ngIf="requestInfoList && requestInfoList.length>0">
+     <!-- <hr> -->
+     <table class="table table-responsive-md">
+           
+       <tbody>
+         <tr>
+           <th>#</th>
+           <th>Token Number</th>
+           <th>Request Message</th>
+           <th>Requested By</th>
+           <th>Date/Time</th>
+         </tr>
+         <tr *ngFor="let requestInfo of requestInfoList let i = index">
+           <td><small>{{i+1}}</small></td>
+           <td><small><b>{{requestInfo.tokenNumber}}</b></small></td>
+           <td><small>{{requestInfo.requestMessage}}</small></td>
+           <td><small>{{requestInfo.requestedUsername}}({{requestInfo.requestedName}})</small></td>
+           <td><small>{{requestInfo.createdOn |date:'medium'}}</small></td>
+           
+                  </tr>
+       </tbody>
+     </table>
+   </div> 
+   <!-- /.d-md-flex -->
+ </div>
+ <!-- /.card-body -->
+</div>
+
+
+
 
 
 <hr *ngIf="isView"  class="view">

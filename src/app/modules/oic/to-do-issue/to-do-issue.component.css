@@ -8,3 +8,8 @@
 hr.view{
     border-top: 5px solid  #17a2b8;
 }
+#titleDiv{
+    display: flex;
+    justify-content: center;
+    height: 0px;
+}

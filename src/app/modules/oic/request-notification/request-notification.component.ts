@@ -19,13 +19,13 @@ export class RequestNotificationComponent implements OnInit {
   loggedInUser: User;
   username: string;
   isReply : boolean;
-  requestInfo: any[];
+  requestInfo: any =[];
   replyForm :FormGroup;
   viewRequest:any;
   file: File;
   uploadFiles: File[] = [];
   requestModel :RequestInfo;
-  requestInfoList:any;
+  requestInfoList:any =[];
   isRequestedUser:boolean;
   isRequestInformation :boolean;
   viewResponse: any;
@@ -52,11 +52,14 @@ export class RequestNotificationComponent implements OnInit {
       if(success.body != null) {
         if (success.status === 200) {
           this.requestInfo = success.body;
+         
+          console.log(success);
           console.log("Request Information Recieved Successfully")
         }
         
       }else if(success.status === 204) {
          console.log("No Content Found in request information")
+         this.requestInfo =[];
          this.isRequestInformation = true;
         
       }
@@ -71,13 +74,14 @@ export class RequestNotificationComponent implements OnInit {
 
     this.requestInformationService.getByRequestUsername(username).subscribe(success => {
 
-      console.log("Inside Success request inforamtion");
+      console.log("Inside Success request inforamtion List");
 
-      console.log(success.body);
+      console.log(success);
+      if(success.status === 200){
+        this.requestInfoList = success.body;
 
-      this.requestInfoList = success.body;
-      if(this.requestInfoList == null){
-        this.isRequestedUser = true;
+      }else if(success.status === 204){
+        this.requestInfoList =[];
       }
 
     }, error => {
@@ -128,8 +132,7 @@ export class RequestNotificationComponent implements OnInit {
     this.isReply = false;
   }
 
-  onReplyubmit(){
-  
+  onReplyubmit(){  
     console.log("on click reply");
     console.log(this.viewRequest);
     this.preparedRequestObject();

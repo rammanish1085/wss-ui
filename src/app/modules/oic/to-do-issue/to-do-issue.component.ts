@@ -37,6 +37,7 @@ export class ToDoIssueComponent implements OnInit {
   isProcessing: boolean;
   officeType: string;
   statusList: any;
+  requestInfoList: any =[];
   
 
   constructor(private dashboardService: DashboardService,
@@ -109,6 +110,7 @@ export class ToDoIssueComponent implements OnInit {
     this.isView = true;
     this.getFileByTokenNumber(ps.tokenNumber);
     this.getIssueStatusByTokenNumber(ps.tokenNumber);
+    this.getByRequestedUsername(this.username);
     console.log("View Clicked");
     console.log(ps);
 
@@ -361,6 +363,34 @@ export class ToDoIssueComponent implements OnInit {
       this.handleError(error);
     })
   }
+
+  getByRequestedUsername(username: any) {
+
+    this.requestInformationService.getByRequestUsername(username).subscribe(success => {
+
+      console.log("Getting Information List As view Clicked");
+
+      console.log(success);
+
+      console.log(success.body);
+
+      if(success.status === 200){
+        this.requestInfoList = success.body;
+
+      }else if(success.status === 204){
+        this.requestInfoList =[];
+      }
+
+    }, error => {
+
+      console.log("Insise error");
+    })
+
+  }
+
+
+
+
 
   /**
    * Save blob to file

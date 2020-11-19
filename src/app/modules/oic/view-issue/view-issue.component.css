@@ -13,3 +13,8 @@ padding:.25px;
   .table .thead-dark th {
        background-color: #17a2b8;
   }
+  #titleDiv{
+      display: flex;
+      justify-content: center;
+      height: 0px;
+  }
