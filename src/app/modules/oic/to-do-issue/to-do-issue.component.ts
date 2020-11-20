@@ -110,7 +110,7 @@ export class ToDoIssueComponent implements OnInit {
     this.isView = true;
     this.getFileByTokenNumber(ps.tokenNumber);
     this.getIssueStatusByTokenNumber(ps.tokenNumber);
-    this.getByRequestedUsername(this.username);
+    this.getByTokenNumberAndIsReply(ps.tokenNumber);
     console.log("View Clicked");
     console.log(ps);
 
@@ -299,6 +299,11 @@ export class ToDoIssueComponent implements OnInit {
   }
   onSubmitRequestInfo() {
     this.prepareRequestInfoObject();
+    console.log("Request info object");
+    console.log(this.requestInfoForm.value);
+
+    
+    
     this.requestInformationService.requestInformationToOrigin(this.requestInfoObject).subscribe(success => {
       console.log("Inside success");
       console.log(success);
@@ -321,11 +326,12 @@ export class ToDoIssueComponent implements OnInit {
 
   prepareRequestInfoObject() {
     this.requestInfoObject.tokenNumber = this.requestInfoForm.value.user.tokenNumber;
-    this.requestInfoObject.username = this.requestInfoForm.value.user.username;
-    this.requestInfoObject.name = this.requestInfoForm.value.user.name;
+    this.requestInfoObject.username = this.requestInfoForm.value.user.requestUsername;
+    this.requestInfoObject.name = this.requestInfoForm.value.user.requestName;
     this.requestInfoObject.requestedUsername = this.username;
     this.requestInfoObject.requestedName = this.name;
     this.requestInfoObject.requestMessage = this.requestInfoForm.value.remark;
+    
   }
 
 
@@ -364,9 +370,9 @@ export class ToDoIssueComponent implements OnInit {
     })
   }
 
-  getByRequestedUsername(username: any) {
+  getByTokenNumberAndIsReply(username: any) {
 
-    this.requestInformationService.getByRequestUsername(username).subscribe(success => {
+    this.requestInformationService.getByTokenNumberAndIsReply(username,false).subscribe(success => {
 
       console.log("Getting Information List As view Clicked");
 

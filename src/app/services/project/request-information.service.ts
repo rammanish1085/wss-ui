@@ -36,6 +36,13 @@ export class RequestInformationService {
      }));
  }
 
+ getRequestInformationByUsernameAndIsReply(username: string,isReply:boolean) {
+  return this.http.get(this.contextPath + 'request-information/user-name/' + username +'/is-reply/'+isReply, { observe: 'response' }).pipe(map(
+   (response: HttpResponse<any>) => {
+     return response;
+   }));
+}
+
  getByRequestUsername(requestedUsername: string) {
   return this.http.get(this.contextPath + '/request-information/requested-username/' + requestedUsername, { observe: 'response' }).pipe(map(
     (response: HttpResponse<any>) => {
@@ -45,6 +52,13 @@ export class RequestInformationService {
 
 getByRequestedUsernameAndIsReply(requestedUsername: string,isReply : boolean) {
   return this.http.get(this.contextPath + '/request-information/requested-username/' + requestedUsername +'/is-reply/'+ isReply, { observe: 'response' }).pipe(map(
+    (response: HttpResponse<any>) => {
+      return response;
+    }));
+}
+
+getByTokenNumberAndIsReply(tokenNumber: string,isReply : boolean) {
+  return this.http.get(this.contextPath + '/request-information/token-number/' + tokenNumber +'/is-reply/'+ isReply, { observe: 'response' }).pipe(map(
     (response: HttpResponse<any>) => {
       return response;
     }));

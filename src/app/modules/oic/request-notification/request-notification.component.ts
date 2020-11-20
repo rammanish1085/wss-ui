@@ -47,7 +47,7 @@ export class RequestNotificationComponent implements OnInit {
   }
 
   getRequestInformationByUsername(username: string) {
-    this.requestInformationService.getRequestInformation(username).subscribe(success => {
+    this.requestInformationService.getRequestInformationByUsernameAndIsReply(username,false).subscribe(success => {
       console.log(success);
       if (success.body != null) {
         if (success.status === 200) {
@@ -152,13 +152,11 @@ export class RequestNotificationComponent implements OnInit {
   }
 
   onReplyubmit(){  
-    console.log("on click reply");
-    console.log(this.viewRequest);
     this.preparedRequestObject();
-    console.log("After Object PRepared");
-    console.log(this.requestModel);
+    let index = this.requestInfo.indexOf(this.viewRequest);
     this.requestInfoService.insertRequestInfo(this.requestModel, this.uploadFiles).subscribe(success => {
       if (success.status === 201) {
+        this.requestInfo.splice(index, 1);
          this.resetReplyForm();
          this.globalutilityService.successAlertMessage("Reply submited Successfully");
       }
@@ -175,6 +173,7 @@ export class RequestNotificationComponent implements OnInit {
   preparedRequestObject(){
 
     this.requestModel = new RequestInfo();
+    this.requestModel.setId(this.viewRequest.id);
     this.requestModel.setTokenNumber(this.viewRequest.tokenNumber);
     this.requestModel.setUsername(this.viewRequest.username);
     this.requestModel.setName(this.viewRequest.name);

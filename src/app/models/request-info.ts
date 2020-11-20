@@ -1,5 +1,7 @@
 export class RequestInfo {
 
+    public id:number;
+
     public tokenNumber: string;
 
     public username: string;
@@ -13,6 +15,13 @@ export class RequestInfo {
     public responseMessage: string;
 
     public requestMessage: string;
+
+    setId(id: number) {
+        this.id = id;
+    }
+    getId(): number {
+        return this.id;
+    }
 
     setTokenNumber(tokenNumber: string) {
         this.tokenNumber = tokenNumber;

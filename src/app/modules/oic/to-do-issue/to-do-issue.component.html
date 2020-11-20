@@ -251,6 +251,7 @@
            <th>#</th>
            <th>Token Number</th>
            <th>Request Message</th>
+           <th>Requested To</th>
            <th>Requested By</th>
            <th>Date/Time</th>
          </tr>
@@ -258,6 +259,7 @@
            <td><small>{{i+1}}</small></td>
            <td><small><b>{{requestInfo.tokenNumber}}</b></small></td>
            <td><small>{{requestInfo.requestMessage}}</small></td>
+           <td><small>{{requestInfo.username}}({{requestInfo.name}})</small></td>
            <td><small>{{requestInfo.requestedUsername}}({{requestInfo.requestedName}})</small></td>
            <td><small>{{requestInfo.createdOn |date:'medium'}}</small></td>
            
