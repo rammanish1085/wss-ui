@@ -110,7 +110,7 @@ export class ToDoIssueComponent implements OnInit {
     this.isView = true;
     this.getFileByTokenNumber(ps.tokenNumber);
     this.getIssueStatusByTokenNumber(ps.tokenNumber);
-    this.getByTokenNumberAndIsReply(ps.tokenNumber);
+    this.getByUsernameAndTokenNumber(this.username,ps.tokenNumber);
     console.log("View Clicked");
     console.log(ps);
 
@@ -369,10 +369,10 @@ export class ToDoIssueComponent implements OnInit {
       this.handleError(error);
     })
   }
-
-  getByTokenNumberAndIsReply(username: any) {
-
-    this.requestInformationService.getByTokenNumberAndIsReply(username,false).subscribe(success => {
+  
+  
+  getByUsernameAndTokenNumber(username: any,tokenNumber :any) {
+    this.requestInformationService.getByUsernameAndTokenNumber(username,tokenNumber).subscribe(success => {
 
       console.log("Getting Information List As view Clicked");
 

@@ -57,8 +57,8 @@ getByRequestedUsernameAndIsReply(requestedUsername: string,isReply : boolean) {
     }));
 }
 
-getByTokenNumberAndIsReply(tokenNumber: string,isReply : boolean) {
-  return this.http.get(this.contextPath + '/request-information/token-number/' + tokenNumber +'/is-reply/'+ isReply, { observe: 'response' }).pipe(map(
+getByUsernameAndTokenNumber(username:string,tokenNumber: string) {
+  return this.http.get(this.contextPath + '/request-information/user-name/' + username +'/token-number/'+ tokenNumber, { observe: 'response' }).pipe(map(
     (response: HttpResponse<any>) => {
       return response;
     }));
