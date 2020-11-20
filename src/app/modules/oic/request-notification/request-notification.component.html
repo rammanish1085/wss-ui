@@ -29,22 +29,24 @@
 
    <div *ngIf="requestInfo !== 'null' && requestInfo.length>0">
      <!-- <hr> -->
-     <table class="table table-responsive-md table-hover">
+     <table class="table table-responsive-md table-hover text-center">
       <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Token number</th>
           <th scope="col">Request Message</th>
           <th scope="col">Requested By</th>
+          <th scope="col">Requested On</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let info of requestInfo let i = index">
           <td>{{i+1}}</td>
-          <td>{{info.tokenNumber}}</td>
-          <td>{{info.requestMessage}}</td>
-          <td>{{info.requestedUsername}}({{info.requestedName}})</td>
+          <td><small><b>{{info.tokenNumber}}</b></small></td>
+          <td><small>{{info.requestMessage}}</small></td>
+          <td><small>{{info.requestedUsername}}({{info.requestedName}})</small></td>
+          <td><small>{{info.createdOn | date:'medium'}}</small></td>
           <td><button class="btn btn-info btn-sm" (click)="onClickReply(info)">Reply</button>
           </td>
 
@@ -95,16 +97,18 @@
           <th scope="col">Request Message</th>
           <th scope="col">Response Message</th>
           <th scope="col">Response by</th>
+          <th scope="col">Response On</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let info of requestInfoList let i = index">
           <td>{{i+1}}</td>
-          <td>{{info.tokenNumber}}</td>
-          <td>{{info.requestMessage}}</td>
-          <td>{{info.responseMessage}}
-          <td>{{info.username}}({{info.name}})</td>
+          <td><small><b>{{info.tokenNumber}}</b></small></td>
+          <td><small>{{info.requestMessage}}</small></td>
+          <td><small>{{info.responseMessage}}</small></td>
+          <td><small>{{info.username}}({{info.name}})</small></td>
+          <td><small>{{info.createdOn|date:'medium'}}</small></td>
          <td><button class="btn btn-info btn-sm"(click)="onClickViewResponse(info)">view</button>
           </td>
         </tr>
@@ -162,7 +166,7 @@
 
 
   <div class="card mt-2" *ngIf="isReply">
-    <div class="card-header text-center  text-white">RESPONSE INFORMATION</div>
+    <div class="card-header text-center  text-white">REPLY ON REQUESTED INFORMATION</div>
     <div class="card-body">
       <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
           (click)="onClickReplyBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>

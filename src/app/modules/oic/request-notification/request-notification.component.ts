@@ -35,7 +35,6 @@ export class RequestNotificationComponent implements OnInit {
   constructor(private authorizationService: AuthorizationService,private requestInfoService:RequestInfoService,private globalutilityService : GobalutilityService, private requestInformationService: RequestInformationService, private globalUtilityService: GobalutilityService) { }
 
   ngOnInit(): void {
-
     this.replyForm = new FormGroup({
       replyMessage: new FormControl('', Validators.required),
       isAttachment :new FormControl(false),
@@ -44,28 +43,27 @@ export class RequestNotificationComponent implements OnInit {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
     this.getRequestInformationByUsername(this.username);
-    this.getByRequestedUsername(this.username);
+    this.getByUsernameAndIsReply(this.username);
   }
+
   getRequestInformationByUsername(username: string) {
     this.requestInformationService.getRequestInformation(username).subscribe(success => {
       console.log(success);
-      if(success.body != null) {
+      if (success.body != null) {
         if (success.status === 200) {
+          console.log("Getting request information by username");
+          console.log(success.body);
           this.requestInfo = success.body;
-         
-          console.log(success);
-          console.log("Request Information Recieved Successfully")
         }
-        
-      }else if(success.status === 204) {
-         console.log("No Content Found in request information")
-         this.requestInfo =[];
-         this.isRequestInformation = true;
-        
+
+      } else if (success.status === 204) {
+        console.log("No Content Found in request information")
+        this.requestInfo = [];
+        this.isRequestInformation = true;
       }
 
     }, error => {
-      console.log("Getting Error while retrive request information")
+      console.log("Getting Error while retrive request information by user name")
     })
 
   }
@@ -75,6 +73,27 @@ export class RequestNotificationComponent implements OnInit {
     this.requestInformationService.getByRequestUsername(username).subscribe(success => {
 
       console.log("Inside Success request inforamtion List");
+
+      console.log(success);
+      if(success.status === 200){
+        this.requestInfoList = success.body;
+
+      }else if(success.status === 204){
+        this.requestInfoList =[];
+      }
+
+    }, error => {
+
+      console.log("Insise error");
+    })
+
+  }
+
+  getByUsernameAndIsReply(username: any) {
+
+    this.requestInformationService.getByRequestedUsernameAndIsReply(username,true).subscribe(success => {
+
+      console.log("Getting request inforamtion by requested username and is reply true");
 
       console.log(success);
       if(success.status === 200){

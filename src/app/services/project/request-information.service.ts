@@ -43,6 +43,13 @@ export class RequestInformationService {
     }));
 }
 
+getByRequestedUsernameAndIsReply(requestedUsername: string,isReply : boolean) {
+  return this.http.get(this.contextPath + '/request-information/requested-username/' + requestedUsername +'/is-reply/'+ isReply, { observe: 'response' }).pipe(map(
+    (response: HttpResponse<any>) => {
+      return response;
+    }));
+}
+
 viewFile(tokenNumber: string, fileName: string, response) {
   let httpParams = new HttpParams();
   httpParams = httpParams.append("tokenNumber", tokenNumber)
