@@ -50,23 +50,22 @@
         </a>
         
       </li>
-      <!-- Notifications Dropdown Menu -->
+      <!-- Notifications Dropdown Menu
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" [routerLink]="['notification']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
           <i class="far fa-bell fa-lg"></i>
           <span class="badge badge-warning navbar-badge">15</span>
         </a>
         
-      </li>
+      </li> -->
       <li class="nav-item">
-        <a
-          class="nav-link"
-          data-widget="control-sidebar"
-          data-slide="true"
-          href="#"
-          ><i class="fas fa-user-cog fa-lg"></i
-        ></a>
+        <a class="nav-link" data-widget="control-sidebar"data-slide="true" href="#">
+          <i class="fas fa-user-cog fa-lg"></i>
+           </a>
+           
       </li>
+      
+   
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -152,6 +151,16 @@
             <i class="nav-icon fas fa-tasks"></i>
             <p>
               To Do Issue
+            </p>
+          </a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['notification']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
+            <i class="nav-icon far fa-bell fa-lg"></i>
+            <p>
+              Request Notifications
             </p>
           </a>
         </li>
