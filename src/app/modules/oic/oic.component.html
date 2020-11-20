@@ -43,23 +43,9 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link"  href="javascript:void(0);" (click)="logoutClicked()">
-          <i class="fas fa-sign-out-alt fa-lg">Log out</i>
-        </a>
-        
-      </li>
-      <!-- Notifications Dropdown Menu
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" [routerLink]="['notification']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
-          <i class="far fa-bell fa-lg"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        
-      </li> -->
+           
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar"data-slide="true" href="#">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
           <i class="fas fa-user-cog fa-lg"></i>
            </a>
            
@@ -257,7 +243,46 @@
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
+   <div class="tab-content">
+    <nav class="mt-2">
+      <ul
+        class="nav nav-pills nav-sidebar flex-column"
+        data-widget="treeview"
+        role="menu"
+        data-accordion="false"
+      >
+      <li class="nav-item">
+        <a class="nav-link" href="javascript:void(0);" (click)="logoutClicked()" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
+          <i class="nav-icon fas fa-sign-out-alt fa-lg"></i>
+          <p>
+            Log Out
+         </p>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['dashboard']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
+          <i class="nav-icon fas fa-key"></i>
+          <p>
+            Change Password
+          </p>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['dashboard']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
+          <i class="nav-icon fas fa-cog"></i>
+          <p>
+           Setting
+          </p>
+        </a>
+      </li>
+
+      
+      </ul>
+    </nav>
+      <!-- /.tab-pane -->
+    </div>
   </aside>
   <!-- /.control-sidebar -->
 
