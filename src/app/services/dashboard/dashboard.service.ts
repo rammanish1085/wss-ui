@@ -8,6 +8,19 @@ import { GlobalConfiguration } from 'src/app/config/global.config';
 })
 export class DashboardService {
 
+  countByUsername(username: any) {
+    return this.http.get(this.contextPath + '/issue-master/user-name/' + username, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+  countByUsernameAndStatus(username: any,status:any) {
+    return this.http.get(this.contextPath + '/issue-master/user-name/' + username +'/status/'+status, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+
   contextPath: any;
   constructor(private http: HttpClient, private globalConfiguration: GlobalConfiguration) {
     this.contextPath = this.globalConfiguration.getBackendURLPrefix();
