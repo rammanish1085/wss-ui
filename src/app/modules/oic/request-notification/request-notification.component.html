@@ -1,4 +1,17 @@
-<div class="card">
+<div class="card" *ngIf="!(requestInfo.length>0 || requestInfoList.length>0 || replyInfoList.length>0)">
+  <div class="card-header">
+     <div class="d-flex justify-content-center">
+       <h3 class="card-title text-white text-center">NOTIFICATION</h3>
+      </div>
+  </div>
+  <div class="card-body">
+  <div class="alert alert-light text-center" role="alert">
+    Notification not found !
+  </div>
+</div>
+</div>
+
+<div class="card" *ngIf="requestInfo !== 'null' && requestInfo.length>0">
   <div class="card-header">
     <div id="titleDiv"> <h3 class="card-title text-white">REQUEST INFORMATION</h3></div>
      <div class="card-tools">
@@ -20,11 +33,7 @@
  </div>
  <!-- /.card-header -->
  <div class="card-body">
-  <div *ngIf="!(requestInfo.length>0)" class="alert alert-warning text-center" role="alert">
-    Request Notification not found !
-  </div>
-
-   <div *ngIf="requestInfo !== 'null' && requestInfo.length>0">
+     <div>
      <!-- <hr> -->
      <table class="table table-responsive-md table-hover text-center">
       <thead>
@@ -58,7 +67,7 @@
 </div>
 
 
-<div class="card">
+<div class="card"  *ngIf="requestInfoList !== 'null' && requestInfoList.length>0">
   <div class="card-header">
     <div id="titleDiv"> <h3 class="card-title text-white">RESPONSE INFORMATION</h3></div>
      <div class="card-tools">
@@ -81,10 +90,7 @@
  <!-- /.card-header -->
  <div class="card-body">
 
-  <div *ngIf="!(requestInfoList.length>0)" class="alert alert-warning text-center" role="alert">
-    Response Notification not found !
-  </div>
-   <div *ngIf="requestInfoList !== 'null' && requestInfoList.length>0">
+   <div>
      <!-- <hr> -->
      <table class="table table-responsive-md table-hover">
       <thead>
@@ -106,7 +112,7 @@
           <td><small>{{info.responseMessage}}</small></td>
           <td><small>{{info.username}}({{info.name}})</small></td>
           <td><small>{{info.createdOn|date:'medium'}}</small></td>
-         <td><button class="btn btn-info btn-sm"(click)="onClickViewResponse(info)">view</button>
+         <td><button class="btn btn-info btn-sm"(click)="onClickViewResponse(info)" data-toggle="modal" data-target="#viewResponseModal">view</button>
           </td>
         </tr>
       </tbody>
@@ -118,49 +124,6 @@
  <!-- /.card-body -->
 </div>
 
-  <div class="card border-dark" *ngIf="isViewResponse">
-    <div class="card-header text-center  text-white">VIEW RESPONSE INFORAMTION</div>
-    <div class="card-body">
-      <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
-        (click)="onClickViewResponseBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card border-0 rounded-0">
-               <div class="card-body">
-                <div class="table-responsive-md">
-                  <table class="table d-flex justify-content-center">
-                     <tbody>
-                      <tr>
-                        <th>Token number</th><td>{{viewResponse.tokenNumber}}</td>
-                      </tr>
-                      <tr>
-                        <th>Request Message</th><td><textarea class="form-control" rows="2" readonly id="remark"[ngModel]="viewResponse.requestMessage"  name="requestMessage"></textarea></td>
-                      </tr>
-                        <tr>
-                          <th>Response Message</th><td><textarea class="form-control" rows="2" readonly id="remark"[ngModel]="viewResponse.responseMessage"  name="remarks"></textarea></td>
-                         
-                        </tr>
-                        <tr>
-                          <th>Response By</th> <td>{{viewResponse.username}}({{viewResponse.name}})</td>
-                        </tr>
-                        <hr>
-                        <tr *ngFor="let file of requestInformationFile let i=index">
-                         <td>{{i+1}}</td>
-                          <td>{{file.originalName}}</td>
-                          <td><button type="button" class="btn btn-info btn-sm" (click)="onClickViewFile(file)">view</button></td>
-                        </tr>
-                       </tbody>
-                  </table>
-                </div>
-  
-              </div>
-            </div>
-          
-        </div>
-      </div>
-    </div>
-    
-  </div>
 
 <!-- The Modal -->
 <div class="modal" id="myModal" *ngIf="isReply">
@@ -223,7 +186,7 @@
 </div>
  
 
-<div class="card">
+<div class="card" *ngIf="replyInfoList !== 'null' && replyInfoList.length>0">
   <div class="card-header">
     <div id="titleDiv"> <h3 class="card-title text-white">REPLIED REQUEST INFORMATION</h3></div>
      <div class="card-tools">
@@ -245,11 +208,8 @@
  </div>
  <!-- /.card-header -->
  <div class="card-body">
-
-  <div *ngIf="!(replyInfoList.length>0)" class="alert alert-warning text-center" role="alert">
-    Response Notification not found !
-  </div>
-   <div *ngIf="replyInfoList !== 'null' && replyInfoList.length>0">
+  
+   <div>
      <!-- <hr> -->
      <table class="table table-responsive-md table-hover">
       <thead>
@@ -271,7 +231,7 @@
           <td><small>{{info.responseMessage}}</small></td>
           <td><small>{{info.username}}({{info.name}})</small></td>
           <td><small>{{info.createdOn|date:'medium'}}</small></td>
-         <td><button class="btn btn-info btn-sm"(click)="onClickViewResponse(info)">view</button>
+         <td><button class="btn btn-info btn-sm"(click)="onClickViewResponse(info)" data-toggle="modal" data-target="#viewResponseModal">view</button>
           </td>
         </tr>
       </tbody>
@@ -281,4 +241,56 @@
    <!-- /.d-md-flex -->
  </div>
  <!-- /.card-body -->
+</div>
+
+<div class="modal fade" id="viewResponseModal" *ngIf="isViewResponse">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title text-white">VIEW RESPONSE</h4>
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <table class="table table-responsive-md">
+          <tbody>
+           <tr>
+             <td>Token number</td><td><b>{{viewResponse.tokenNumber}}</b></td>
+           </tr>
+           <tr>
+             <td>Request Message</td><td>{{viewResponse.requestMessage}}</td>
+           </tr>
+             <tr>
+               <td>Response Message</td><td>{{viewResponse.responseMessage}}</td>
+              
+             </tr>
+             <tr>
+               <td>Response By</td> <td>{{viewResponse.username}}({{viewResponse.name}})</td>
+             </tr>
+               <tr><th colspan="3" class="text-center table-info">ATTACHED FILES</th></tr>       
+              <tr> 
+                <th scope="col">#</th>
+                <th scope="col">File Name</th>
+                <th scope="col">Action</th>
+               </tr>
+            
+             <tr *ngFor="let file of requestInformationFile let i=index" class="table-warning">
+              <td>{{i+1}}</td>
+               <td>{{file.originalName}}</td>
+               <td><button type="button" class="btn btn-info btn-sm" (click)="onClickViewFile(file)">view</button></td>
+             </tr>
+            </tbody>
+       </table>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
 </div>
