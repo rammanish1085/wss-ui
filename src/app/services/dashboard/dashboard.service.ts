@@ -66,4 +66,14 @@ getUserByTokenNumber(tokenNumber: any) {
     }));
 }
 
+getProjectProblemUserMapping(locationCode:string,projectName:string,projectModule:string,projectProblemStatement:string) {
+  console.log("Inside getting users");
+  return this.http.get(this.contextPath + '/project-problem-user-mapping/location-code/' + locationCode +'/project-name/'+projectName +'/project-module/'+ projectModule +'/project-problem-statement/'+projectProblemStatement, { observe: 'response' }).pipe(map(
+    (response: HttpResponse<any>) => {
+      return response;
+    }));
+}
+
+
+
 }

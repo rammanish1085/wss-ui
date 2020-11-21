@@ -308,6 +308,10 @@
     <form [formGroup]="requestForwardForm" (ngSubmit)="onForwardSubmit()">
       <table class="table d-flex justify-content-center">
         <tbody>
+          <tr *ngIf="forwardUser != null">
+            <th>Forward To</th>
+            <td><small>{{forwardUser.username}} ({{forwardUser.name}})</small></td>
+          </tr>
           <tr>
             <th>Token Number</th>
             <td><small>{{viewIssue.tokenNumber}}</small></td>

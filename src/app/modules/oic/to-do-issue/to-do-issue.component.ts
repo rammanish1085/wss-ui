@@ -38,6 +38,7 @@ export class ToDoIssueComponent implements OnInit {
   officeType: string;
   statusList: any;
   requestInfoList: any =[];
+  forwardUser: any;
   
 
   constructor(private dashboardService: DashboardService,
@@ -224,6 +225,18 @@ export class ToDoIssueComponent implements OnInit {
     this.isResolve = false;
     console.log("forward click");
     console.log(viewIssue);
+    this.getProjectProblemUserMapping(this.locationCode,viewIssue.projectName,viewIssue.projectModule,viewIssue.projectProblemStatement);
+  }
+  getProjectProblemUserMapping(locationCode: string, projectName: any, projectModule: any, projectProblemStatement: any) {
+    this.dashboardService.getProjectProblemUserMapping(locationCode,projectName,projectModule,projectProblemStatement).subscribe(success=>{
+      if(success.status === 200){
+        this.forwardUser = success.body;
+      }      
+
+    },error=>{
+      console.log("inside error");
+      
+    })
   }
 
   public onClickForwardBack() {
