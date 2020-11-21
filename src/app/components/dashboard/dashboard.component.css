@@ -17,3 +17,8 @@ hr.hrline{
  height: 175px;
 
   }
+ #titleDiv{
+  display: flex;
+  height: 0px;
+  justify-content: center;
+  }

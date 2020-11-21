@@ -1,182 +1,236 @@
-<section class="content" *ngIf="totalIssue>0 || resolveIssue>0">
-  <div class="container-fluid">
-    <!-- Info boxes -->
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-8">
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-6">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-danger elevation-1"
-                ><i class="fas fa-bug"></i
-              ></span>
-    
-              <div class="info-box-content">
-                <span class="info-box-text">Pending Issue</span>
-                <span class="info-box-number">{{pendingIssue}}</span>
+<div class="card" *ngIf="totalIssue>0 || resolveIssue>0">
+  <div class="card-header">
+    <div id="titleDiv"> <h3 class="card-title text-white">CREATED ISSUE</h3></div>
+     <div class="card-tools">
+     <button
+       type="button"
+       class="btn btn-tool"
+       data-card-widget="collapse"
+     >
+       <i class="fas fa-minus"></i>
+     </button>
+     <button
+       type="button"
+       class="btn btn-tool"
+       data-card-widget="remove"
+     >
+       <i class="fas fa-times"></i>
+     </button>
+   </div>
+ </div>
+ <!-- /.card-header -->
+ <div class="card-body mt-3">
+   
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-8">
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-6">
+              <div class="info-box mb-3">
+                <span class="info-box-icon bg-danger elevation-1"
+                  ><i class="fas fa-bug"></i
+                ></span>
+      
+                <div class="info-box-content">
+                  <span class="info-box-text">Pending Issue</span>
+                  <span class="info-box-number">{{pendingIssue}}</span>
+                </div>
+                <!-- /.info-box-content -->
               </div>
               <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box-content -->
+            <div class="col-12 col-sm-6 col-md-6">
+              <div class="info-box mb-3">
+                <span class="info-box-icon bg-primary elevation-1"
+                  ><i class="fas fa-bug"></i
+                ></span>
+      
+                <div class="info-box-content">
+                  <span class="info-box-text">Forwarded Issue</span>
+                  <span class="info-box-number">{{forwardedIssue}}</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+               <!-- /.info-box-content -->
+             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-6">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-primary elevation-1"
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-6">
+             <div class="info-box">
+              <span class="info-box-icon bg-warning elevation-1"
                 ><i class="fas fa-bug"></i
               ></span>
     
               <div class="info-box-content">
-                <span class="info-box-text">Forwarded Issue</span>
-                <span class="info-box-number">{{forwardedIssue}}</span>
+                <span class="info-box-text">Reject Issue</span>
+                <span class="info-box-number">
+                  {{rejectedIssue}}
+                  
+                </span>
               </div>
+            </div>
               <!-- /.info-box-content -->
             </div>
-             <!-- /.info-box-content -->
-           </div>
+            <div class="col-12 col-sm-6 col-md-6">
+              <div class="info-box mb-3">
+                <span class="info-box-icon bg-success elevation-1"
+                  ><i class="fas fa-bug"></i
+                ></span>
+      
+                <div class="info-box-content">
+                  <span class="info-box-text">Resolve Issue</span>
+                  <span class="info-box-number">{{resolveIssue}}</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+               <!-- /.info-box-content -->
+             </div>
+          </div>
+                
+          <!-- /.info-box -->
         </div>
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-6">
-           <div class="info-box">
-            <span class="info-box-icon bg-warning elevation-1"
-              ><i class="fas fa-bug"></i
-            ></span>
+        <!-- /.col -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="info-box" id="xyz">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-bug"></i></span>
   
             <div class="info-box-content">
-              <span class="info-box-text">Reject Issue</span>
-              <span class="info-box-number">
-                {{rejectedIssue}}
-                
-              </span>
+              <span class="info-box-text"><h5>Total Issue</h5></span>
+              <span class="info-box-number"><h5>{{totalIssue}}</h5></span>
             </div>
           </div>
-            <!-- /.info-box-content -->
-          </div>
-          <div class="col-12 col-sm-6 col-md-6">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-success elevation-1"
-                ><i class="fas fa-bug"></i
-              ></span>
-    
-              <div class="info-box-content">
-                <span class="info-box-text">Resolve Issue</span>
-                <span class="info-box-number">{{resolveIssue}}</span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-             <!-- /.info-box-content -->
-           </div>
         </div>
-              
-        <!-- /.info-box -->
+        <!-- /.col -->
       </div>
-      <!-- /.col -->
-      <div class="col-12 col-sm-6 col-md-4">
-        <div class="info-box" id="xyz">
-          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-bug"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text"><h5>Total Issue</h5></span>
-            <span class="info-box-number"><h5>{{totalIssue}}</h5></span>
-          </div>
-        </div>
-      </div>
-      <!-- /.col -->
+      <!-- /.row -->
+     
+      <!-- /.row -->
     </div>
-    <!-- /.row -->
-   
-    <!-- /.row -->
-  </div>
-  <!--/. container-fluid -->
-</section>
-
-<section class="content" *ngIf="totalAssignIssue>0 || resolveAssignIssue>0">
-  <div class="container-fluid">
-    <!-- Info boxes -->
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-8">
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-6">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-danger elevation-1"
-                ><i class="fas fa-bug"></i
-              ></span>
-    
-              <div class="info-box-content">
-                <span class="info-box-text">Pending Assign Issue</span>
-                <span class="info-box-number">{{pendingAssignIssue}}</span>
+    <!--/. container-fluid -->
+  </section>
+   <!-- /.d-md-flex -->
+ </div>
+ <!-- /.card-body -->
+</div>
+<div class="card" *ngIf="totalAssignIssue>0 || resolveAssignIssue>0">
+  <div class="card-header">
+    <div id="titleDiv"> <h3 class="card-title text-white">ASSIGNED ISSUE</h3></div>
+     <div class="card-tools">
+     <button
+       type="button"
+       class="btn btn-tool"
+       data-card-widget="collapse"
+     >
+       <i class="fas fa-minus"></i>
+     </button>
+     <button
+       type="button"
+       class="btn btn-tool"
+       data-card-widget="remove"
+     >
+       <i class="fas fa-times"></i>
+     </button>
+   </div>
+ </div>
+ <!-- /.card-header -->
+ <div class="card-body mt-3">
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-8">
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-6">
+              <div class="info-box mb-3">
+                <span class="info-box-icon bg-danger elevation-1"
+                  ><i class="fas fa-bug"></i
+                ></span>
+      
+                <div class="info-box-content">
+                  <span class="info-box-text">Pending Assign Issue</span>
+                  <span class="info-box-number">{{pendingAssignIssue}}</span>
+                </div>
+                <!-- /.info-box-content -->
               </div>
               <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box-content -->
+            <div class="col-12 col-sm-6 col-md-6">
+              <div class="info-box mb-3">
+                <span class="info-box-icon bg-primary elevation-1"
+                  ><i class="fas fa-bug"></i
+                ></span>
+      
+                <div class="info-box-content">
+                  <span class="info-box-text">Forwarded Assign Issue</span>
+                  <span class="info-box-number">{{forwardAssignIssue}}</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+               <!-- /.info-box-content -->
+             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-6">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-primary elevation-1"
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-6">
+             <div class="info-box">
+              <span class="info-box-icon bg-warning elevation-1"
                 ><i class="fas fa-bug"></i
               ></span>
     
               <div class="info-box-content">
-                <span class="info-box-text">Forwarded Assign Issue</span>
-                <span class="info-box-number">{{forwardAssignIssue}}</span>
+                <span class="info-box-text">Rejected Assign Issue</span>
+                <span class="info-box-number">
+                  {{rejectAssignIssue}}
+                  
+                </span>
               </div>
+            </div>
               <!-- /.info-box-content -->
             </div>
-             <!-- /.info-box-content -->
-           </div>
+            <div class="col-12 col-sm-6 col-md-6">
+              <div class="info-box mb-3">
+                <span class="info-box-icon bg-success elevation-1"
+                  ><i class="fas fa-bug"></i
+                ></span>
+      
+                <div class="info-box-content">
+                  <span class="info-box-text">Resolve Assign Issue</span>
+                  <span class="info-box-number">{{resolveAssignIssue}}</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+               <!-- /.info-box-content -->
+             </div>
+          </div>
+                
+          <!-- /.info-box -->
         </div>
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-6">
-           <div class="info-box">
-            <span class="info-box-icon bg-warning elevation-1"
-              ><i class="fas fa-bug"></i
-            ></span>
+        <!-- /.col -->
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="info-box" id="xyz">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-bug"></i></span>
   
             <div class="info-box-content">
-              <span class="info-box-text">Rejected Assign Issue</span>
-              <span class="info-box-number">
-                {{rejectAssignIssue}}
-                
-              </span>
+              <span class="info-box-text"><h5>Total Assign Issue</h5></span>
+              <span class="info-box-number"><h5>{{totalAssignIssue}}</h5></span>
             </div>
           </div>
-            <!-- /.info-box-content -->
-          </div>
-          <div class="col-12 col-sm-6 col-md-6">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-success elevation-1"
-                ><i class="fas fa-bug"></i
-              ></span>
-    
-              <div class="info-box-content">
-                <span class="info-box-text">Resolve Assign Issue</span>
-                <span class="info-box-number">{{resolveAssignIssue}}</span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-             <!-- /.info-box-content -->
-           </div>
         </div>
-              
-        <!-- /.info-box -->
+        <!-- /.col -->
       </div>
-      <!-- /.col -->
-      <div class="col-12 col-sm-6 col-md-4">
-        <div class="info-box" id="xyz">
-          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-bug"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text"><h5>Total Assign Issue</h5></span>
-            <span class="info-box-number"><h5>{{totalAssignIssue}}</h5></span>
-          </div>
-        </div>
-      </div>
-      <!-- /.col -->
+      <!-- /.row -->
+     
+      <!-- /.row -->
     </div>
-    <!-- /.row -->
-   
-    <!-- /.row -->
-  </div>
-  <!--/. container-fluid -->
-</section>
+    <!--/. container-fluid -->
+  </section>
+  
+   <!-- /.d-md-flex -->
+ </div>
+ <!-- /.card-body -->
+</div>
+
 
 
 
