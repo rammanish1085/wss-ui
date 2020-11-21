@@ -2,71 +2,82 @@
   <div class="container-fluid">
     <!-- Info boxes -->
     <div class="row">
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="info-box">
-          <span class="info-box-icon bg-info elevation-1"
-            ><i class="fas fa-bug"></i
-          ></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Total Issue</span>
-            <span class="info-box-number">
-              {{totalIssue}}
+      <div class="col-12 col-sm-6 col-md-8">
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-6">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"
+                ><i class="fas fa-bug"></i
+              ></span>
+    
+              <div class="info-box-content">
+                <span class="info-box-text">Pending Issue</span>
+                <span class="info-box-number">{{pendingIssue}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <div class="col-12 col-sm-6 col-md-6">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-primary elevation-1"
+                ><i class="fas fa-bug"></i
+              ></span>
+    
+              <div class="info-box-content">
+                <span class="info-box-text">Forwarded Issue</span>
+                <span class="info-box-number">{{forwardedIssue}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+             <!-- /.info-box-content -->
+           </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-6">
+           <div class="info-box">
+            <span class="info-box-icon bg-warning elevation-1"
+              ><i class="fas fa-bug"></i
+            ></span>
+  
+            <div class="info-box-content">
+              <span class="info-box-text">Reject Issue</span>
+              <span class="info-box-number">
+                {{rejectedIssue}}
+                
+              </span>
+            </div>
+          </div>
+            <!-- /.info-box-content -->
+          </div>
+          <div class="col-12 col-sm-6 col-md-6">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"
+                ><i class="fas fa-bug"></i
+              ></span>
+    
+              <div class="info-box-content">
+                <span class="info-box-text">Resolve Issue</span>
+                <span class="info-box-number">{{resolveIssue}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+             <!-- /.info-box-content -->
+           </div>
+        </div>
               
-            </span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
         <!-- /.info-box -->
       </div>
       <!-- /.col -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="info-box mb-3">
-          <span class="info-box-icon bg-danger elevation-1"
-            ><i class="fas fa-bug"></i
-          ></span>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box" id="xyz">
+          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-bug"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Pending Issue</span>
-            <span class="info-box-number">{{pendingIssue}}</span>
+            <span class="info-box-text"><h5>Total Issue</h5></span>
+            <span class="info-box-number"><h5>{{totalIssue}}</h5></span>
           </div>
-          <!-- /.info-box-content -->
         </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-
-      <!-- fix for small devices only -->
-      <div class="clearfix hidden-md-up"></div>
-
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="info-box mb-3">
-          <span class="info-box-icon bg-success elevation-1"
-            ><i class="fas fa-bug"></i
-          ></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Resolve Issue</span>
-            <span class="info-box-number">{{resolveIssue}}</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </div>
-      <!-- /.col -->
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="info-box mb-3">
-          <span class="info-box-icon bg-warning elevation-1"
-            ><i class="fas fa-bug"></i
-          ></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Forwarded Issue</span>
-            <span class="info-box-number">{{forwardedIssue}}</span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
       </div>
       <!-- /.col -->
     </div>
@@ -76,4 +87,96 @@
   </div>
   <!--/. container-fluid -->
 </section>
+
+<section class="content" *ngIf="totalAssignIssue>0 || resolveAssignIssue>0">
+  <div class="container-fluid">
+    <!-- Info boxes -->
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-8">
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-6">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"
+                ><i class="fas fa-bug"></i
+              ></span>
+    
+              <div class="info-box-content">
+                <span class="info-box-text">Pending Assign Issue</span>
+                <span class="info-box-number">{{pendingAssignIssue}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <div class="col-12 col-sm-6 col-md-6">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-primary elevation-1"
+                ><i class="fas fa-bug"></i
+              ></span>
+    
+              <div class="info-box-content">
+                <span class="info-box-text">Forwarded Assign Issue</span>
+                <span class="info-box-number">{{forwardAssignIssue}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+             <!-- /.info-box-content -->
+           </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-6">
+           <div class="info-box">
+            <span class="info-box-icon bg-warning elevation-1"
+              ><i class="fas fa-bug"></i
+            ></span>
+  
+            <div class="info-box-content">
+              <span class="info-box-text">Rejected Assign Issue</span>
+              <span class="info-box-number">
+                {{rejectAssignIssue}}
+                
+              </span>
+            </div>
+          </div>
+            <!-- /.info-box-content -->
+          </div>
+          <div class="col-12 col-sm-6 col-md-6">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"
+                ><i class="fas fa-bug"></i
+              ></span>
+    
+              <div class="info-box-content">
+                <span class="info-box-text">Resolve Assign Issue</span>
+                <span class="info-box-number">{{resolveAssignIssue}}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+             <!-- /.info-box-content -->
+           </div>
+        </div>
+              
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="info-box" id="xyz">
+          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-bug"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text"><h5>Total Assign Issue</h5></span>
+            <span class="info-box-number"><h5>{{totalAssignIssue}}</h5></span>
+          </div>
+        </div>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+   
+    <!-- /.row -->
+  </div>
+  <!--/. container-fluid -->
+</section>
+
+
 

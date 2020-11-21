@@ -7,6 +7,18 @@ import { GlobalConfiguration } from 'src/app/config/global.config';
   providedIn: 'root'
 })
 export class DashboardService {
+  countByAssignUsernameAndStatus(assignUsername: any, status: string) {
+    return this.http.get(this.contextPath + '/project-problem-assignment/assign-username/' + assignUsername +'/status/'+status, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+  countAssignByUsername(assignUsername: any) {
+    return this.http.get(this.contextPath + '/project-problem-assignment/assign-username/' + assignUsername, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
 
   countByUsername(username: any) {
     return this.http.get(this.contextPath + '/issue-master/user-name/' + username, { observe: 'response' }).pipe(map(
