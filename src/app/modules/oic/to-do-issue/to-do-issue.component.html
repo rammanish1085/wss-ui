@@ -1,8 +1,11 @@
+
 <div class="card border-dark" *ngIf="!isView">
   <div class="card-header text-center text-white">TO DO ISSUE</div>
   <div class="card-body">
-    <div class="row mb-4">
-
+    <div *ngIf="!(assignedProblemStatement.length>0)" class="alert alert-warning text-center" role="alert">
+      <b> To do issue not found !!!</b>     
+    </div>
+    <div *ngIf="(assignedProblemStatement.length>0)" class="row mb-4">
       <div class="col-md-12">
         <div class="card border-0 rounded-0">
           <div class="card-body">
@@ -156,7 +159,6 @@
   <!-- /.card-body -->
 </div>
 
-
 <div class="card" *ngIf="isView">
    <div class="card-header">
     <div id="titleDiv"><h3 class="card-title text-white text-xs-center">ISSUE CURRENT STATUS</h3></div>
@@ -272,10 +274,6 @@
  <!-- /.card-body -->
 </div>
 
-
-
-
-
 <hr *ngIf="isView"  class="view">
 <div *ngIf="isView" class="d-flex justify-content-center mr-2">
   <div>
@@ -295,10 +293,6 @@
       Info</button>
   </div>
 </div>
-
-
-
-
 
 <div class="card mt-2" *ngIf="isForward">
   <div class="card-header text-center text-white">FORWARD ISSUE</div>
@@ -331,7 +325,6 @@
     </form>
   </div>
 </div>
-
 
 <div class="card mt-2" *ngIf="isResolve">
   <div class="card-header text-center text-white">RESOLVE ISSUE</div>

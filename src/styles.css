@@ -6,3 +6,9 @@
     font-size: 20px;
     background-color: rgb(23 162 184);
 }
+
+.alert-warning {
+  color: #1F2D3D;
+  background: none!important;
+  border-color: #edb100;
+}

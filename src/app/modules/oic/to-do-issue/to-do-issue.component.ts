@@ -19,7 +19,7 @@ export class ToDoIssueComponent implements OnInit {
   loggedInUser: User;
   username: string;
   locationCode: string;
-  assignedProblemStatement: any;
+  assignedProblemStatement: any =[];
   files: any;
   isView: boolean;
   viewIssue: any;
@@ -82,14 +82,20 @@ export class ToDoIssueComponent implements OnInit {
 
     this.dashboardService.getAllAssignedProblem(username).subscribe(success => {
 
-      console.log("Getting Assign problem");
-
-      console.log(success.body);
-
-      this.assignedProblemStatement = success.body;
+      if(success.status === 200){
+        console.log("Inside success assign problem found successfully");
+        
+        this.assignedProblemStatement = success.body;
+      }
+      else if(success.status === 204){
+        console.log("No content found");
+        
+        this.assignedProblemStatement =[];
+      }
+    
        }, error => {
 
-      console.log("Insise error");
+      console.log("Inside error while getting assign problem");
 
     })
 
