@@ -19,7 +19,7 @@ export class ViewIssueComponent implements OnInit {
   loggedInUser: User;
   username: string;
   locationCode: string;
-  assignedProblemStatement: Array<any>;
+  assignedProblemStatement:any =[];
   isView: boolean;
   viewIssue: any;
   files: any;
@@ -31,12 +31,9 @@ export class ViewIssueComponent implements OnInit {
 
   constructor(private issueMasterService: IssueMasterService, private issueStatusService: IssueStatusService,
     private globalUtilityService: GobalutilityService, private authorizationService: AuthorizationService, private route: ActivatedRoute, private router: Router) {
-    this.assignedProblemStatement = new Array<any>()
-
   }
 
   ngOnInit(): void {
-    this.assignedProblemStatement = [];
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
     this.locationCode = this.loggedInUser.getLocationCode();
@@ -45,10 +42,15 @@ export class ViewIssueComponent implements OnInit {
 
   getAllAssignedProblemStatement(username: any, locationCode: any) {
     this.issueMasterService.getAllAssignedProblem(username, locationCode).subscribe(success => {
-      console.log("Getting Assign problem");
-      console.log(success.body);
-      this.assignedProblemStatement = success.body;
-      // this.total_issues = this.assignedProblemStatement.length;
+      console.log("Inside Success Assign problem found");
+      console.log(success);
+      if(success.status === 200){
+        this.assignedProblemStatement = success.body;
+      }else if(success.status === 204){
+        console.log("No content found");
+        this.assignedProblemStatement =[];
+      }
+            
     }, error => {
       console.log("Getting Error while getting assigned problem");
       console.log(error);
@@ -72,20 +74,13 @@ export class ViewIssueComponent implements OnInit {
         this.statusList = success.body;
         console.log("issue status");
         console.log(this.statusList);
-        
-        
-
       } if (success.status === 204) {
-
         console.log(success);
-
       }
 
 
     }, error => {
       console.log(error);
-
-
     })
   }
 
