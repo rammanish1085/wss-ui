@@ -31,7 +31,7 @@ export class RequestNotificationComponent implements OnInit {
   isRequestInformation :boolean;
   viewResponse: any;
   isViewResponse:boolean;
-  requestInformationFile: any;
+  requestInformationFile: any =[];
 
   constructor(private authorizationService: AuthorizationService,private requestInfoService:RequestInfoService,private globalutilityService : GobalutilityService, private requestInformationService: RequestInformationService, private globalUtilityService: GobalutilityService) { }
 
@@ -44,8 +44,8 @@ export class RequestNotificationComponent implements OnInit {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
     this.getRequestInformationByUsername(this.username);
-    this.getByUsernameAndIsReply(this.username);
-    this.getReplyRequestInformationByUsernameAndIsReply(this.username);
+     this.getByUsernameAndIsReply(this.username);
+     this.getReplyRequestInformationByUsernameAndIsReply(this.username);
   }
 
   getRequestInformationByUsername(username: string) {
@@ -151,8 +151,15 @@ export class RequestNotificationComponent implements OnInit {
   getFileByTokenNumber(tokenNumber: any) {
     this.requestInformationService.getFileByTokenNumber(tokenNumber).subscribe(success=>{
      console.log("Inside Succes");
-     this.requestInformationFile = success.body; 
+     if(success.status === 200){
+      this.requestInformationFile = success.body; 
 
+     }
+     else if(success.status === 204){
+      this.requestInformationFile = []; 
+
+     }
+    
     },error=>{
       console.log("Inside Succes");
 
