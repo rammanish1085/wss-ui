@@ -10,27 +10,18 @@ import { AuthorizationService } from 'src/app/services/authorization-service/aut
 export class OicComponent implements OnInit {
 
   public loggedInUser: User;
-
-  isTrue: boolean;
-
-  @Output() messageEvent = new EventEmitter<boolean>();
+ 
 
   constructor(private authorizationService: AuthorizationService) { }
 
   ngOnInit(): void {
-    this.loggedInUser = this.authorizationService.getLoggedInUser();
+      this.loggedInUser = this.authorizationService.getLoggedInUser();
   }
 
   logoutClicked() {
     console.log("logout clicked from ngb-navbar");
     localStorage.clear();
     this.authorizationService.logout();
-  }
- 
-sendMessage() {
-  console.log("Message send");
-  
-    this.messageEvent.emit(this.isTrue)
   }
  
 }

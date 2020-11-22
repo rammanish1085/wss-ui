@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {AuthorizationService} from '../../services/authorization-service/authorization.service';
-import { FormGroup, FormControl, Validators,ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators,ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { User } from '../../models/user.model';
+import { OtpService } from 'src/app/services/OTP/otp.service';
+import { GobalutilityService } from 'src/app/utility/gobalutility.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-modal',
@@ -14,6 +17,7 @@ export class LoginModalComponent implements OnInit {
 
   modalInstance: any;
   username;
+  isRelogin:boolean;
 
   readonly INVALID_LOGIN_MESSAGE = "Invalid Username/Password. Try Again !";
   readonly UNABLE_LOGIN_MESSAGE = "Unable to Login. Try Again !";
@@ -23,8 +27,22 @@ export class LoginModalComponent implements OnInit {
   loginError = false;
   loginErrorText;
   user;
+  isOtpResend: boolean;
+  isResend: boolean;
+  timeLeft: number = 120;
+  durationMillisecond: number;
+  otpSend: boolean;
+  form: FormGroup = new FormGroup({});
+  interval: number;
+  loggedUser: User;
 
-  constructor(private authorizationService : AuthorizationService) { }
+  constructor(private authorizationService : AuthorizationService,private otpService: OtpService, private globalutilityService: GobalutilityService,
+    private fb: FormBuilder,private router: Router) { 
+      this.form = fb.group({
+        number: ['', [Validators.required, Validators.pattern("^[0-9]*$")]]
+      })
+
+    }
 
   ngOnInit() {
     console.log(this.CLASS_NAME + "ngOnInit called")
@@ -69,7 +87,10 @@ export class LoginModalComponent implements OnInit {
         if(status === 200){
           console.log(this.CLASS_NAME + "Re Login Successfull. Logged in User is: ");
           if(this.authorizationService.isLogedIn()){
-            this.modalInstance.close("Logged In successfully");
+            this.isRelogin = true;
+            this.loggedUser = this.authorizationService.getLoggedInUser();
+            this.generateOTP();
+            // this.modalInstance.close("Logged In successfully");
           }else {
             console.log(this.CLASS_NAME + "Unable to login user");
             this.loginError = true;
@@ -92,6 +113,84 @@ export class LoginModalComponent implements OnInit {
          this.loginErrorText = this.UNABLE_LOGIN_MESSAGE;
        }
      });
+  }
+
+  generateOTP() {
+    this.otpService.generateOTP().subscribe(success => {
+      console.log("Inside success generating otp");
+      if (success.status === 200) {
+        // this.globalutilityService.successAlertMessage("OTP Sent Successfully !!")
+        this.otpSend = false;
+        this.durationMillisecond = 1000;
+        this.startTimer();
+
+      }
+    }, error => {
+      this.globalutilityService.errorAlertMessage("Error While Generating OTP");
+
+    })
+  }
+
+
+  processOtpForm() {
+    this.otpService.validateOTP(this.form.value.number).subscribe(success => {
+      if (success.status === 200) {
+
+        localStorage.setItem("key", "SUCCESS");
+         
+        this.modalInstance.close("Logged In successfully");
+        // this.router.navigate(['oic']);
+      }
+
+    }, error => {
+      if (error.status === 400) {
+        this.globalutilityService.successAlertMessage("Enter OTP is not valid !!")
+        localStorage.setItem("key", "FAIL");
+      } else if (error.status === 401) {
+        localStorage.setItem("key", "FAIL");
+        this.globalutilityService.successAlertMessage("OTP has been expired !!");
+      } else if (error.status === 417) {
+        localStorage.setItem("key", "FAIL");
+        this.globalutilityService.successAlertMessage("Enter OTP is not matched !!");
+      }
+    })
+  }
+
+  onClickResendOTP() {
+
+    this.otpService.generateOTP().subscribe(success => {
+      console.log("Inside success generating otp");
+      // console.log(success.body);
+      if (success.status === 200) {
+        console.log("OTP Generated Successfully");
+        this.isOtpResend = true;
+        this.isResend = false;
+        this.timeLeft = 120;
+        this.durationMillisecond = 10000;
+        this.startTimer();
+
+      }
+    }, error => {
+      console.log("Error while generating OTP");
+
+    })
+  }
+
+  get f() {
+    return this.form.controls;
+  }
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+        this.otpSend = false;
+      } else {
+        // this.timeLeft = 10;
+        this.isResend = true;
+        this.isOtpResend = true;
+      }
+    }, this.durationMillisecond)
   }
 
   public logoutClicked(){
