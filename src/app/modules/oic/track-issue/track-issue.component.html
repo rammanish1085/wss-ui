@@ -34,11 +34,13 @@
         <div class="row" *ngIf="statusList && statusList.length>0">
           <div class="col-12">
             <ul id="progressbar" class="text-center">
-              <li class="active step0">PENDING at ({{statusList[0]?.name}}) <br>
+              <li class="active step0">CREATED By ({{statusList[0]?.createdName}}) <br>
+                ({{statusList[0]?.createdOn | date:'medium'}})</li>
+              <li class="active step0">ASSIGN to ({{statusList[0]?.name}}) <br>
                 ({{statusList[0]?.createdOn | date:'medium'}})</li>
               <ng-template ngFor let-status [ngForOf]="statusList" let-first="first" let-last="last" let-i="index">
                 <li class="active step0"
-                  *ngIf="!first && !(status.status === 'REJECTED' ||status.status === 'COMPLETED')">
+                  *ngIf="!first && !(status.status === 'REJECTED' || status.status === 'COMPLETED')">
                   {{status.status  | uppercase}} to ({{status.name}}) <br> ({{status.createdOn  | date:'medium'}})</li>
 
               </ng-template>

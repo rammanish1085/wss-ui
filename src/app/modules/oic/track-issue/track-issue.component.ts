@@ -31,6 +31,10 @@ export class TrackIssueComponent implements OnInit {
       this.isProcessing = false;
       if(success.status === 200){
         this.statusList = success.body;
+        console.log("Getting Status");
+        console.log(this.statusList);
+        
+        
         this.reset();
       }if(success.status === 204){
         this.globalutilityService.errorAlertMessage("Issue not found with given token number !!");
