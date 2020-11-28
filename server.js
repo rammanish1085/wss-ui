@@ -14,7 +14,7 @@ const LOCAL_BACKEND_SERVER = 'http://localhost:8080';
 
 //app.use('/mppkvvcl/nextgenbilling/', proxy({target: '', changeOrigin: true}));
 app.use('/mppkvvcl/cit/', proxy({
-  target: process.env.PRODUCTION_BACKEND_SERVER || DEVELOPMENT_BACKEND_SERVER || LOCAL_BACKEND_SERVER,
+  target:  LOCAL_BACKEND_SERVER,
   xfwd:true,
 }));
 
