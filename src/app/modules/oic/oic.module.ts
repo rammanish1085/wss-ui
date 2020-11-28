@@ -16,7 +16,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ViewIssueComponent } from './view-issue/view-issue.component';
 import { TrackIssueComponent } from './track-issue/track-issue.component';
 import { RequestNotificationComponent } from './request-notification/request-notification.component';
-import { NgxPaginationModule } from 'ngx-pagination';
 import {SessionTimerComponent} from 'src/app/components/timer/session-timer/session-timer.component';
 import {LoginModalModule} from 'src/app/modals/login-modal/login-modal.module';
 import { ToDoIssueComponent } from './to-do-issue/to-do-issue.component';
@@ -34,7 +33,6 @@ import { ToDoIssueComponent } from './to-do-issue/to-do-issue.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxPaginationModule,
     LoginModalModule
     // SessionTimerModule,
     // NavBarModule
