@@ -15,22 +15,22 @@
               </select>
             </div>
           </div>
-          <div class="col-md-6 mt-4">
+          <div class="col-md-7 mt-4">
 
             <div>
               <select class="form-control" name="user" formControlName="user" required>
                 <option value="" disabled>Select User</option>
-                <option *ngFor="let user of users" [ngValue]="user" class="form-control form-control-sm">
+                <option *ngFor="let user of users" [ngValue]="user" class="form-control form-control-sm text-center">
                   {{user.username}}&nbsp;({{user.name}})
                 </option>
               </select>
             </div>
-          </div>
-          <div class="col-md-1 mt-4">
+          </div>          
+        </div>
+        <div class="mt-4">
 
-            <div class="button justify-content-center">
-              <button type="submit" [disabled]="userProjectFrom.invalid" class="btn btn-success btn-sm">Add</button>
-            </div>
+          <div class="button d-flex justify-content-center">
+            <button type="submit" [disabled]="userProjectFrom.invalid" class="btn btn-primary">Add</button>
           </div>
         </div>
       </form>
@@ -42,13 +42,13 @@
       </div>
     </div>
 
-    <div class="containe-fluid">
+    <div class="mt-4" *ngIf="projectUserMapping && projectUserMapping.length>0">
 
-      <div class="row mt-4">
+      <div class="row">
 
-        <div class="col-xs-12">
+        <div class="col-md-12">
           <div class="card border-0 rounded-0">
-            <div class="card-title mb-1 p-3 mt-5 text-center">
+            <div class="card-title mb-1 text-center">
               <!-- <h5>Project User Mapping</h5> -->
             </div>
             <div class="card-body">

@@ -18,7 +18,7 @@ export class AddUserComponent implements OnInit {
   users: any;
   projectUserMappingObject: any = {};
   loggedInUser: User;
-  projectUserMapping: any;
+  projectUserMapping: any [];
   locationCode: string;
 
   userProjectFrom: FormGroup;
@@ -103,10 +103,18 @@ export class AddUserComponent implements OnInit {
   getAssignProject() {
 
     this.projectUserMappingService.getAssignedProjectList(this.loggedInUser.getLocationCode()).subscribe(success => {
-      this.projectUserMapping = success.body;
-      console.log('Inside ger Assigned Project');
-      console.log(this.projectUserMapping);
+      //
+      if(success.status !== null) {
+      if(success.status === 200){
+        this.projectUserMapping = success.body;
+      }
+      else if(success.status === 204){
+        this.projectUserMapping =undefined;
+      }
+    }
     }, () => {
+      console.log("Inside Error");
+      
     });
 
   }

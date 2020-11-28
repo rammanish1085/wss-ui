@@ -18,9 +18,3 @@ padding:.25px;
       justify-content: center;
       height: 0px;
   }
-  
-.dataTables_filter {
-    float: right;
-    text-align: right;
-    margin-right: 5px !important;
-  }
