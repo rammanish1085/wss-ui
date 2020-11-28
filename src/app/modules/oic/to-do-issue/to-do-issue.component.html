@@ -9,7 +9,7 @@
       <div class="col-md-12">
         <div class="card border-0 rounded-0">
           <div class="card-body">
-            <table class="table table-responsive-md" *ngIf="!isView">
+            <table class="table table-responsive-md" datatable [dtOptions]="dtOptions" *ngIf="!isView">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -17,7 +17,7 @@
                   <th scope="col">Location code</th>
                   <th scope="col">Project</th>
                   <th scope="col">Project Module</th>
-                  <th scope="col">Problem Statment</th>
+                  <th scope="col">Problem</th>
                   <th scope="col">Status</th>
                   <th scope="col">Attachment</th>
                 </tr>
@@ -25,7 +25,7 @@
               <tbody>
                 <tr *ngFor="let ps of assignedProblemStatement let i = index">
                   <td><small>{{i+1}}</small></td>
-                  <td><small>{{ps.tokenNumber}}</small></td>
+                  <td><small><b>{{ps.tokenNumber}}</b></small></td>
                   <td><small>{{ps.locationCode}}</small></td>
                   <td><small>{{ps.projectName}}</small></td>
                   <td><small>{{ps.projectModule}}</small></td>

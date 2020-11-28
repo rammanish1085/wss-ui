@@ -12,3 +12,10 @@
   background: none!important;
   border-color: #edb100;
 }
+
+.dataTables_filter {
+    margin-right: 5px !important; 
+}
+.dataTables_length{
+  margin-left: 5px !important;
+}

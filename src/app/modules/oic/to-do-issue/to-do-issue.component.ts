@@ -39,6 +39,7 @@ export class ToDoIssueComponent implements OnInit {
   statusList: any;
   requestInfoList: any =[];
   forwardUser: any;
+  dtOptions: any = {};
   
 
   constructor(private dashboardService: DashboardService,
@@ -75,6 +76,13 @@ export class ToDoIssueComponent implements OnInit {
     this.name = this.loggedInUser.getName();
     this.officeType = this.loggedInUser.getOfficeType();
     this.getAllAssignedProblemStatement(this.username);
+
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+    lengthMenu : [5, 10, 25],
+      processing: true
+    };
 
   }
 

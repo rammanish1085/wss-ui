@@ -19,6 +19,8 @@ import { RequestNotificationComponent } from './request-notification/request-not
 import {SessionTimerComponent} from 'src/app/components/timer/session-timer/session-timer.component';
 import {LoginModalModule} from 'src/app/modals/login-modal/login-modal.module';
 import { ToDoIssueComponent } from './to-do-issue/to-do-issue.component';
+import {DataTablesModule} from 'angular-datatables';
+
 
 
 
@@ -33,7 +35,8 @@ import { ToDoIssueComponent } from './to-do-issue/to-do-issue.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    LoginModalModule
+    LoginModalModule,
+    DataTablesModule
     // SessionTimerModule,
     // NavBarModule
   ]

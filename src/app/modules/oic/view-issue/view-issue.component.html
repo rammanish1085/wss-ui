@@ -1,3 +1,4 @@
+
 <div class="card border-dark" *ngIf="!isView">
   <div class="card-header text-center  text-white">VIEW ISSUE</div>
   <div class="card-body">
@@ -8,12 +9,12 @@
        <div class="col-md-12">
         <div class="card border-0 rounded-0">
           <div class="card-body">
-            <div class="table-responsive-md">
+            <div class="table-responsive-md mt-2">
 
               <!-- <nav class="navbar">
                   <input type="text" class="form-control" name="tokenNumber" [(ngModel)]="tokenNumber" (ngModelChange)="search()" placeholder="Enter token number to search">
               </nav> -->
-              <table class="table table-responsive-md" *ngIf="!isView">
+              <table class="table table-responsive-md" datatable [dtOptions]="dtOptions" *ngIf="!isView">
                 <thead>
                   <tr>
                     <th scope="col">#</th>

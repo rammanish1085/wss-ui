@@ -28,6 +28,7 @@ export class ViewIssueComponent implements OnInit {
   tokenNumber: any;
   isTrue: boolean;
   statusList: any;
+  dtOptions: any = {};
 
   constructor(private issueMasterService: IssueMasterService, private issueStatusService: IssueStatusService,
     private globalUtilityService: GobalutilityService, private authorizationService: AuthorizationService, private route: ActivatedRoute, private router: Router) {
@@ -38,6 +39,14 @@ export class ViewIssueComponent implements OnInit {
     this.username = this.loggedInUser.getUsername();
     this.locationCode = this.loggedInUser.getLocationCode();
     this.getAllAssignedProblemStatement(this.username, this.locationCode);
+
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+    lengthMenu : [5, 10, 25],
+      processing: true
+    };
+
   }
 
   getAllAssignedProblemStatement(username: any, locationCode: any) {
