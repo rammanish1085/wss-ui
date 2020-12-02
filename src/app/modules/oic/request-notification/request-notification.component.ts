@@ -50,19 +50,20 @@ export class RequestNotificationComponent implements OnInit {
 
   getRequestInformationByUsername(username: string) {
     this.requestInformationService.getRequestInformationByUsernameAndIsReply(username,false).subscribe(success => {
+      console.log("Getting request information");
       console.log(success);
-      if (success.body != null) {
-        if (success.status === 200) {
-          console.log("Getting request information by username");
-          console.log(success.body);
-          this.requestInfo = success.body;
-        }
-
-      } else if (success.status === 204) {
-        console.log("No Content Found in request information")
-        this.requestInfo = [];
-        this.isRequestInformation = true;
-      }
+      this.requestInfo = success.body;
+      
+        // if (success.status===200) {
+        //   console.log("Getting request information by username");
+        //   console.log(success.body);
+        //   this.requestInfo = success.body;
+        // }
+      //  else if (success.status===204) {
+      //   console.log("No Content Found in request information")
+      //   //this.requestInfo = [];
+      //   this.isRequestInformation = true;
+      // }
 
     }, error => {
       console.log("Getting Error while retrive request information by user name")

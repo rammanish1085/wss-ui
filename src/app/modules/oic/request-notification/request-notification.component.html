@@ -1,4 +1,4 @@
-<div class="card" *ngIf="!(requestInfo.length>0 || requestInfoList.length>0 || replyInfoList.length>0)">
+<!-- <div class="card" *ngIf="!(requestInfo.length>0 || requestInfoList.length>0 || replyInfoList.length>0)">
   <div class="card-header">
      <div class="d-flex justify-content-center">
        <h3 class="card-title text-white text-center">NOTIFICATION</h3>
@@ -9,9 +9,9 @@
     <b>Notification not found !!!</b>
   </div>
 </div>
-</div>
+</div> -->
 
-<div class="card" *ngIf="requestInfo.length>0">
+<div class="card">
   <div class="card-header">
     <div id="titleDiv"> <h3 class="card-title text-white">REQUEST INFORMATION</h3></div>
      <div class="card-tools">
@@ -22,13 +22,13 @@
      >
        <i class="fas fa-minus"></i>
      </button>
-     <button
+     <!-- <button
        type="button"
        class="btn btn-tool"
        data-card-widget="remove"
      >
        <i class="fas fa-times"></i>
-     </button>
+     </button> -->
    </div>
  </div>
  <!-- /.card-header -->
@@ -67,7 +67,7 @@
 </div>
 
 
-<div class="card"  *ngIf="requestInfoList !== 'null' && requestInfoList.length>0">
+<div class="card"  *ngIf="requestInfoList && requestInfoList.length>0">
   <div class="card-header">
     <div id="titleDiv"> <h3 class="card-title text-white">RESPONSE INFORMATION</h3></div>
      <div class="card-tools">
