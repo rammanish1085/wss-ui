@@ -13,11 +13,16 @@
       <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
            
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="javascript:void(0);">
+      <!-- <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
           <i class="fas fa-user-cog fa-lg"></i>
            </a>
            
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="nav-icon fas fa-power-off fa-lg"><small> Log Out </small></i>
+          </a>
       </li>
       
    
@@ -112,13 +117,50 @@
             </p>
           </a>
         </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['add-user']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
+            <i class="nav-icon fas fa-user-plus"></i>
+            <p>
+              Add User
+            </p>
+          </a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['add-issue']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
+            <i class="nav-icon fas fa-plus"></i>
+            <p>
+              Add Issue
+            </p>
+          </a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['view-issue']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
+            <i class="nav-icon fas fa-eye"></i>
+            <p>
+              View Issue
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['track-issue']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
+            <i class="nav-icon fas fa-search"></i>
+            <p>
+              Track Issue
+            </p>
+          </a>
+        </li>
         
         
 
-        <li class="nav-item has-treeview menu-open">
-
-          <!-- <a><i class="fa fa-globe fa-lg mr-2"></i> Issue <span class="arrow"></span></a> -->
-          <a class="nav-link active" href="javascript:void(0);">
+        <!-- <li class="nav-item has-treeview menu-open">
+                   <a class="nav-link" href="javascript:void(0);">
             <i class="nav-icon fas fa-users"></i>
             <p>
               Users
@@ -135,11 +177,11 @@
               </a>
             </li>
            </ul>
-        </li>
+        </li> -->
 
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
+          <!-- <li class="nav-item has-treeview menu-open">
             <a class="nav-link" href="javascript:void(0);">
               <i class="nav-icon fas fa-bug"></i>
               <p>
@@ -168,7 +210,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
 
           <!-- <li class="nav-item has-treeview menu-open">
             <a  class="nav-link" href="javascript:void(0);">
@@ -204,8 +246,8 @@
   <!-- /.content-wrapper -->
 
   <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-   <div class="tab-content">
+  <!-- <aside class="control-sidebar control-sidebar-dark">
+   <div>
     <nav class="mt-2">
       <ul
         class="nav nav-pills nav-sidebar flex-column"
@@ -214,7 +256,7 @@
         data-accordion="false"
       >
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="javascript:void(0);" (click)="logoutClicked()">
+        <a class="nav-link" href="javascript:void(0);" (click)="logoutClicked()">
           <i class="nav-icon fas fa-sign-out-alt fa-lg text-white"></i>
           <p class="text-white">
             Log Out
@@ -243,9 +285,9 @@
       
       </ul>
     </nav>
-      <!-- /.tab-pane -->
+     
     </div>
-  </aside>
+  </aside> -->
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
