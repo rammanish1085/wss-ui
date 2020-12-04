@@ -70,28 +70,7 @@ export class RequestNotificationComponent implements OnInit {
 
   }
 
-  // getByRequestedUsername(username: any) {
-
-  //   this.requestInformationService.getByRequestUsername(username).subscribe(success => {
-
-  //     console.log("Inside Success request inforamtion List");
-
-  //     console.log(success);
-  //     if(success.status === 200){
-  //       this.requestInfoList = success.body;
-
-  //     }else if(success.status === 204){
-  //       this.requestInfoList =[];
-  //     }
-
-  //   }, error => {
-
-  //     console.log("Insise error");
-  //   })
-
-  // }
-
-  getByRequestedUsernameAndIsReplyTrue(username: any,isReply:boolean) {
+   getByRequestedUsernameAndIsReplyTrue(username: any,isReply:boolean) {
 
     this.requestInformationService.getByRequestedUsernameAndIsReply(username,true).subscribe(success => {
 
@@ -139,13 +118,9 @@ export class RequestNotificationComponent implements OnInit {
     this.isViewResponse = false;
     }
 
-  oclickNotification() {
-    // this.getRequestInformationByUsername(this.username)
-  }
   
   onClickReply(info:any){
     this.isReply= true;
-    // this.isRequestInformation = true;
     this.viewRequest = info;
     console.log("reply clicked");
     console.log(info);
@@ -177,7 +152,6 @@ export class RequestNotificationComponent implements OnInit {
   }
 
   preparedRequestObject(){
-
     this.requestModel = new RequestInfo();
     this.requestModel.setId(this.viewRequest.id);
     this.requestModel.setTokenNumber(this.viewRequest.tokenNumber);
@@ -187,8 +161,6 @@ export class RequestNotificationComponent implements OnInit {
     this.requestModel.setRequestedName(this.viewRequest.requestedName);
     this.requestModel.setRequestMessage(this.viewRequest.requestMessage);
     this.requestModel.setResponseMessage(this.replyForm.value.replyMessage);
-
-
   }
 
   onFileChange(event){
@@ -215,6 +187,7 @@ export class RequestNotificationComponent implements OnInit {
     }
   }
 
+  
   isAttachmentClicked(){
     this.replyForm.get('isAttachment').valueChanges.subscribe(checked => {
       if (checked) {
