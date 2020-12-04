@@ -10,12 +10,18 @@ import { AuthorizationService } from 'src/app/services/authorization-service/aut
 export class OicComponent implements OnInit {
 
   public loggedInUser: User;
+
+  role:any;
+
+  officeType:any;
  
 
   constructor(private authorizationService: AuthorizationService) { }
 
   ngOnInit(): void {
       this.loggedInUser = this.authorizationService.getLoggedInUser();
+      this.role = this.loggedInUser.getRole();
+      this.officeType =this.authorizationService.getLoggedInUser().getOfficeType();
   }
 
   logoutClicked() {

@@ -1,3 +1,17 @@
+<div class="card" *ngIf="!(totalIssue>0 || resolveIssue>0 || totalAssignIssue>0 || resolveAssignIssue>0)">
+  <div class="card-header">
+     <div class="d-flex justify-content-center">
+       <h3 class="card-title text-white text-center">DASHBOARD</h3>
+      </div>
+  </div>
+  <div class="card-body">
+  <div class="alert alert-warning text-center" role="alert">
+    <b>No issue available on dashboard !!!</b>
+  </div>
+</div>
+</div>
+
+
 <div class="card" *ngIf="totalIssue>0 || resolveIssue>0">
   <div class="card-header">
     <div id="titleDiv"> <h3 class="card-title text-white">CREATED ISSUE</h3></div>
@@ -8,14 +22,7 @@
        data-card-widget="collapse"
      >
        <i class="fas fa-minus"></i>
-     </button>
-     <!-- <button
-       type="button"
-       class="btn btn-tool"
-       data-card-widget="remove"
-     >
-       <i class="fas fa-times"></i>
-     </button> -->
+     </button>     
    </div>
  </div>
  <!-- /.card-header -->
