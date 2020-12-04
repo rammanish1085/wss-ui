@@ -43,95 +43,63 @@ export class RequestNotificationComponent implements OnInit {
 
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
-    this.getRequestInformationByUsername(this.username);
-     this.getByUsernameAndIsReply(this.username);
-     this.getReplyRequestInformationByUsernameAndIsReply(this.username);
+    this.getRequestInformationByUsernameIsReplyFalse(this.username,false);
+    this.getReplyRequestInformationByUsernameAndIsReply(this.username,true);
+    this.getByRequestedUsernameAndIsReplyTrue(this.username,true);
   }
 
-  getRequestInformationByUsername(username: string) {
-    this.requestInformationService.getRequestInformationByUsernameAndIsReply(username,false).subscribe(success => {
-      console.log("Getting request information");
+  getRequestInformationByUsernameIsReplyFalse(username: string,isReply:boolean) {
+    this.requestInformationService.getRequestInformationByUsernameAndIsReply(username,isReply).subscribe(success => {
+      console.log("Getting request information by login user name and is reply false");
       console.log(success);
       this.requestInfo = success.body;
-      
-        // if (success.status===200) {
-        //   console.log("Getting request information by username");
-        //   console.log(success.body);
-        //   this.requestInfo = success.body;
-        // }
-      //  else if (success.status===204) {
-      //   console.log("No Content Found in request information")
-      //   //this.requestInfo = [];
-      //   this.isRequestInformation = true;
-      // }
-
     }, error => {
       console.log("Getting Error while retrive request information by user name")
     })
 
   }
 
-  getReplyRequestInformationByUsernameAndIsReply(username: string) {
-    this.requestInformationService.getRequestInformationByUsernameAndIsReply(username,true).subscribe(success => {
+  getReplyRequestInformationByUsernameAndIsReply(username: string,isReply:boolean) {
+    this.requestInformationService.getRequestInformationByUsernameAndIsReply(username,isReply).subscribe(success => {
+      console.log("Getting Reply request information by username and is reply true");
       console.log(success);
-      if (success.body != null) {
-        if (success.status === 200) {
-          console.log("Getting Reply request information by username");
-          console.log(success.body);
-          this.replyInfoList = success.body;
-        }
-
-      } else if (success.status === 204) {
-        console.log("No Content Found in Reply request information")
-        this.requestInfo = [];
-        this.isRequestInformation = true;
-      }
-
+      this.replyInfoList = success.body;
     }, error => {
       console.log("Getting Error while retrive request information by user name")
     })
 
   }
 
+  // getByRequestedUsername(username: any) {
 
+  //   this.requestInformationService.getByRequestUsername(username).subscribe(success => {
 
+  //     console.log("Inside Success request inforamtion List");
 
+  //     console.log(success);
+  //     if(success.status === 200){
+  //       this.requestInfoList = success.body;
 
+  //     }else if(success.status === 204){
+  //       this.requestInfoList =[];
+  //     }
 
-  getByRequestedUsername(username: any) {
+  //   }, error => {
 
-    this.requestInformationService.getByRequestUsername(username).subscribe(success => {
+  //     console.log("Insise error");
+  //   })
 
-      console.log("Inside Success request inforamtion List");
+  // }
 
-      console.log(success);
-      if(success.status === 200){
-        this.requestInfoList = success.body;
-
-      }else if(success.status === 204){
-        this.requestInfoList =[];
-      }
-
-    }, error => {
-
-      console.log("Insise error");
-    })
-
-  }
-
-  getByUsernameAndIsReply(username: any) {
+  getByRequestedUsernameAndIsReplyTrue(username: any,isReply:boolean) {
 
     this.requestInformationService.getByRequestedUsernameAndIsReply(username,true).subscribe(success => {
 
-      console.log("Getting request inforamtion by requested username and is reply true");
+      console.log("Getting request information by requested username and is reply true");
 
       console.log(success);
-      if(success.status === 200){
-        this.requestInfoList = success.body;
 
-      }else if(success.status === 204){
-        this.requestInfoList =[];
-      }
+      this.requestInfoList = success.body;
 
     }, error => {
 
@@ -193,7 +161,7 @@ export class RequestNotificationComponent implements OnInit {
     let index = this.requestInfo.indexOf(this.viewRequest);
     this.requestInfoService.insertRequestInfo(this.requestModel, this.uploadFiles).subscribe(success => {
       if (success.status === 201) {
-        this.getReplyRequestInformationByUsernameAndIsReply(this.username);
+        this.getReplyRequestInformationByUsernameAndIsReply(this.username,true);
         this.requestInfo.splice(index, 1);
          this.resetReplyForm();
          this.globalutilityService.successAlertMessage("Reply submited Successfully");

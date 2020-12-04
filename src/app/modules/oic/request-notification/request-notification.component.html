@@ -1,35 +1,27 @@
-<!-- <div class="card" *ngIf="!(requestInfo.length>0 || requestInfoList.length>0 || replyInfoList.length>0)">
+<div class="card" *ngIf="!(requestInfo && requestInfo.length>0 || replyInfoList && replyInfoList.length>0 || requestInfoList && requestInfoList.length>0 )">
   <div class="card-header">
      <div class="d-flex justify-content-center">
-       <h3 class="card-title text-white text-center">NOTIFICATION</h3>
+       <h3 class="card-title text-white text-center">REQUEST NOTIFICATION</h3>
       </div>
   </div>
   <div class="card-body">
   <div class="alert alert-warning text-center" role="alert">
-    <b>Notification not found !!!</b>
+    <b>Request Notification not found !!!</b>
   </div>
 </div>
-</div> -->
+</div>
 
-<div class="card">
+<div class="card" *ngIf="requestInfo && requestInfo.length>0">
   <div class="card-header">
     <div id="titleDiv"> <h3 class="card-title text-white">REQUEST INFORMATION</h3></div>
      <div class="card-tools">
      <button
        type="button"
        class="btn btn-tool"
-       data-card-widget="collapse"
-     >
+       data-card-widget="collapse">
        <i class="fas fa-minus"></i>
      </button>
-     <!-- <button
-       type="button"
-       class="btn btn-tool"
-       data-card-widget="remove"
-     >
-       <i class="fas fa-times"></i>
-     </button> -->
-   </div>
+     </div>
  </div>
  <!-- /.card-header -->
  <div class="card-body">
@@ -67,7 +59,7 @@
 </div>
 
 
-<div class="card"  *ngIf="requestInfoList && requestInfoList.length>0">
+<div class="card" *ngIf="requestInfoList && requestInfoList.length>0">
   <div class="card-header">
     <div id="titleDiv"> <h3 class="card-title text-white">RESPONSE INFORMATION</h3></div>
      <div class="card-tools">
@@ -77,14 +69,7 @@
        data-card-widget="collapse"
      >
        <i class="fas fa-minus"></i>
-     </button>
-     <button
-       type="button"
-       class="btn btn-tool"
-       data-card-widget="remove"
-     >
-       <i class="fas fa-times"></i>
-     </button>
+     </button>     
    </div>
  </div>
  <!-- /.card-header -->
@@ -186,9 +171,9 @@
 </div>
  
 
-<div class="card" *ngIf="replyInfoList !== 'null' && replyInfoList.length>0">
+<div class="card" *ngIf="replyInfoList && replyInfoList.length>0">
   <div class="card-header">
-    <div id="titleDiv"> <h3 class="card-title text-white">REPLIED REQUEST INFORMATION</h3></div>
+    <div id="titleDiv"> <h3 class="card-title text-white">REPLIED ON REQUEST INFORMATION</h3></div>
      <div class="card-tools">
      <button
        type="button"
@@ -196,13 +181,6 @@
        data-card-widget="collapse"
      >
        <i class="fas fa-minus"></i>
-     </button>
-     <button
-       type="button"
-       class="btn btn-tool"
-       data-card-widget="remove"
-     >
-       <i class="fas fa-times"></i>
      </button>
    </div>
  </div>
@@ -280,7 +258,7 @@
              <tr *ngFor="let file of requestInformationFile let i=index" class="table-warning">
               <td>{{i+1}}</td>
                <td>{{file.originalName}}</td>
-               <td><button type="button" class="btn btn-info btn-sm" (click)="onClickViewFile(file)">view</button></td>
+               <td><button type="button" class="btn btn-info btn-sm" (click)="onClickViewFile(file)"><i class="fa fa-download fa-lg" aria-hidden="true"></i></button></td>
              </tr>
             </tbody>
        </table>
