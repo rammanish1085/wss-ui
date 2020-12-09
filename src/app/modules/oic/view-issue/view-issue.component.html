@@ -14,7 +14,7 @@
               <!-- <nav class="navbar">
                   <input type="text" class="form-control" name="tokenNumber" [(ngModel)]="tokenNumber" (ngModelChange)="search()" placeholder="Enter token number to search">
               </nav> -->
-              <table class="table table-responsive-md" datatable [dtOptions]="dtOptions" *ngIf="!isView">
+              <table class="table table-responsive-md text-center" datatable [dtOptions]="dtOptions" *ngIf="!isView">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -23,6 +23,7 @@
                     <th scope="col">Project</th>
                     <th scope="col">Module</th>
                     <th scope="col">Problem</th>
+                    <th scope="col">Date</th>
                     <th scope="col">Assign To</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
@@ -36,7 +37,8 @@
                     <td><small>{{ps.projectName}}</small></td>
                     <td><small>{{ps.projectModule}}</small></td>
                     <td><small>{{ps.problemStatement}}</small></td>
-                    <td><small>{{ps.assignedUsername}}&nbsp; &nbsp; {{ps.assignedName}}</small></td>
+                    <td><small>{{ps.createdOn | date:'dd/MM/yyyy'}}</small></td>
+                    <td><small>{{ps.assignedUsername}}&nbsp;({{ps.assignedName}})</small></td>
                     <td><span *ngIf="ps.status==='FORWARDED'"
                         class="badge badge-primary rounded-0 p-1">{{ps.status}}</span><span
                         *ngIf="ps.status==='REJECTED'"

@@ -14,10 +14,11 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Token No</th>
-                  <th scope="col">Location code</th>
                   <th scope="col">Project</th>
-                  <th scope="col">Project Module</th>
+                  <th scope="col">Module</th>
                   <th scope="col">Problem</th>
+                  <th scope="col">Created By</th>
+                  <th scope="col">Date</th>
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
                 </tr>
@@ -26,10 +27,11 @@
                 <tr *ngFor="let ps of assignedProblemStatement let i = index">
                   <td><small>{{i+1}}</small></td>
                   <td><small><b>{{ps.tokenNumber}}</b></small></td>
-                  <td><small>{{ps.locationCode}}</small></td>
                   <td><small>{{ps.projectName}}</small></td>
                   <td><small>{{ps.projectModule}}</small></td>
                   <td><small>{{ps.projectProblemStatement}}</small></td>
+                  <td><small>{{ps.name}}</small></td>
+                  <td><small>{{ps.createdOn | date:'dd/MM/yyyy'}}</small></td>
                   <td><span *ngIf="ps.status==='FORWARDED'"
                       class="badge badge-primary rounded-0 p-1">{{ps.status}}</span>
                       <span *ngIf="ps.status==='REJECTED'"

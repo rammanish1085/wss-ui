@@ -77,7 +77,7 @@ export class ViewIssueComponent implements OnInit {
 
   }
   getIssueStatusByTokenNumber(tokenNumber: any) {
-    this.issueStatusService.getRequestInformation(tokenNumber).subscribe(success => {
+    this.issueStatusService.getRequestInformationByTokenNumber(tokenNumber).subscribe(success => {
 
       if (success.status === 200) {
         this.statusList = success.body;

@@ -21,4 +21,11 @@ export class IssueStatusService {
      }));
  }
 
+ getRequestInformationByTokenNumber(tokenNumber: string) {
+  return this.http.get(this.contextPath + 'issue-status/order-by-id-desc/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
+   (response: HttpResponse<any>) => {
+     return response;
+   }));
+}
+
 }
