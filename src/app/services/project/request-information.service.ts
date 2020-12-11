@@ -8,6 +8,13 @@ import { GlobalConfiguration } from 'src/app/config/global.config';
 })
 export class RequestInformationService {
 
+  getRequestInformationReplyByTokenNumberAndIsReplyTrue(tokenNumber:any,isReply:boolean) {
+    return this.http.get(this.contextPath + '/request-information/order-by-desc/token-number/' + tokenNumber +'/is-reply/'+isReply, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+
 
   getFileByTokenNumber(tokenNumber:any) {
     return this.http.get(this.contextPath + '/request-information-file/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
@@ -38,6 +45,13 @@ export class RequestInformationService {
 
  getRequestInformationByUsernameAndIsReply(username: string,isReply:boolean) {
   return this.http.get(this.contextPath + 'request-information/user-name/' + username +'/is-reply/'+isReply, { observe: 'response' }).pipe(map(
+   (response: HttpResponse<any>) => {
+     return response;
+   }));
+}
+
+getDistinctRequestInformationByUsernameAndIsReply(username: string,isReply:boolean) {
+  return this.http.get(this.contextPath + 'request-information/distinct-request-info/user-name/' + username +'/is-reply/'+isReply, { observe: 'response' }).pipe(map(
    (response: HttpResponse<any>) => {
      return response;
    }));

@@ -32,6 +32,8 @@ export class RequestNotificationComponent implements OnInit {
   viewResponse: any;
   isViewResponse:boolean;
   requestInformationFile: any =[];
+  requestInformationReply: any;
+  dtOptions: any = {};
 
   constructor(private authorizationService: AuthorizationService,private requestInfoService:RequestInfoService,private globalutilityService : GobalutilityService, private requestInformationService: RequestInformationService, private globalUtilityService: GobalutilityService) { }
 
@@ -40,6 +42,13 @@ export class RequestNotificationComponent implements OnInit {
       replyMessage: new FormControl('', Validators.required),
       isAttachment :new FormControl(false),
     });
+
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+    lengthMenu : [5, 10, 25],
+      processing: true
+    };
 
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
@@ -60,7 +69,7 @@ export class RequestNotificationComponent implements OnInit {
   }
 
   getReplyRequestInformationByUsernameAndIsReply(username: string,isReply:boolean) {
-    this.requestInformationService.getRequestInformationByUsernameAndIsReply(username,isReply).subscribe(success => {
+    this.requestInformationService.getDistinctRequestInformationByUsernameAndIsReply(username,isReply).subscribe(success => {
       console.log("Getting Reply request information by username and is reply true");
       console.log(success);
       this.replyInfoList = success.body;
@@ -94,7 +103,28 @@ export class RequestNotificationComponent implements OnInit {
     this.isRequestedUser =true;
     this.isViewResponse = true;
     this.getFileByTokenNumber(info.tokenNumber);
+    this.getRequestInformationByTokennumberAndIsReplyTrue(info.tokenNumber,true);
     }
+  getRequestInformationByTokennumberAndIsReplyTrue(tokenNumber: any, isReply: boolean) {
+    this.requestInformationService.getRequestInformationReplyByTokenNumberAndIsReplyTrue(tokenNumber,isReply).subscribe(success=>{
+      console.log("Inside Succes getRequestInformationByTokennumberAndIsReplyTrue");
+      if(success.status === 200){
+        
+        
+       this.requestInformationReply = success.body; 
+       console.log( this.requestInformationReply);
+ 
+      }
+      else if(success.status === 204){
+      //  this.requestInformationFile = []; 
+ 
+      }
+     
+     },error=>{
+       console.log("Inside Succes");
+ 
+     })
+  }
 
   getFileByTokenNumber(tokenNumber: any) {
     this.requestInformationService.getFileByTokenNumber(tokenNumber).subscribe(success=>{

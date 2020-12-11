@@ -189,7 +189,7 @@
   
    <div>
      <!-- <hr> -->
-     <table class="table table-responsive-md table-hover">
+     <table class="table table-responsive-md table-hover" datatable [dtOptions]="dtOptions">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -235,29 +235,37 @@
       <div class="modal-body">
         <table class="table table-responsive-md">
           <tbody>
-           <tr>
-             <td>Token number</td><td><b>{{viewResponse.tokenNumber}}</b></td>
-           </tr>
-           <tr>
-             <td>Request Message</td><td>{{viewResponse.requestMessage}}</td>
-           </tr>
-             <tr>
-               <td>Response Message</td><td>{{viewResponse.responseMessage}}</td>
-              
-             </tr>
-             <tr>
-               <td>Response By</td> <td>{{viewResponse.username}}({{viewResponse.name}})</td>
-             </tr>
-               <tr *ngIf="requestInformationFile.length>0"><th colspan="3" class="text-center table-info">ATTACHED FILES</th></tr>       
-              <tr *ngIf="requestInformationFile.length>0"> 
+            <!-- <tr *ngIf="requestInformationReply && requestInformationReply.length>0"><th colspan="8" class="text-center table-info">ATTACHED FILES</th></tr>        -->
+              <tr *ngIf="requestInformationReply && requestInformationReply.length>0" class="table-warning"> 
                 <th scope="col">#</th>
-                <th scope="col">File Name</th>
-                <th scope="col">Action</th>
+                <!-- <th scope="col">Token Number</th> -->
+                <th scope="col">Request Message</th>
+                <th scope="col">Response Message</th>
+                <th scope="col">Requested By</th>
                </tr>
             
-             <tr *ngFor="let file of requestInformationFile let i=index" class="table-warning">
+             <tr *ngFor="let requestInfo of requestInformationReply let i=index">
               <td>{{i+1}}</td>
+               <!-- <td>{{requestInfo.tokenNumber}}</td> -->
+               <td>{{requestInfo.requestMessage}}</td>
+               <td>{{requestInfo.responseMessage}}</td>
+               <td>{{requestInfo.requestedName}}</td>
+             </tr>
+             
+
+              <tr *ngIf="requestInformationFile.length>0"><th colspan="4" class="text-center table-info">ATTACHED FILES</th></tr>       
+              <tr *ngIf="requestInformationFile.length>0"> 
+                
+                <th></th>
+                <th>#</th>
+                <th>File Name</th>
+                <th>Action</th>
+               </tr>
+            
+             <tr *ngFor="let file of requestInformationFile let i=index">
+              <td></td><td>{{i+1}}</td>
                <td>{{file.originalName}}</td>
+              
                <td><button type="button" class="btn btn-info btn-sm" (click)="onClickViewFile(file)"><i class="fa fa-download fa-lg" aria-hidden="true"></i></button></td>
              </tr>
             </tbody>

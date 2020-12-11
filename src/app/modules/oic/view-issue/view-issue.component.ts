@@ -152,15 +152,4 @@ export class ViewIssueComponent implements OnInit {
   }
 
 
-
-  search() {
-    if (this.tokenNumber == "") { this.ngOnInit(); }
-    else {
-      this.assignedProblemStatement = this.assignedProblemStatement.filter(res => {
-        return res.tokenNumber.toLocaleLowerCase().match(this.tokenNumber.toLocaleLowerCase())
-      })
-    }
-  }
-
-
 }
