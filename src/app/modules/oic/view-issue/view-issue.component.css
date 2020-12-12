@@ -6,9 +6,9 @@
 padding:.25px;
 } */
 
-.table td,th {
+/* .table td,th {
     border-top: 1px;
-  }
+  } */
 
   .table .thead-dark th {
        background-color: #17a2b8;
@@ -17,4 +17,11 @@ padding:.25px;
       display: flex;
       justify-content: center;
       height: 0px;
-  }
+  }  
+.modal-header{
+    display: flex;
+    justify-content: center;
+    background-color: #17a2b8;
+    
+   }
+   

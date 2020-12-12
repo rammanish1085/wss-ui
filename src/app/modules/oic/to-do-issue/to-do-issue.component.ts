@@ -40,6 +40,7 @@ export class ToDoIssueComponent implements OnInit {
   requestInfoList: any =[];
   forwardUser: any;
   dtOptions: any = {};
+  uploadFiles: File[] = [];
   
 
   constructor(private dashboardService: DashboardService,
@@ -62,6 +63,7 @@ export class ToDoIssueComponent implements OnInit {
 
     this.resolveForm = new FormGroup({
       comments: new FormControl('', Validators.required),
+      isAttachment :new FormControl(false)
     });
 
     this.rejectForm = new FormGroup({
@@ -165,7 +167,7 @@ export class ToDoIssueComponent implements OnInit {
 
   onResolveSubmit() {
     this.isProcessing = true;
-    this.dashboardService.resolveIssueByTokenNumber(this.viewIssue.tokenNumber, this.resolveForm.value.comments).subscribe(success => {
+    this.dashboardService.resolveIssueByTokenNumber(this.viewIssue.tokenNumber, this.resolveForm.value.comments,this.uploadFiles).subscribe(success => {
       if (success.status === 201) {
         this.globalutilityService.successAlertMessage("Issue resolve successfully");
         this.isProcessing = false;
@@ -176,8 +178,11 @@ export class ToDoIssueComponent implements OnInit {
       this.getAllAssignedProblemStatement(this.username);
     }, error => {
       if (error.status === 417) {
+        this.isProcessing = false;
         this.resetResolveForm();
-        this.globalutilityService.errorAlertMessage("Unable to resolve !!");
+        this.onClickResolveBack();
+        this.isView = false;
+        this.globalutilityService.errorAlertMessage("Unable to resolve Issue!!");
 
       }
     })
@@ -376,8 +381,10 @@ export class ToDoIssueComponent implements OnInit {
   }
 
   resetResolveForm() {
+    this.uploadFiles = [];
     this.resolveForm.patchValue({
-      comments: ''
+      comments: '',
+      isAttachment:''
     });
   }
 
@@ -395,6 +402,11 @@ export class ToDoIssueComponent implements OnInit {
     }, error => {
       this.handleError(error);
     })
+  }
+
+  viewResolveIssueFileClicked(file :any){
+    console.log("Resolve issue File clicked");
+    
   }
   
   
@@ -418,6 +430,61 @@ export class ToDoIssueComponent implements OnInit {
 
       console.log("Insise error");
     })
+
+  }
+
+  onFileChange(event){
+
+    this.uploadFiles = [];
+
+    const size = event.srcElement.files[0].size;
+
+    console.log(size)
+
+    if (size < 1000000) 
+    { 
+     if(event.target.files.length <=2){
+           
+      for (var i = 0; i < event.target.files.length; i++) {
+        this.uploadFiles.push(event.target.files[i]);
+      }
+    } else{
+        this.globalutilityService.errorAlertMessage("Maximum 2 File Allow to upload");
+      }
+
+    }else{
+    this.globalutilityService.errorAlertMessage("File Size greater 1 Mb");
+    }
+  }
+
+  
+  isAttachmentClicked(){
+    this.resolveForm.get('isAttachment').valueChanges.subscribe(checked => {
+      if (checked) {
+        const validators = [Validators.required];
+        this.resolveForm.addControl('attachment', new FormControl('', validators));
+      } else {
+        this.resolveForm.removeControl('attachment');
+      }
+
+    });
+
+  }
+
+  deleteFieldValue(index) {
+    if (this.uploadFiles.length <= 1) {
+      this.uploadFiles.splice(index, 1);
+      this.resetFile();
+    } else {
+      this.uploadFiles.splice(index, 1);
+    }
+  }
+
+   
+  resetFile() {
+    this.resolveForm.patchValue({
+      attachment: '',
+    });
 
   }
 

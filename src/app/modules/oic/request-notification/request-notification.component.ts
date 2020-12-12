@@ -1,6 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { from } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 import { RequestInformationService } from 'src/app/services/project/request-information.service';
@@ -105,6 +104,8 @@ export class RequestNotificationComponent implements OnInit {
     this.getFileByTokenNumber(info.tokenNumber);
     this.getRequestInformationByTokennumberAndIsReplyTrue(info.tokenNumber,true);
     }
+
+
   getRequestInformationByTokennumberAndIsReplyTrue(tokenNumber: any, isReply: boolean) {
     this.requestInformationService.getRequestInformationReplyByTokenNumberAndIsReplyTrue(tokenNumber,isReply).subscribe(success=>{
       console.log("Inside Succes getRequestInformationByTokennumberAndIsReplyTrue");

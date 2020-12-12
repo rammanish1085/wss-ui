@@ -29,6 +29,8 @@ export class ViewIssueComponent implements OnInit {
   isTrue: boolean;
   statusList: any;
   dtOptions: any = {};
+  resolveIssuefiles: any;
+  isResolveIssueFile :boolean;
 
   constructor(private issueMasterService: IssueMasterService, private issueStatusService: IssueStatusService,
     private globalUtilityService: GobalutilityService, private authorizationService: AuthorizationService, private route: ActivatedRoute, private router: Router) {
@@ -102,18 +104,42 @@ export class ViewIssueComponent implements OnInit {
 
     this.issueMasterService.getFileByTokenNumber(tokenNumber).subscribe(success => {
 
-      console.log("Gettinf File");
+      console.log("Getting File");
 
       console.log(success.body);
 
       this.files = success.body;
-
 
     }, error => {
       console.log("Getting Error");
       console.log(error);
     })
 
+  }
+
+  viewResolveIssueFileClicked(file:any){
+    this.isResolveIssueFile = true;
+    this.issueMasterService.getResolveIssueFileByTokenNumber(file.tokenNumber).subscribe(success => {
+    if(success.status === 200){      
+      console.log("Resolve Issue File Found Successfully By TokenNumber");
+      this.resolveIssuefiles = success.body;
+      console.log(this.resolveIssuefiles);      
+    }else if(success.status === 204){
+      console.log("No File Found While Getting  File By TokenNumber");
+    } 
+    }, error => {
+      console.log("Getting Error while getting File By TokenNumber");
+      console.log(error);
+    })
+  }
+
+  onClickViewResolveIssueFile(file:any){
+    console.log("onClickViewResolveIssueFile");
+    this.issueMasterService.downloadFileByTokenNumberAndFileName(file.tokenNumber, file.name, GlobalConstants.FALSE).subscribe(success => {
+      this.saveFile(success, file.originalName)
+    }, error => {
+      this.handleError(error);
+    })
   }
 
   viewFileClicked(file: any) {

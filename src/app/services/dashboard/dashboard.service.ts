@@ -54,7 +54,23 @@ export class DashboardService {
       }));
   }
 
-  resolveIssueByTokenNumber(tokenNumber: string,comments:string) {
+
+  resolveIssueByTokenNumber(tokenNumber:string,comments:string,uploadFiles: File [] ) {
+    let formData = new FormData();
+        uploadFiles.forEach(file  => {
+        formData.append('files', file);
+    });
+    formData.append('tokenNumber',tokenNumber);
+    formData.append('comments',comments);
+    // formData.append('requestInformation', JSON.stringify(requestInformation));
+
+    return this.http.post(this.contextPath + 'project-problem-assignment/accept', formData, { observe: 'response' }).pipe(
+      map((response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+
+  ddasdarresolveIssueByTokenNumber(tokenNumber: string,comments:string) {
 
     let formData = new FormData();
     formData.append('tokenNumber',tokenNumber);

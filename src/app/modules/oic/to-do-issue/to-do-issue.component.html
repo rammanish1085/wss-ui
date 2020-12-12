@@ -190,6 +190,8 @@
             <th>Comments</th>
             <th>Assigned User</th>
             <th>Date/Time</th>
+            <th>Attachment</th>
+
           </tr>
           <tr *ngFor="let status of statusList let i = index">
             <td><small>{{i+1}}</small></td>
@@ -206,7 +208,8 @@
             <td *ngIf="status.userComments !== null"><small>{{status.userComments}}</small></td>
             <td><small>{{status.username}}({{status.name}})</small></td>
             <td><small>{{status.createdOn | date:'medium'}}</small></td>
-                   </tr>
+            <td *ngIf="status.status==='COMPLETED'"><button class="btn btn-info btn-sm" (click)="viewResolveIssueFileClicked(file)"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td>
+          </tr>
         </tbody>
       </table>
     </div> 
@@ -285,7 +288,7 @@
 <div class="card mt-2" *ngIf="isForward">
   <div class="card-header text-center text-white">FORWARD ISSUE</div>
   <div class="card-body">
-    <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
+    <div class="d-flex justify-content-end"><button class="btn btn-info btn-sm"
         (click)="onClickForwardBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
     <form [formGroup]="requestForwardForm" (ngSubmit)="onForwardSubmit()">
       <table class="table d-flex justify-content-center">
@@ -317,7 +320,7 @@
 <div class="card mt-2" *ngIf="isResolve">
   <div class="card-header text-center text-white">RESOLVE ISSUE</div>
   <div class="card-body">
-    <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
+    <div class="d-flex justify-content-end"><button class="btn btn-info btn-sm"
         (click)="onClickResolveBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
     <form [formGroup]="resolveForm" (ngSubmit)="onResolveSubmit()">
       <table class="table d-flex justify-content-center">
@@ -332,6 +335,26 @@
                 required></textarea></td>
           </tr>
           <tr>
+            <td>Attachment </td><td><input type="checkbox" class="form-check-input" formControlName="isAttachment" id="exampleCheck1" (click)="isAttachmentClicked()"></td>
+          </tr>
+          <tr *ngIf="resolveForm.value.isAttachment"><td>No of file</td><td><font color=red>2 file allow</font></td></tr>
+          <tr *ngIf="resolveForm.value.isAttachment"><td>File size</td><td><font color=red>1 Mb</font></td></tr>
+          <tr *ngIf="resolveForm.value.isAttachment"><td>File type</td><td><font color=red>[ jpg, pdf ,doc ,xls ] only</font></td></tr>
+          <tr *ngIf="resolveForm.value.isAttachment"><td></td><td ><input type="file" class="form-control-file" (change)="onFileChange($event)"formControlName="attachment" accept="image/*,.pdf,.doc,.docx,.xml,.xls" multiple required></td></tr>
+          <tr *ngIf="uploadFiles && uploadFiles.length>0 && resolveForm.value.isAttachment">
+            <th>#</th>
+            <th>File name</th>
+            <th>Action</th>
+          </tr>             
+          <tr *ngFor="let file of uploadFiles; let i = index">
+            <td *ngIf="resolveForm.value.isAttachment">{{i+1}}</td>
+            <td *ngIf="resolveForm.value.isAttachment">{{file.name}}</td>
+            <td *ngIf="resolveForm.value.isAttachment"> {{file.size/1000000 | number}}Mb</td>
+            <td *ngIf="resolveForm.value.isAttachment">
+              <button class="btn btn-danger btn-sm" type="button" (click)="deleteFieldValue(i)"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+            </td>
+          </tr>  
+          <tr>
             <th></th>
             <td><button type="submit" [disabled]="resolveForm.invalid"
                 class="btn btn-primary btn-sm ml-5">Submit</button></td>
@@ -345,7 +368,7 @@
 <div class="card mt-2" *ngIf="isReject">
   <div class="card-header text-center text-white">REJECT ISSUE</div>
   <div class="card-body">
-    <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
+    <div class="d-flex justify-content-end"><button class="btn btn-info btn-sm"
         (click)="onClickRejectBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
     <form [formGroup]="rejectForm" (ngSubmit)="onRejectSubmit()">
       <table class="table d-flex justify-content-center">
@@ -374,7 +397,7 @@
 <div class="card mt-2" *ngIf="isRequestInfo">
   <div class="card-header text-center text-white">REQUEST INFO</div>
   <div class="card-body">
-    <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm"
+    <div class="d-flex justify-content-end"><button class="btn btn-info btn-sm"
         (click)="onClickRequestInfoBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
 
     <form [formGroup]="requestInfoForm" (ngSubmit)="onSubmitRequestInfo()">

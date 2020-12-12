@@ -13,9 +13,9 @@
     color: white;
   }
   
-  .table td {
+  /* .table td {
     border-top: 1px;
-  }
+  } */
 
   #titleDiv{
     display: flex;
