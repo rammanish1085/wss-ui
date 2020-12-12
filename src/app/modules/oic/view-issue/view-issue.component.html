@@ -216,7 +216,7 @@
            <td *ngIf="status.userComments !== null"><small>{{status.userComments}}</small></td>
            <td><small>{{status.username}}({{status.name}})</small></td>
            <td><small>{{status.createdOn | date:'medium'}}</small></td>
-           <td *ngIf="status.status==='COMPLETED'"><button class="btn btn-info btn-sm" (click)="viewResolveIssueFileClicked(status)" data-toggle="modal" data-target="#resolveIssueFileModal"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td>
+           <td><button class="btn btn-info btn-sm" *ngIf="status.status==='COMPLETED'&& resolveIssuefiles" (click)="viewResolveIssueFileClicked(status)" data-toggle="modal" data-target="#resolveIssueFileModal"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td>
                   </tr>
        </tbody>
      </table>

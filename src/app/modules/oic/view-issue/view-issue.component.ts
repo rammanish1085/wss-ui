@@ -74,9 +74,8 @@ export class ViewIssueComponent implements OnInit {
     this.isView = true;
     this.getFileByTokenNumber(ps.tokenNumber);
     this.getIssueStatusByTokenNumber(ps.tokenNumber);
-    console.log("View Clicked");
-    console.log(ps);
-
+    this.viewResolveIssueFileClicked(ps);
+    
   }
   getIssueStatusByTokenNumber(tokenNumber: any) {
     this.issueStatusService.getRequestInformationByTokenNumber(tokenNumber).subscribe(success => {

@@ -41,6 +41,8 @@ export class ToDoIssueComponent implements OnInit {
   forwardUser: any;
   dtOptions: any = {};
   uploadFiles: File[] = [];
+  isResolveIssueFile :boolean;
+  resolveIssuefiles: any;
   
 
   constructor(private dashboardService: DashboardService,
@@ -111,6 +113,31 @@ export class ToDoIssueComponent implements OnInit {
 
   }
 
+  viewResolveIssueFileClicked(file:any){
+    this.isResolveIssueFile = true;
+    this.issueMasterService.getResolveIssueFileByTokenNumber(file.tokenNumber).subscribe(success => {
+    if(success.status === 200){      
+      console.log("Resolve Issue File Found Successfully By TokenNumber");
+      this.resolveIssuefiles = success.body;
+      console.log(this.resolveIssuefiles);      
+    }else if(success.status === 204){
+      console.log("No File Found While Getting  File By TokenNumber");
+    } 
+    }, error => {
+      console.log("Getting Error while getting File By TokenNumber");
+      console.log(error);
+    })
+  }
+
+  onClickViewResolveIssueFile(file:any){
+    console.log("onClickViewResolveIssueFile");
+    this.issueMasterService.downloadFileByTokenNumberAndFileName(file.tokenNumber, file.name, GlobalConstants.FALSE).subscribe(success => {
+      this.saveFile(success, file.originalName)
+    }, error => {
+      this.handleError(error);
+    })
+  }
+
 
 
   public onClickView(ps: any) {
@@ -128,6 +155,7 @@ export class ToDoIssueComponent implements OnInit {
     this.getFileByTokenNumber(ps.tokenNumber);
     this.getIssueStatusByTokenNumber(ps.tokenNumber);
     this.getByUsernameAndTokenNumber(this.username,ps.tokenNumber);
+    this.viewResolveIssueFileClicked(ps);
     console.log("View Clicked");
     console.log(ps);
 
@@ -403,12 +431,7 @@ export class ToDoIssueComponent implements OnInit {
       this.handleError(error);
     })
   }
-
-  viewResolveIssueFileClicked(file :any){
-    console.log("Resolve issue File clicked");
-    
-  }
-  
+ 
   
   getByUsernameAndTokenNumber(username: any,tokenNumber :any) {
     this.requestInformationService.getByUsernameAndTokenNumber(username,tokenNumber).subscribe(success => {

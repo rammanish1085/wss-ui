@@ -208,7 +208,7 @@
             <td *ngIf="status.userComments !== null"><small>{{status.userComments}}</small></td>
             <td><small>{{status.username}}({{status.name}})</small></td>
             <td><small>{{status.createdOn | date:'medium'}}</small></td>
-            <td *ngIf="status.status==='COMPLETED'"><button class="btn btn-info btn-sm" (click)="viewResolveIssueFileClicked(file)"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td>
+            <td ><button class="btn btn-info btn-sm" *ngIf="status.status==='COMPLETED' && resolveIssuefiles"  data-toggle="modal" data-target="#resolveIssueFileModal" (click)="viewResolveIssueFileClicked(status)"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td>
           </tr>
         </tbody>
       </table>
@@ -437,6 +437,48 @@
 
 
     </form>
+  </div>
+</div>
+
+<div class="modal fade" id="resolveIssueFileModal" *ngIf="isResolveIssueFile">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title text-white">ATTACHED FILES</h4>
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <table class="table table-responsive-md">
+          <tbody>            
+                  
+              <tr *ngIf="resolveIssuefiles && resolveIssuefiles.length>0"> 
+                
+                <th></th>
+                <th>#</th>
+                <th>File Name</th>
+                <th>Action</th>
+               </tr>
+            
+             <tr *ngFor="let file of resolveIssuefiles let i=index">
+              <td></td><td>{{i+1}}</td>
+               <td>{{file.originalName}}</td>
+              
+               <td><button type="button" class="btn btn-info btn-sm" (click)="onClickViewResolveIssueFile(file)"><i class="fa fa-download fa-lg" aria-hidden="true"></i></button></td>
+             </tr>
+            </tbody>
+       </table>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
   </div>
 </div>
 
