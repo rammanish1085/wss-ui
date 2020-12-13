@@ -19,7 +19,6 @@
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">TokenNo</th>
-                    <!-- <th scope="col">code</th> -->
                     <th scope="col">Project</th>
                     <th scope="col">Module</th>
                     <th scope="col">Problem</th>
@@ -27,13 +26,13 @@
                     <th scope="col">Assign To</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
-                  </tr>
+                    <th scope="col">Action</th>
+                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor=" let i = index let ps of assignedProblemStatement">
                     <td><small>{{i+1}}</small></td>
                     <td><small><b>{{ps.tokenNumber}}</b></small></td>
-                    <!-- <td><small>{{ps.locationCode}}</small></td> -->
                     <td><small>{{ps.projectName}}</small></td>
                     <td><small>{{ps.projectModule}}</small></td>
                     <td><small>{{ps.problemStatement}}</small></td>
@@ -46,7 +45,8 @@
                         *ngIf="ps.status==='COMPLETED'"
                         class="badge badge-success rounded-0 p-1">{{ps.status}}</span><span
                         *ngIf="ps.status==='PENDING'" class="badge badge-danger rounded-0 p-1">{{ps.status}}</span></td>
-                    <td><button class="btn btn-info btn-sm" (click)="onClickView(ps)">view</button></td>
+                    <td><button type="button" class="btn btn-outline-info btn-sm" (click)="onClickView(ps)">View</button></td>
+                    <td><button *ngIf="ps.status==='COMPLETED'|| ps.status==='REJECTED'" type="button" class="btn btn-outline-primary btn-sm" (click)="onClickReopen(ps)">Reopen</button></td>
                   </tr>
                 </tbody>
               </table>

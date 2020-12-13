@@ -5,7 +5,8 @@ import { AuthorizationService } from 'src/app/services/authorization-service/aut
 import { IssueMasterService } from 'src/app/services/project/issue-master.service';
 import { IssueStatusService } from 'src/app/services/project/issue-status.service';
 import { GlobalConstants } from 'src/app/utility/global.constants';
-import { GobalutilityService } from 'src/app/utility/gobalutility.service'
+import { GobalutilityService } from 'src/app/utility/gobalutility.service';
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-view-issue',
@@ -32,8 +33,8 @@ export class ViewIssueComponent implements OnInit {
   resolveIssuefiles: any;
   isResolveIssueFile :boolean;
 
-  constructor(private issueMasterService: IssueMasterService, private issueStatusService: IssueStatusService,
-    private globalUtilityService: GobalutilityService, private authorizationService: AuthorizationService, private route: ActivatedRoute, private router: Router) {
+  constructor(private issueMasterService: IssueMasterService,public datepipe: DatePipe, private issueStatusService: IssueStatusService,
+    private globalUtilityService: GobalutilityService,private globalutilityService: GobalutilityService, private authorizationService: AuthorizationService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -49,6 +50,35 @@ export class ViewIssueComponent implements OnInit {
       processing: true
     };
 
+  }
+
+  onClickReopen(ps:any){
+   var diffDays:any= this.calculateDiff(this.datepipe.transform(ps.updatedOn, 'medium'));
+   if(diffDays>7){
+    this.globalutilityService.errorAlertMessage("7 days is overed issue can't' be reopen");
+   }else{
+     console.log("inside else");
+     this.issueMasterService.reopenIssueByTokenNumber(ps.tokenNumber,ps.status).subscribe(success => {
+      console.log("reopenIssueByTokenNumber");
+      console.log(success);
+      if(success.status === 200){
+        this.globalutilityService.successAlertMessage("Issue Reopen Successfully");
+      }
+            
+    }, error => {
+      console.log("Getting Error while getting assigned problem");
+      console.log(error);
+    })
+   }  
+   
+  }
+
+  calculateDiff(sentDate) {
+    var date1:any = new Date(sentDate);
+    var date2:any = new Date();
+    console.log(this.datepipe.transform(date2, 'medium'));
+    var diffDays:any = Math.floor((date2 - date1) / (1000 * 60 * 60 * 24));
+    return diffDays;
   }
 
   getAllAssignedProblemStatement(username: any, locationCode: any) {

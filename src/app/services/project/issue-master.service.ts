@@ -15,6 +15,13 @@ export class IssueMasterService {
     this.contextPath = this.globalConfiguration.getBackendURLPrefix();
   }
 
+  reopenIssueByTokenNumber(tokenNumber: string,status:any) {
+      return this.http.get(this.contextPath + '/issue-master/re-open/token-number/' + tokenNumber +'/status/'+status, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+
   insertIssueMaster(issueMaster: IssueMaster, myFiles: File [] ) {
     let formData = new FormData();
         myFiles.forEach(file  => {

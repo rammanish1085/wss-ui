@@ -12,9 +12,8 @@ import { AuthorizationInterceptor } from '../app/interceptor/authorization.inter
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthGuard} from 'src/app/guard/auth.guard'
 import {GlobalConstants} from 'src/app/utility/global.constants';
-import {SessionTimerModule} from 'src/app/services/session-timer/session-timer/session-timer.module';
-import { NavbarComponent } from './components/navbar/nav-bar/navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common'
 
 
 
@@ -40,6 +39,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     GlobalConstants,
     HttpClient,
     AuthGuard,
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthorizationInterceptor,
