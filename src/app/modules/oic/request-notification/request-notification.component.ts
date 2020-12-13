@@ -53,7 +53,8 @@ export class RequestNotificationComponent implements OnInit {
     this.username = this.loggedInUser.getUsername();
     this.getRequestInformationByUsernameIsReplyFalse(this.username,false);
     this.getReplyRequestInformationByUsernameAndIsReply(this.username,true);
-    this.getByRequestedUsernameAndIsReplyTrue(this.username,true);
+    this.getDistinctResponseInforamtionByRequestedUsernameAndIsReplyTrue(this.username,true);
+    // this.getByRequestedUsernameAndIsReplyTrue(this.username,true);
   }
 
   getRequestInformationByUsernameIsReplyFalse(username: string,isReply:boolean) {
@@ -90,7 +91,24 @@ export class RequestNotificationComponent implements OnInit {
 
     }, error => {
 
-      console.log("Insise error");
+      console.log("Inside error");
+    })
+
+  }
+
+  getDistinctResponseInforamtionByRequestedUsernameAndIsReplyTrue(username: any,isReply:boolean) {
+
+    this.requestInformationService.getByRequestedUsernameAndIsReply(username,true).subscribe(success => {
+
+      console.log("Getting request information by requested username and is reply true");
+
+      console.log(success);
+
+      this.requestInfoList = success.body;
+
+    }, error => {
+
+      console.log("Inside error");
     })
 
   }

@@ -65,7 +65,7 @@ getDistinctRequestInformationByUsernameAndIsReply(username: string,isReply:boole
 }
 
 getByRequestedUsernameAndIsReply(requestedUsername: string,isReply : boolean) {
-  return this.http.get(this.contextPath + '/request-information/requested-username/' + requestedUsername +'/is-reply/'+ isReply, { observe: 'response' }).pipe(map(
+  return this.http.get(this.contextPath + '/request-information/distinct-response-information/requested-username/' + requestedUsername +'/is-reply/'+ isReply, { observe: 'response' }).pipe(map(
     (response: HttpResponse<any>) => {
       return response;
     }));
