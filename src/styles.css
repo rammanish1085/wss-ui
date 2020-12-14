@@ -19,9 +19,3 @@
 .dataTables_length{
   margin-left: 5px !important;
 }
-.modal-header{
-  display: flex;
-  justify-content: center;
-  background-color: #17a2b8;
-  
- }
