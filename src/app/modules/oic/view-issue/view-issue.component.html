@@ -46,7 +46,7 @@
                         class="badge badge-success rounded-0 p-1">{{ps.status}}</span><span
                         *ngIf="ps.status==='PENDING'" class="badge badge-danger rounded-0 p-1">{{ps.status}}</span></td>
                     <td><button type="button" class="btn btn-outline-info btn-sm" (click)="onClickView(ps)">View</button></td>
-                    <td><button *ngIf="ps.status==='COMPLETED'|| ps.status==='REJECTED'" type="button" class="btn btn-outline-primary btn-sm" (click)="onClickReopen(ps)">Reopen</button></td>
+                    <td><button *ngIf="ps.status==='COMPLETED'|| ps.status==='REJECTED'" type="button" class="btn btn-outline-primary btn-sm" (click)="onClickReopen(ps)" data-toggle="modal" data-target="#reopenModal"  >Reopen</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -55,9 +55,6 @@
           </div>
         </div>
       </div>
-
-
-
     </div>
   </div>
 </div>
@@ -170,6 +167,7 @@
   </div>
   <!-- /.card-body -->
 </div>
+
 <div class="card" *ngIf="isView">
   <div class="card-header">
     <div id="titleDiv"> <h3 class="card-title text-white">ISSUE CURRENT STATUS</h3></div>
@@ -204,19 +202,16 @@
          <tr *ngFor="let status of statusList let i = index">
            <td><small>{{i+1}}</small></td>
            <td><small><b>{{status.tokenNumber}}</b></small></td>
-           <td><span *ngIf="status.status==='COMPLETED'"
-             class="badge badge-success rounded-0 p-1">{{status.status}}</span>
-           <span *ngIf="status.status==='REJECTED'"
-             class="badge badge-warning rounded-0 p-1">{{status.status}}</span>
-           <span *ngIf="status.status==='PENDING'"
-             class="badge badge-danger rounded-0 p-1">{{status.status}}</span>
-             <span *ngIf="status.status==='FORWARDED'"
-             class="badge badge-primary rounded-0 p-1">{{status.status}}</span></td>
-           <td *ngIf="status.status === 'PENDING'"></td>
-           <td *ngIf="status.userComments !== null"><small>{{status.userComments}}</small></td>
+           <td><span *ngIf="status.status==='COMPLETED'" class="badge badge-success rounded-0 p-1">{{status.status}}</span>
+           <span *ngIf="status.status==='REJECTED'" class="badge badge-warning rounded-0 p-1">{{status.status}}</span>
+           <span *ngIf="status.status==='PENDING'"  class="badge badge-danger rounded-0 p-1">{{status.status}}</span>
+             <span *ngIf="status.status==='FORWARDED'"  class="badge badge-primary rounded-0 p-1">{{status.status}}</span></td>
+           <td><small>{{status.userComments}}</small></td>
            <td><small>{{status.username}}({{status.name}})</small></td>
            <td><small>{{status.createdOn | date:'medium'}}</small></td>
-           <td><button class="btn btn-info btn-sm" *ngIf="status.status==='COMPLETED'&& resolveIssuefiles" (click)="viewResolveIssueFileClicked(status)" data-toggle="modal" data-target="#resolveIssueFileModal"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td>
+           <td><button class="btn btn-success btn-sm" *ngIf="status.status==='COMPLETED'&& resolveIssuefiles" (click)="viewResolveIssueFileClicked(status)" data-toggle="modal" data-target="#resolveIssueFileModal"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button><button class="btn btn-danger btn-sm" *ngIf="status.status==='PENDING'&& reopenIssuefiles" (click)="viewReopenFileClicked(status)" data-toggle="modal" data-target="#reopenIssueFileModal"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td>
+           <!-- <td><button class="btn btn-info btn-sm"  (click)="viewResolveIssueFileClicked(status)" data-toggle="modal" data-target="#resolveIssueFileModal"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td> -->
+           <!-- <td><button class="btn btn-info btn-sm" *ngIf="status.status==='PENDING'&& resolveIssuefiles" (click)="viewResolveIssueFileClicked(status)" data-toggle="modal" data-target="#resolveIssueFileModal"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td> -->
                   </tr>
        </tbody>
      </table>
@@ -227,12 +222,12 @@
 </div>
 
 <div class="modal fade" id="resolveIssueFileModal" *ngIf="isResolveIssueFile">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title text-white">ATTACHED FILES</h4>
+        <h4 class="modal-title text-white">RESOLVE ISSUE ATTACHED FILES</h4>
         <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
       </div>
 
@@ -267,3 +262,107 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="reopenIssueFileModal" *ngIf="isReopenIssueFile">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title text-white">REOPEN ISSUE ATTACHED FILES</h4>
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <table class="table table-responsive-md">
+          <tbody>            
+                  
+              <tr *ngIf="resolveIssuefiles && resolveIssuefiles.length>0"> 
+                
+                <th></th>
+                <th>#</th>
+                <th>File Name</th>
+                <th>Action</th>
+               </tr>
+            
+             <tr *ngFor="let file of reopenIssuefiles let i=index">
+              <td></td><td>{{i+1}}</td>
+               <td>{{file.originalName}}</td>
+              
+               <td><button type="button" class="btn btn-info btn-sm" (click)="onClickDownloadReopenIssueFile(file)"><i class="fa fa-download fa-lg" aria-hidden="true"></i></button></td>
+             </tr>
+            </tbody>
+       </table>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="reopenModal" *ngIf="isReopen">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title text-white">REOPEN ISSUE</h4>
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form [formGroup]="reopenIssueForm">
+          <table class="table table-responsive-md">
+            <tbody>
+              <tr>
+                <td>Token Number</td>
+                <td><small><b>{{reopenIssue.tokenNumber}}</b></small></td>
+              </tr>
+              <tr>
+                <td>Comments</td>
+                <td><textarea class="form-control" rows="2" id="remark" formControlName="reopenMessage" name="reopen"
+                    required></textarea></td>
+              </tr>
+              <tr>
+                <td>Attachment </td><td><input type="checkbox" class="form-check-input" formControlName="isAttachment" id="exampleCheck1" (click)="isAttachmentClicked()"></td>
+              </tr>
+              <tr *ngIf="reopenIssueForm.value.isAttachment"><td>No of file</td><td><font color=red>2 file allow</font></td></tr>
+              <tr *ngIf="reopenIssueForm.value.isAttachment"><td>File size</td><td><font color=red>1 Mb</font></td></tr>
+              <tr *ngIf="reopenIssueForm.value.isAttachment"><td>File type</td><td><font color=red>[ jpg, pdf ,doc ,xls ] only</font></td></tr>
+              <tr *ngIf="reopenIssueForm.value.isAttachment"><td></td><td ><input type="file" class="form-control-file" (change)="onFileChange($event)"formControlName="attachment" accept="image/*,.pdf,.doc,.docx,.xml,.xls" multiple required></td></tr>
+              <tr *ngIf="uploadReopenIssueFiles && uploadReopenIssueFiles.length>0">
+                <th>#</th>
+                <th>File name</th>
+                <th>Action</th>
+              </tr>             
+              <tr *ngFor="let file of uploadReopenIssueFiles; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{file.name}}</td>
+                <td> {{file.size/1000000 | number}}Mb</td>
+                <td>
+                  <button class="btn btn-danger btn-sm" type="button" (click)="deleteFieldValue(i)"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+                </td>
+              </tr>  
+            </tbody>
+          </table>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" [disabled]="reopenIssueForm.invalid" data-dismiss="modal" (click)="onReopenSubmit()" class="btn btn-primary btn-sm">Submit</button>
+         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+ 

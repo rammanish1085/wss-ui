@@ -15,12 +15,12 @@ export class IssueMasterService {
     this.contextPath = this.globalConfiguration.getBackendURLPrefix();
   }
 
-  reopenIssueByTokenNumber(tokenNumber: string,status:any) {
-      return this.http.get(this.contextPath + '/issue-master/re-open/token-number/' + tokenNumber +'/status/'+status, { observe: 'response' }).pipe(map(
-      (response: HttpResponse<any>) => {
-        return response;
-      }));
-  }
+  // reopenIssueByTokenNumber(tokenNumber: string,status:any) {
+  //     return this.http.get(this.contextPath + '/issue-master/re-open/token-number/' + tokenNumber +'/status/'+status, { observe: 'response' }).pipe(map(
+  //     (response: HttpResponse<any>) => {
+  //       return response;
+  //     }));
+  // }
 
   insertIssueMaster(issueMaster: IssueMaster, myFiles: File [] ) {
     let formData = new FormData();
@@ -56,6 +56,14 @@ export class IssueMasterService {
   getResolveIssueFileByTokenNumber(tokenNumber: string) {
     console.log("Inside getResolveIssueFileByTokenNumber");
     return this.http.get(this.contextPath + '/resolve-issue-file/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+
+  getReopenIssueFileByTokenNumber(tokenNumber: string) {
+    console.log("Inside getResolveIssueFileByTokenNumber");
+    return this.http.get(this.contextPath + '/reopen-issue-file/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
         return response;
       }));
@@ -104,7 +112,33 @@ downloadFileByTokenNumberAndFileName(tokenNumber: string, fileName: string, resp
   return this.http.get(this.contextPath +"/resolve-issue-file/downloadFile", options);
 }
 
+downloadReopenIssueFileByTokenNumberAndFileName(tokenNumber: string, fileName: string, response) {
+  let httpParams = new HttpParams();
+  httpParams = httpParams.append("tokenNumber", tokenNumber)
+  .append("fileName", fileName) 
+  let options : any = {
+    responseType: 'blob',
+    params: httpParams
+  }
+  if (response) {
+    options["observe"] = 'response';
+  }
+  return this.http.get(this.contextPath +"/reopen-issue-file/downloadFile", options);
+}
 
+reopenIssueByTokenNumber(tokenNumber:string,status:string,comments:string,uploadFiles: File [] ) {
+  let formData = new FormData();
+      uploadFiles.forEach(file  => {
+      formData.append('files', file);
+  });
+  formData.append('tokenNumber',tokenNumber);
+  formData.append('status',status);
+  formData.append('comments',comments);
+  return this.http.post(this.contextPath + '/issue-master/reopen/', formData, { observe: 'response' }).pipe(
+    map((response: HttpResponse<any>) => {
+      return response;
+    }));
+}
 
 }
 

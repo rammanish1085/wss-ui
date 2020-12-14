@@ -281,8 +281,8 @@ export class RequestNotificationComponent implements OnInit {
     this.replyForm.patchValue({
       attachment: '',
     });
-
   }
+  
   resetReplyForm() {
     this.uploadFiles = [];
     this.replyForm.patchValue({

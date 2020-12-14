@@ -7,6 +7,7 @@ import { IssueStatusService } from 'src/app/services/project/issue-status.servic
 import { GlobalConstants } from 'src/app/utility/global.constants';
 import { GobalutilityService } from 'src/app/utility/gobalutility.service';
 import { DatePipe } from '@angular/common'
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-view-issue',
@@ -32,12 +33,24 @@ export class ViewIssueComponent implements OnInit {
   dtOptions: any = {};
   resolveIssuefiles: any;
   isResolveIssueFile :boolean;
+  uploadReopenIssueFiles: any;
+  reopenIssueForm :FormGroup;
+  isReopen : boolean;
+  reopenIssue:any;
+  isReopenIssueFile :boolean;
+  reopenIssuefiles: any;
 
   constructor(private issueMasterService: IssueMasterService,public datepipe: DatePipe, private issueStatusService: IssueStatusService,
     private globalUtilityService: GobalutilityService,private globalutilityService: GobalutilityService, private authorizationService: AuthorizationService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
+
+    this.reopenIssueForm = new FormGroup({
+      reopenMessage: new FormControl('', Validators.required),
+      isAttachment :new FormControl(false),
+    });
+
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
     this.locationCode = this.loggedInUser.getLocationCode();
@@ -53,24 +66,31 @@ export class ViewIssueComponent implements OnInit {
   }
 
   onClickReopen(ps:any){
+   console.log("reopn issue clicked");
+   this.reopenIssue = ps;
+
    var diffDays:any= this.calculateDiff(this.datepipe.transform(ps.updatedOn, 'medium'));
    if(diffDays>7){
     this.globalutilityService.errorAlertMessage("7 days is overed issue can't' be reopen");
    }else{
-     console.log("inside else");
-     this.issueMasterService.reopenIssueByTokenNumber(ps.tokenNumber,ps.status).subscribe(success => {
-      console.log("reopenIssueByTokenNumber");
-      console.log(success);
-      if(success.status === 200){
-        this.globalutilityService.successAlertMessage("Issue Reopen Successfully");
-      }
-            
-    }, error => {
-      console.log("Getting Error while getting assigned problem");
-      console.log(error);
+    this.isReopen = true;
+  
+   }
+  }
+
+  onReopenSubmit(){
+    console.log("onReopenSubmit");
+    console.log(this.reopenIssueForm.value);
+    console.log(this.reopenIssue.tokenNumber);
+    console.log(this.reopenIssue.status);
+    
+    this.issueMasterService.reopenIssueByTokenNumber(this.reopenIssue.tokenNumber,this.reopenIssue.status,this.reopenIssueForm.value.reopenMessage,this.uploadReopenIssueFiles).subscribe(success=>{
+      this.globalutilityService.successAlertMessage("Issue reopen successfully");
+
+    },error=>{
+      this.globalutilityService.errorAlertMessage("Unable to reopen issue !!!");
+
     })
-   }  
-   
   }
 
   calculateDiff(sentDate) {
@@ -98,6 +118,7 @@ export class ViewIssueComponent implements OnInit {
     })
 
   }
+
   public onClickView(ps: any) {
 
     this.viewIssue = ps;
@@ -105,16 +126,18 @@ export class ViewIssueComponent implements OnInit {
     this.getFileByTokenNumber(ps.tokenNumber);
     this.getIssueStatusByTokenNumber(ps.tokenNumber);
     this.viewResolveIssueFileClicked(ps);
+    this.viewReopenFileClicked(ps);
     
   }
+
   getIssueStatusByTokenNumber(tokenNumber: any) {
     this.issueStatusService.getRequestInformationByTokenNumber(tokenNumber).subscribe(success => {
 
       if (success.status === 200) {
+        console.log("Getting Current Status of problem by token number");
         this.statusList = success.body;
-        console.log("issue status");
         console.log(this.statusList);
-      } if (success.status === 204) {
+       }if (success.status === 204) {
         console.log(success);
       }
 
@@ -162,6 +185,36 @@ export class ViewIssueComponent implements OnInit {
     })
   }
 
+  viewReopenFileClicked(file:any){
+    this.isReopenIssueFile = true;
+    console.log("reopen file clicked");
+    console.log(file);
+    this.issueMasterService.getReopenIssueFileByTokenNumber(file.tokenNumber).subscribe(success => {
+      if(success.status === 200){      
+        console.log("Resolve Issue File Found Successfully By TokenNumber");
+        this.reopenIssuefiles = success.body;
+        console.log(this.resolveIssuefiles);      
+      }else if(success.status === 204){
+        console.log("No File Found While Getting  File By TokenNumber");
+      } 
+      }, error => {
+        console.log("Getting Error while getting File By TokenNumber");
+        console.log(error);
+      })
+    
+    
+  }
+
+  onClickDownloadReopenIssueFile(file:any)
+  {
+    console.log("onClickViewResolveIssueFile");
+    this.issueMasterService.downloadReopenIssueFileByTokenNumberAndFileName(file.tokenNumber, file.name, GlobalConstants.FALSE).subscribe(success => {
+      this.saveFile(success, file.originalName)
+    }, error => {
+      this.handleError(error);
+    })
+  }
+
   onClickViewResolveIssueFile(file:any){
     console.log("onClickViewResolveIssueFile");
     this.issueMasterService.downloadFileByTokenNumberAndFileName(file.tokenNumber, file.name, GlobalConstants.FALSE).subscribe(success => {
@@ -179,6 +232,67 @@ export class ViewIssueComponent implements OnInit {
     }, error => {
       this.handleError(error);
     })
+  }
+
+  onFileChange(event){
+
+    this.uploadReopenIssueFiles = [];
+
+    const size = event.srcElement.files[0].size;
+
+    console.log(size)
+
+    if (size < 1000000) 
+    { 
+     if(event.target.files.length <=2){
+           
+      for (var i = 0; i < event.target.files.length; i++) {
+        this.uploadReopenIssueFiles.push(event.target.files[i]);
+      }
+    } else{
+        this.globalutilityService.errorAlertMessage("Maximum 2 File Allow to upload");
+      }
+
+    }else{
+    this.globalutilityService.errorAlertMessage("File Size greater 1 Mb");
+    }
+  }
+
+  
+  isAttachmentClicked(){
+    this.reopenIssueForm.get('isAttachment').valueChanges.subscribe(checked => {
+      if (checked) {
+        const validators = [Validators.required];
+        this.reopenIssueForm.addControl('attachment', new FormControl('', validators));
+      } else {
+        this.reopenIssueForm.removeControl('attachment');
+      }
+
+    });
+  }
+
+  deleteFieldValue(index) {
+    if (this.uploadReopenIssueFiles.length <= 1) {
+      this.uploadReopenIssueFiles.splice(index, 1);
+      this.resetFile();
+    } else {
+      this.uploadReopenIssueFiles.splice(index, 1);
+    }
+  }
+
+  resetFile() {
+    this.reopenIssueForm.patchValue({
+      attachment: '',
+    });
+  }
+  
+  resetReopenForm() {
+    this.uploadReopenIssueFiles = [];
+    this.reopenIssueForm.patchValue({
+      attachment: '',
+      reopenMessage:'',
+      isAttachment:''
+    });
   }
 
 
