@@ -43,6 +43,8 @@ export class ToDoIssueComponent implements OnInit {
   uploadFiles: File[] = [];
   isResolveIssueFile :boolean;
   resolveIssuefiles: any;
+  isReopenIssueFile :boolean;
+  reopenIssuefiles: any;
   
 
   constructor(private dashboardService: DashboardService,
@@ -138,6 +140,34 @@ export class ToDoIssueComponent implements OnInit {
     })
   }
 
+  viewReopenFileClicked(file:any){
+    this.isReopenIssueFile = true;
+    console.log("reopen file clicked");
+    console.log(file);
+    this.issueMasterService.getReopenIssueFileByTokenNumber(file.tokenNumber).subscribe(success => {
+      if(success.status === 200){      
+        console.log("Resolve Issue File Found Successfully By TokenNumber");
+        this.reopenIssuefiles = success.body;
+        console.log(this.resolveIssuefiles);      
+      }else if(success.status === 204){
+        console.log("No File Found While Getting  File By TokenNumber");
+      } 
+      }, error => {
+        console.log("Getting Error while getting File By TokenNumber");
+        console.log(error);
+      })
+    }
+
+  onClickDownloadReopenIssueFile(file:any)
+  {
+    console.log("onClickViewResolveIssueFile");
+    this.issueMasterService.downloadReopenIssueFileByTokenNumberAndFileName(file.tokenNumber, file.name, GlobalConstants.FALSE).subscribe(success => {
+      this.saveFile(success, file.originalName)
+    }, error => {
+      this.handleError(error);
+    })
+  }
+
 
 
   public onClickView(ps: any) {
@@ -156,6 +186,7 @@ export class ToDoIssueComponent implements OnInit {
     this.getIssueStatusByTokenNumber(ps.tokenNumber);
     this.getByUsernameAndTokenNumber(this.username,ps.tokenNumber);
     this.viewResolveIssueFileClicked(ps);
+    this.viewReopenFileClicked(ps);
     console.log("View Clicked");
     console.log(ps);
 
@@ -339,10 +370,6 @@ export class ToDoIssueComponent implements OnInit {
   }
   private prepareFarwardIssueObject() {
     this.forwardIssue = this.viewIssue;
-    // this.forwardIssue.locationCode = this.locationCode;
-    // this.forwardIssue.locationName = this.loggedInUser.getLocationName();
-    // this.forwardIssue.username = this.username;
-    // this.forwardIssue.name = this.name;
     this.forwardIssue.remark = this.requestForwardForm.value.remark;
 
   }

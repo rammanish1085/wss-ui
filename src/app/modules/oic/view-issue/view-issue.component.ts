@@ -201,9 +201,7 @@ export class ViewIssueComponent implements OnInit {
         console.log("Getting Error while getting File By TokenNumber");
         console.log(error);
       })
-    
-    
-  }
+    }
 
   onClickDownloadReopenIssueFile(file:any)
   {
