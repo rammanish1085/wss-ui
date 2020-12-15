@@ -128,9 +128,12 @@ downloadReopenIssueFileByTokenNumberAndFileName(tokenNumber: string, fileName: s
 
 reopenIssueByTokenNumber(tokenNumber:string,status:string,comments:string,uploadFiles: File [] ) {
   let formData = new FormData();
+  if(uploadFiles && uploadFiles.length>0){
+  
       uploadFiles.forEach(file  => {
       formData.append('files', file);
   });
+}
   formData.append('tokenNumber',tokenNumber);
   formData.append('status',status);
   formData.append('comments',comments);

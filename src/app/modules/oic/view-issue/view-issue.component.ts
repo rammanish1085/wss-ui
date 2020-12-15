@@ -86,6 +86,8 @@ export class ViewIssueComponent implements OnInit {
     
     this.issueMasterService.reopenIssueByTokenNumber(this.reopenIssue.tokenNumber,this.reopenIssue.status,this.reopenIssueForm.value.reopenMessage,this.uploadReopenIssueFiles).subscribe(success=>{
       this.globalutilityService.successAlertMessage("Issue reopen successfully");
+      this.getAllAssignedProblemStatement(this.username, this.locationCode);
+      this.resetReopenForm();
 
     },error=>{
       this.globalutilityService.errorAlertMessage("Unable to reopen issue !!!");
