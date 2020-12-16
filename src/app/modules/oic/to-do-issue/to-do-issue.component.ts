@@ -85,8 +85,8 @@ export class ToDoIssueComponent implements OnInit {
 
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 5,
-    lengthMenu : [5, 10, 25],
+      pageLength: 10,
+    lengthMenu : [10, 25, 50],
       processing: true
     };
 
