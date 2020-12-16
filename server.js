@@ -18,7 +18,10 @@ app.use('/mppkvvcl/cit/', proxy({
   xfwd:true,
 }));
 
-
+app.all('/*', function(req, res, next) {
+  // Just send the index.html for other files to support HTML5Mode
+  res.sendFile('dist/cit-ui/index.html', { root: __dirname });
+});
 //for local testing
 //app.use('/mppkvvcl/nextgenbilling/', proxy({target: LOCAL_BACKEND_SERVER, changeOrigin: true}));
 

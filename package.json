@@ -28,6 +28,7 @@
     "bootstrap": "^4.5.3",
     "datatables.net": "^1.10.22",
     "datatables.net-dt": "^1.10.22",
+    "express": "^4.17.1",
     "file-saver": "^2.0.0",
     "jquery": "^3.5.1",
     "rxjs": "~6.5.5",
