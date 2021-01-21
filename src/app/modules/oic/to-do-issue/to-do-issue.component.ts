@@ -305,6 +305,7 @@ export class ToDoIssueComponent implements OnInit {
     console.log(viewIssue);
     this.getProjectProblemUserMapping(this.locationCode,viewIssue.projectName,viewIssue.projectModule,viewIssue.projectProblemStatement);
   }
+
   getProjectProblemUserMapping(locationCode: string, projectName: any, projectModule: any, projectProblemStatement: any) {
     this.dashboardService.getProjectProblemUserMapping(locationCode,projectName,projectModule,projectProblemStatement).subscribe(success=>{
       if(success.status === 200){
@@ -368,6 +369,7 @@ export class ToDoIssueComponent implements OnInit {
     })
 
   }
+
   private prepareFarwardIssueObject() {
     this.forwardIssue = this.viewIssue;
     this.forwardIssue.remark = this.requestForwardForm.value.remark;
@@ -384,6 +386,7 @@ export class ToDoIssueComponent implements OnInit {
     })
 
   }
+
   onSubmitRequestInfo() {
     this.prepareRequestInfoObject();
     console.log("Request info object");
@@ -537,10 +540,6 @@ export class ToDoIssueComponent implements OnInit {
     });
 
   }
-
-
-
-
 
   /**
    * Save blob to file
