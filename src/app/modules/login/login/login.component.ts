@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
 
       }
     }, error => {
-      this.globalutilityService.errorAlertMessage("Error While Generating OTP");
+      this.globalutilityService.errorAlertMessage("Unable to send OTP Contact System Admin");
 
     })
   }

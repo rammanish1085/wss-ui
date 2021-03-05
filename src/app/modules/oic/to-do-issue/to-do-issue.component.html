@@ -406,7 +406,7 @@
                   <option value="" disabled>Select user</option>
                   <option *ngFor="let info of requestInfoUser" [ngValue]="info"
                     class="form-control form-control-sm text-center">
-                    {{info.requestUsername}}&nbsp;{{info.requestName}}</option>
+                    {{info.createdBy}}&nbsp;{{info.createdName}}</option>
                 </select>
               </div>
             </td>

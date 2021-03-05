@@ -333,13 +333,14 @@ export class ToDoIssueComponent implements OnInit {
     console.log("request info click");
     console.log(viewIssue);
     this.dashboardService.getUserByTokenNumber(viewIssue.tokenNumber).subscribe(success => {
-      console.log("success");
+      console.log("Get issue status");
       console.log(success);
       this.requestInfoUser = success.body;
+      console.log(this.requestInfoUser);
 
     }, error => {
 
-      console.log("eroor");
+      console.log("error");
     })
   }
 
@@ -390,6 +391,7 @@ export class ToDoIssueComponent implements OnInit {
   onSubmitRequestInfo() {
     this.prepareRequestInfoObject();
     console.log("Request info object");
+    console.log(this.requestInfoForm);
     console.log(this.requestInfoForm.value);
 
     
@@ -416,8 +418,8 @@ export class ToDoIssueComponent implements OnInit {
 
   prepareRequestInfoObject() {
     this.requestInfoObject.tokenNumber = this.requestInfoForm.value.user.tokenNumber;
-    this.requestInfoObject.username = this.requestInfoForm.value.user.requestUsername;
-    this.requestInfoObject.name = this.requestInfoForm.value.user.requestName;
+    this.requestInfoObject.username = this.requestInfoForm.value.user.createdBy;
+    this.requestInfoObject.name = this.requestInfoForm.value.user.createdName;
     this.requestInfoObject.requestedUsername = this.username;
     this.requestInfoObject.requestedName = this.name;
     this.requestInfoObject.requestMessage = this.requestInfoForm.value.remark;
