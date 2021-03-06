@@ -10,7 +10,7 @@ app.use(express.static(__dirname + '/dist/cit-ui'));
 // Add middleware for http proxying 
 const DEVELOPMENT_BACKEND_SERVER = 'http://192.168.29.45:8080';
 
-const LOCAL_BACKEND_SERVER = 'http://localhost:8080';
+const LOCAL_BACKEND_SERVER = 'http://localhost:8090';
 
 //app.use('/mppkvvcl/nextgenbilling/', proxy({target: '', changeOrigin: true}));
 app.use('/mppkvvcl/cit/', proxy({
