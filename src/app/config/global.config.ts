@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class GlobalConfiguration {
   
-  private readonly BACKEND_PREFIX : string = '/mppkvvcl/cit/backend/api/v1/';
+  private readonly BACKEND_PREFIX : string = '/mppkvvcl/wss/backend/api/v1/';
   private readonly REPORT_PREFIX : string = '/mppkvvcl/ngb/report/backend/api/v1/';
   private readonly AUTHENTICATION_URL : string = 'authentication/login';
   private readonly LOGOUT_URL : string = 'authentication/logout';

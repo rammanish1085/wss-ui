@@ -20,6 +20,10 @@ import {SessionTimerComponent} from 'src/app/components/timer/session-timer/sess
 import {LoginModalModule} from 'src/app/modals/login-modal/login-modal.module';
 import { ToDoIssueComponent } from './to-do-issue/to-do-issue.component';
 import {DataTablesModule} from 'angular-datatables';
+import { AddIncidentComponent } from './add-incident/add-incident.component';
+import { ViewIncidentComponent } from './view-incident/view-incident.component';
+import { TrackIncidentComponent } from './track-incident/track-incident.component';
+import { ToDoIncidentComponent } from './to-do-incident/to-do-incident.component';
 
 
 
@@ -27,7 +31,7 @@ import {DataTablesModule} from 'angular-datatables';
 
 
 @NgModule({
-  declarations: [OicComponent,NavbarComponent,SessionTimerComponent,SidebarComponent, AddUserComponent,FooterComponent, AddIssueComponent, HomeComponent,DashboardComponent, ViewIssueComponent, TrackIssueComponent, RequestNotificationComponent, ToDoIssueComponent],
+  declarations: [OicComponent,NavbarComponent,SessionTimerComponent,SidebarComponent, AddUserComponent,FooterComponent, AddIssueComponent, HomeComponent,DashboardComponent, ViewIssueComponent, TrackIssueComponent, RequestNotificationComponent, ToDoIssueComponent, AddIncidentComponent, ViewIncidentComponent, TrackIncidentComponent, ToDoIncidentComponent],
   imports: [
     CommonModule,
     OicRoutingModule,

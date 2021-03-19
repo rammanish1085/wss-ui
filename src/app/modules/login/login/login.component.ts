@@ -65,9 +65,12 @@ export class LoginComponent implements OnInit {
         console.log(data);
         console.log("Login Successfull. Logged in User is: " + this.authorizationService.getLoggedInUserRole());
         if (this.authorizationService.isLogedIn()) {
-          this.isLogIn = false;
-          this.loggedUser = this.authorizationService.getLoggedInUser();
-          this.generateOTP();
+          // this.isLogIn = false;
+          // this.loggedUser = this.authorizationService.getLoggedInUser();
+          // this.generateOTP();
+          localStorage.setItem("key", "SUCCESS");
+
+          this.router.navigate(['oic']);
         } else {
           console.log("Unable to login user");
           this.loginError = true;

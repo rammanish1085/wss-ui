@@ -3,7 +3,7 @@
        <div class="user-picture m-auto">
             <img src="./assets/img/mppkvvcl.png" class="img-fluid" alt="">
         </div>
-        <div class="header text-white">WIN-Common Issue Tracker</div>
+        <div class="header text-white">WIN-SAFTEY SYSTEM</div>
         <div class="card-body" *ngIf="isLogIn">
             <div *ngIf="logging">
                 <div class="form-group">
@@ -57,41 +57,7 @@
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="card-body" *ngIf="!isLogIn">
-                       
-            <div>
-                <div>
-                    <form [formGroup]="form" (ngSubmit)="processOtpForm()">
-
-                        <div>
-                            <Label class="text-white"><h5>{{loggedUser.getName()}}</h5></Label>
-                        </div>
-            
-                        <div class="form-group">
-                            <label for="number" class="text-white">Enter OTP </label>
-                             <input formControlName="number" id="number"  type="text" autofocus class="form-control" autocomplete="off">
-                                <div *ngIf="f.number.touched && f.number.invalid" class="alert alert-danger">
-                                <div *ngIf="f.number.errors.required">Number is required.</div>
-                                <div *ngIf="f.number.errors.pattern">Enter only number.</div>
-                            </div>
-                        </div>
-                        <div *ngIf="!isResend">
-                            <p class="h6 mb-3  text-white">{{timeLeft}} Seconds left</p> 
-                        </div>
-                         <div class="form-group">
-                        <button class="btn btn-primary btn-sm mr-3" type="submit" [disabled]="!form.valid">Submit</button>
-                       
-                        <button type="reset" class="btn btn-warning btn-sm mr-3" (click)="loginErrorText=null">Clear</button>
-
-                        <button type="reset" class="btn btn-info btn-sm" (click)="onClickResendOTP()" *ngIf="isOtpResend">Resend</button>
-                        
-                    </div>
-                    </form>
-                </div>
-            </div> 
-            
-        </div>
+        </div>        
         <div class="card-footer  text-white">
             <strong>&copy; MPPKVCL Indore</strong>
         </div>

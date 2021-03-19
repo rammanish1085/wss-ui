@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { OicComponent } from './oic.component';
-import { AddUserComponent } from './add-user/add-user.component';
-import { AddIssueComponent } from './add-issue/add-issue.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from 'src/app/components/dashboard/dashboard.component';
 import { AuthGuard } from 'src/app/guard/auth.guard';
-import { ViewIssueComponent } from './view-issue/view-issue.component';
-import { TrackIssueComponent } from './track-issue/track-issue.component';
 import { RequestNotificationComponent } from './request-notification/request-notification.component';
-import { ToDoIssueComponent } from './to-do-issue/to-do-issue.component';
+import { AddIncidentComponent } from './add-incident/add-incident.component';
+import { ViewIncidentComponent } from './view-incident/view-incident.component';
+import { ToDoIncidentComponent } from './to-do-incident/to-do-incident.component';
+import { TrackIncidentComponent } from './track-incident/track-incident.component';
 
 const routes: Routes = [
   {
@@ -25,25 +24,22 @@ const routes: Routes = [
          { path: 'home', 
            component: HomeComponent
         },
+          
           {
-            path:'add-user',
-            component:AddUserComponent
-          },
-          {
-            path:'add-issue',
-            component:AddIssueComponent
+            path:'add-incident',
+            component:AddIncidentComponent
 
           },
 
           {
-            path:'view-issue',
-            component:ViewIssueComponent
+            path:'view-incident',
+            component:ViewIncidentComponent
 
           },
 
           {
-            path:'track-issue',
-            component:TrackIssueComponent
+            path:'track-incident',
+            component:TrackIncidentComponent
 
           },
 
@@ -58,8 +54,8 @@ const routes: Routes = [
           },
 
           {
-            path:'to-do-issue',
-            component:ToDoIssueComponent
+            path:'to-do-incident',
+            component:ToDoIncidentComponent
           },
           {
             path: '', redirectTo: 'home', pathMatch: 'full'
