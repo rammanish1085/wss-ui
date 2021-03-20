@@ -1,1 +1,68 @@
-<p>add-incident works!</p>
+<div class="card border-dark">
+    <div class="card-header text-center text-white">ADD INCIDENT </div>
+    <div class="card-body">
+        <form [formGroup]="incidentMasterForm" (ngSubmit)="onSubmitIncidentMasterForm()">
+            <div class="row">
+                <div class="col-md-3 mb-4 mt-4">
+                    <div>
+                        <select class="form-control" name="incidentList" formControlName="incident" required>
+                            <option value="" disabled>Select Incident</option>
+                            <option *ngFor="let incident of incidentList" [ngValue]="incident"
+                                class="form-control form-control-sm">
+                                {{incident}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4 mt-4">
+                    <div>
+                        <select class="form-control" name="incidentObject" formControlName="incidentObject"
+                            (change)="onChangeIncidentObject()" required>
+                            <option value="" disabled>Select Incident Object</option>
+                            <option *ngFor="let incidentObject of incidentObjectList" [ngValue]="incidentObject"
+                                class="form-control form-control-sm">
+                                {{incidentObject}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-4 mt-4" *ngIf="isHuman">
+                    <div>
+                        <select class="form-control" name="incidentObjectType" formControlName="incidentobjecType"
+                            (change)="onChangeIncidentObjectType()" required>
+                            <option value="" disabled>Select Incident Object Type</option>
+                            <option *ngFor="let incidentobjecType of incidentObjectTypeList"
+                                [ngValue]="incidentobjecType" class="form-control form-control-sm">
+                                {{incidentobjecType}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-4 mt-4" *ngIf="isDepartment">
+                    <div>
+                        <select class="form-control" name="employeeType" formControlName="employeeType" required>
+                            <option value="" disabled>Select Employee Type</option>
+                            <option *ngFor="let employee of employeeTypeList" [ngValue]="employeeType"
+                                class="form-control form-control-sm">
+                                {{employee}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 mb-2 mt-2">
+                    <div class="form-group">
+                        <!-- <label for="comment">Incident Description:</label> -->
+                        <textarea class="form-control" rows="4" placeholder="Enter the details of incident happened"
+                            id="comment" formControlName="incidentDescription" required></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button mt-4">
+                <button type="submit" [disabled]="!incidentMasterForm.valid" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+
+    </div>
+</div>

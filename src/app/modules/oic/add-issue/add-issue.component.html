@@ -7,7 +7,7 @@
           <div class="col-md-3 mb-4 mt-4" *ngIf="role ==='oic'">
             <div>
               <select class="form-control" name="projectOic" formControlName="projectName"
-                (change)="onChangeProjectOic()" required>
+                (change)="onChangeProjectOic()" >
                 <option value="" disabled>Select Project</option>
                 <option *ngFor="let project of projectsOic" class="form-control form-control-sm">{{project.name}}
                 </option>
@@ -18,7 +18,7 @@
           <div class="col-md-3 mb-4 mt-4" *ngIf="role !=='oic'">
             <div>
               <select class="form-control" name="projectOthers" formControlName="projectName"
-                (change)="onChangeProjectOther()" required>
+                (change)="onChangeProjectOther()" >
                 <option value="" disabled>Select Project</option>
                 <option *ngFor="let project of projectsOther" class="form-control form-control-sm">
                   {{project.projectName}}
@@ -30,7 +30,7 @@
           <div class="col-md-3 mb-4 mt-4">
             <div>
               <select class="form-control" name="projectModule" formControlName="projectModule"
-                (change)="onChangeProjectModule()" required>
+                (change)="onChangeProjectModule()" >
                 <option value="" disabled>Select Module</option>
                 <option *ngFor="let module of moduleList" [ngValue]="module" class="form-control form-control-sm">
                   {{module.projectModule}}</option>
@@ -40,7 +40,7 @@
 
           <div class="col-md-3 mb-4 mt-4">
             <div>
-              <select class="form-control" name="problemStatement" formControlName="projectProblemStatement" required>
+              <select class="form-control" name="problemStatement" formControlName="projectProblemStatement">
                 <option value="" disabled>Select Problem statement</option>
                 <option *ngFor="let projectProblemStatment of projectProblemStatmentList"
                   class="form-control form-control-sm">
@@ -119,7 +119,8 @@
             </table>
           </div>
         </div>
-        <div class="button mt-4"><button type="submit" [disabled]="!issueMasterForm.valid"
+        <div class="button mt-4">
+          <button type="submit" [disabled]="!issueMasterForm.valid"
             class="btn btn-primary">Submit</button></div>
       </form>
 

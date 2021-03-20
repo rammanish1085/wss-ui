@@ -9,6 +9,7 @@ import { AddIncidentComponent } from './add-incident/add-incident.component';
 import { ViewIncidentComponent } from './view-incident/view-incident.component';
 import { ToDoIncidentComponent } from './to-do-incident/to-do-incident.component';
 import { TrackIncidentComponent } from './track-incident/track-incident.component';
+import { AddIssueComponent } from './add-issue/add-issue.component';
 
 const routes: Routes = [
   {
@@ -33,7 +34,7 @@ const routes: Routes = [
 
           {
             path:'view-incident',
-            component:ViewIncidentComponent
+            component:AddIssueComponent
 
           },
 
