@@ -16,7 +16,7 @@
                 <div class="col-md-3 mb-4 mt-4">
                     <div>
                         <select class="form-control" name="incidentObject" formControlName="incidentObject"
-                            (change)="onChangeIncidentObject()" required>
+                            (change)="onChangeIncidentObject()">
                             <option value="" disabled>Select Incident Object</option>
                             <option *ngFor="let incidentObject of incidentObjectList" [ngValue]="incidentObject"
                                 class="form-control form-control-sm">
@@ -41,9 +41,9 @@
                     <div>
                         <select class="form-control" name="employeeType" formControlName="employeeType" required>
                             <option value="" disabled>Select Employee Type</option>
-                            <option *ngFor="let employee of employeeTypeList" [ngValue]="employeeType"
+                            <option *ngFor="let employeeType of employeeTypeList" [ngValue]="employeeType"
                                 class="form-control form-control-sm">
-                                {{employee}}</option>
+                                {{employeeType}}</option>
                         </select>
                     </div>
                 </div>
@@ -58,6 +58,62 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-8 mb-2 mt-2">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" formControlName="isAttachment" id="exampleCheck1"
+                      (click)="isAttachmentClicked()">
+                    <label class="form-check-label" for="exampleCheck1">Attachment</label>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="incidentMasterForm.value.isAttachment">
+
+                <div class="fileinfo mb-3 mt-3">
+      
+                  <div>
+                    <small class="mr-4">Maximum -> 5 file</small>
+                  </div>
+      
+                  <div>
+                    <small class="mr-4">Maximum file size -> 1 Mb</small>
+                  </div>
+                  <div>
+                    <small>File type ->[ jpg, pdf ,doc ,xls ] only</small>
+                  </div>
+                </div>
+      
+      
+                <div class="table">
+                  <div class="mr-3"><label for="exampleFormControlFile1">Attatch File </label></div>
+                  <div><input type="file" class="form-control-file" (change)="onFileChange($event)"
+                      formControlName="attachment" accept="image/*,.pdf,.doc,.docx,.xml,.xls" multiple required></div>
+                </div>
+      
+                <div>
+                  <table class="table">
+                    <tbody>
+                      <tr *ngFor="let field of myFiles; let i = index">
+      
+                        <td>{{i+1}}</td>
+                        <td>
+                          {{field.name}}
+                        </td>
+                        <td>
+                          {{field.size/1000000 | number}}Mb
+                        </td>
+                        <td>
+                          <button class="btn btn-danger btn-sm" type="button" (click)="deleteFieldValue(i)"><i
+                              class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+                        </td>
+                      </tr>
+      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
 
             <div class="button mt-4">
                 <button type="submit" [disabled]="!incidentMasterForm.valid" class="btn btn-primary">Submit</button>
